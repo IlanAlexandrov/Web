@@ -1,0 +1,195 @@
+
+body{
+  
+  
+  background-image: url('/pic/back.jpg');
+  background-size: 200%;
+ 
+    font: italic;
+}
+h3{
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 50px;
+
+}
+
+#password{
+  border-radius: 7px;
+    border: 2px solid rgb(248, 238, 236);
+    padding: 5px; 
+    margin-left:3px;
+  }
+#firstName{
+  border-radius: 7px;
+    border: 2px solid rgb(248, 238, 236);
+    padding: 5px; 
+    margin-left:3px;
+}
+#promoCode{
+  border-radius: 7px;
+    border: 2px solid rgb(248, 238, 236);
+    padding: 5px; 
+    margin-left:3px;
+}
+#lastName{
+  border-radius: 7px;
+  border: 2px solid rgb(248, 238, 236);
+  padding: 5px; 
+  margin-left:3px;
+}
+  #email{
+    border-radius: 7px;
+    border: 2px solid rgb(230, 226, 231);
+    padding: 5px; 
+    margin-left:3px;
+  }
+  .bg-password-image {
+    background: url('/pic/lockForget.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .bg-login-image{
+    background: url('/pic/login.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+.bg-register-image{
+    background: url('/pic/sign-Up.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.bg-change-image
+{
+  background: url('/pic/change.jpg');
+    background-position: center;
+    background-size: cover;
+
+}
+
+.reset{
+  padding: 5px;
+  font-weight : bold;
+  font-size :12px;
+  text-align: center;
+  margin-top:10%;
+
+
+}
+
+input{
+  
+  width: 100%;
+  padding: 5px;
+
+}
+
+h3{
+  margin-top: 0px;
+  margin-bottom : 25px;
+}
+.but{
+  
+  margin-top: 10px;
+  
+}
+p{
+  margin-top: 40px;
+  margin-left: 80px;
+}
+#Change{
+  margin-bottom: 50px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+    
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content:"\2713";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content:"\2715";
+}
+
+#message{
+    background-color: #CBDF7B;
+    margin: inherit;
+    margin-top: 10px;
+    width: 50%;
+    position: relative;
+    border-radius: 10%;
+   
+    
+}
+.container{
+    padding-left: 2px;
+}
+p{
+    text-align: left;
+    padding-left: 10px;
+    margin-top: 4px;
+    margin-bottom: 2px;
+}
+.butC{
+    width:100%;
+    padding-left: 10px;
+}
+#SU{
+    margin: inherit;
+    margin-bottom: 2px;
+    margin-top: 5px;
+}
+
+.right-top{
+   
+    background-color: midnightblue;
+    width:90%;
+    text-decoration-color: white;
+    margin-bottom: 5%;
+   
+}
+
+.right-bott{
+    background-color: lightgrey;
+    width: 90%;
+    
+    
+    
+}
+
+#all{
+    background-color: white; 
+    background-blend-mode: hard-light; 
+    
+}
+#CH3{
+    text-align: left;
+    font-weight: bold;
+}
+#BC{
+    margin-left: 30%;
+    width: inherit;
+    margin-bottom: 2%;
+}
+
+#submitBTN{
+    margin-top: 13%;
+    margin-left: 0%;
+    margin-right: 2%;
+    
+}

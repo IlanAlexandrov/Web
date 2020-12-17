@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<link rel="stylesheet" href="/css/lec2Style.css">
+    <meta charset="utf-8">
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Architects Daughter"</link>
+    <link rel="stykesheeet"
+          href="https://fonts.googleapis.com/css?family=Antic Slab" </link>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Contact-Us Page</title>
+  </head>
+  <body>
+   <!-- Example single danger button -->
+<div class="btn-group" style="margin-left: 15%;">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="log-in">Log-In</a>
+    <a class="dropdown-item" href="SignUp">Sign-Up</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="Contact-Us">Refresh</a>
+  </div>
+</div>
+      <div id="all" class="container-fluid" style="border-radius: 3%; width:70%; margin-top: 5px; background-color: #FBEEC1;" >
+
+          <!--This is for the first label -->
+          <div class="row">
+          <h3 style="color:blue; margin-top:2%;margin-left: 2%; font-family: Antic Slab;" id="CH3">CONTACT US</h3>
+            </div>
+          <div class="row">
+        <!--This is for the left side of the site -->
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div  class="jumbotron" style="height:84%;" >
+              
+                  <input class="form-control" type="text" id="name" placeholder="Name*" required>
+                  <input class="form-control" type="email" id="emailC" placeholder="Email*" required>
+                 <select id="Selector" class="form-control">
+                      <option value="" deafault selected disabled>Contact us concerning*</option>
+                      <option value="Sign-Up problems">ReachUsOut</option>
+                      <option value="C">I need someone to call me back</option>
+                  </select>
+                  <br><textarea id="sub" class="form-control" rows="3" placeholder="Write your concern*"></textarea>
+                  <button type="button" id="submitBTN" class="btn btn-success">SUBMIT</button>
+              
+              
+            </div>
+              </div>
+
+
+          <!--This is for the right side of the site-->
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="right-top">
+                    <h3 style="color: white; padding:2%" content="&#xf05: font-family: Architects Daughter;"><i class='far fa-comments' style="font-size:46px;"></i> Need 24/7 SUPPORT</h3>
+                  <a href="mailto:ilan19555@gmail.com?subject=ContactSupport">
+                      <button class="btn btn-primary" type="button" id="BC"> Contact Support</button>
+                  </a>
+
+                  </div>
+                      <div class="right-bott" style=" font-family: Antic Slab;">
+                      <P ><b>CALL SALES NOW <i class='fas fa-phone' style="font-size:20px;"></i></b><br>+1-20-504-3500</P>
+                        <p><b>SALES HOURS <i class='far fa-clock' style="font-size:20px;"></i></b></p>
+                          <p style="font-size:12px;">7am-7pm CST</p>
+                          <p><b>SALES CONTACT INFO <i class='far fa-user' style="font-size:20px;"></i></b></p>
+                          <p style="font-size:12px;"> ilan19555@gmail.com<br>+1-512-827-3500</p>
+                          <p><b>MAILING ADDRESS <i class='far fa-envelope' style="font-size:20px;"></i></b></p>
+                          <p style="font-size:12px;">GoNature<br>ilan19555@gmail.com<br>AustinTexas 78701<br>UnitedStates</p>
+                      </div>
+          </div>
+     </div>
+          </div>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="http://code.jquery.com/jquery.js"></script>
+
+      <script src="/js/Js.js"></script>
+
+          <script>
+            $(document).ready(function(){
+              $("#submitBTN").click(function(){
+                if(ContactPageCheck())
+                $.post('/contact-us',{name:$("#name").val(), email:$("#emailC").val(),selected:$("#Selector option:selected").text(),tex:$("#sub").val()})
+              })
+            })
+
+
+
+          </script>
+
+
+  </body>
+</html>
