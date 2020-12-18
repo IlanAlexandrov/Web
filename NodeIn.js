@@ -221,4 +221,6 @@ app.post('/update-password',function(req,res){
   console.log("Got here")
 
 })
-app.listen(8080);
+app.listen(port, () => {
+	console.log('App listening on port %d!', port);
+});
