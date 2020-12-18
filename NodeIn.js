@@ -5,7 +5,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
-var mysql = require('mysql');
+//var mysql = require('mysql');
 
 const { syncBuiltinESMExports } = require('module');
 var con = mysql.createConnection({
@@ -15,7 +15,7 @@ var con = mysql.createConnection({
 });
 let port = process.env.PORT || 3000;
 
-con.connect();
+//con.connect();
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,18 +49,18 @@ app.post("/log-in", function (req, res) {
 
   console.log(email + password1);
 
-  con.query("SELECT * FROM website.user WHERE email='" + email + "' AND password=SHA1('" + password1 + "')", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result.length);
-    if (result.length == 0)
-      res.send("Error");
-    else {
-      console.log("here")
-      res.redirect('/sign-up');
-    }
+  // con.query("SELECT * FROM website.user WHERE email='" + email + "' AND password=SHA1('" + password1 + "')", function (err, result, fields) {
+  //   if (err) throw err;
+  //   console.log(result.length);
+  //   if (result.length == 0)
+  //     res.send("Error");
+  //   else {
+  //     console.log("here")
+  //     res.redirect('/sign-up');
+  //   }
 
-  }
-  )
+  // }
+  // )
 
 
 
@@ -95,57 +95,57 @@ app.post('/sign-up', function (req, res) {
   var reso = 0;
 
   console.log("connected");
-  con.query("SELECT * FROM website.user WHERE email='" + emailTmp + "'", function (err, result, fields) {
-    if (err) throw err;
-    reso = result.length;
-    console.log(reso);
-    if (reso == 1) {
-      console.log("Here is when check if reso = 1" + reso);
-      res.send(st[flag]);
-    }
+  // con.query("SELECT * FROM website.user WHERE email='" + emailTmp + "'", function (err, result, fields) {
+  //   if (err) throw err;
+  //   reso = result.length;
+  //   console.log(reso);
+  //   if (reso == 1) {
+  //     console.log("Here is when check if reso = 1" + reso);
+  //     res.send(st[flag]);
+  //   }
 
-    if (reso == 0) {
-      console.log("here is if it passed" + flag);
-      flag = 0;
-      console.log(flag);
-      var sql = "INSERT INTO website.user (`FirstName`,`LastName`,`email`,`password`,`PromoCode`) VALUES ('" + firstNAme + "', '" + lastName + "','" + emailTmp + "',SHA1('" + passwordTmp + "'),'" + code + "')";
-      con.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("1 record inserted");
+  //   if (reso == 0) {
+  //     console.log("here is if it passed" + flag);
+  //     flag = 0;
+  //     console.log(flag);
+  //     var sql = "INSERT INTO website.user (`FirstName`,`LastName`,`email`,`password`,`PromoCode`) VALUES ('" + firstNAme + "', '" + lastName + "','" + emailTmp + "',SHA1('" + passwordTmp + "'),'" + code + "')";
+  //     con.query(sql, function (err, result) {
+  //       if (err) throw err;
+  //       console.log("1 record inserted");
 
 
-        let text2 = 'some....';
+  //       let text2 = 'some....';
        
 
 
-        if (flag == 0) {
-          var mailOptions = {
-            from: 'ilan19555@gmail.com',
-            to: emailTmp,
-            subject: 'Welcome to My site',
-            text: text2
-          };
+  //       if (flag == 0) {
+  //         var mailOptions = {
+  //           from: 'ilan19555@gmail.com',
+  //           to: emailTmp,
+  //           subject: 'Welcome to My site',
+  //           text: text2
+  //         };
 
 
-          transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
-        }
+  //         transporter.sendMail(mailOptions, function (error, info) {
+  //           if (error) {
+  //             console.log(error);
+  //           } else {
+  //             console.log('Email sent: ' + info.response);
+  //           }
+  //         });
+  //       }
 
 
 
 
 
-      })
-      res.send(st[flag]);
-    }
+  //     })
+  //     res.send(st[flag]);
+  //   }
 
 
-  })
+  // })
 
 
 
@@ -216,28 +216,28 @@ app.post('/reset-password', function (req, res) {
   console.log("GOT")
   var email = req.body.Email;
   console.log(email);
-  con.query("SELECT * FROM website.user WHERE email='" + email + "'", function (err, result, fields) {
-    if (err) throw err;
-     if (result.length == 0)
-       res.send("Error")
-      else{
-        var mailOptions = {
-          from: 'ilan19555@gmail.com',
-          to: email,
-          subject: 'Welcome to My site',
-          text: "me"
-        };
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
-        });
+  // con.query("SELECT * FROM website.user WHERE email='" + email + "'", function (err, result, fields) {
+  //   if (err) throw err;
+  //    if (result.length == 0)
+  //      res.send("Error")
+  //     else{
+  //       var mailOptions = {
+  //         from: 'ilan19555@gmail.com',
+  //         to: email,
+  //         subject: 'Welcome to My site',
+  //         text: "me"
+  //       };
+  //       transporter.sendMail(mailOptions, function (error, info) {
+  //         if (error) {
+  //           console.log(error);
+  //         } else {
+  //           console.log('Email sent: ' + info.response);
+  //         }
+  //       });
         
-      }
+  //     }
 
-  })
+  // })
     //
     // else {
     //   var mailOptions = {
