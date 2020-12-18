@@ -8,15 +8,15 @@ var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 //var mysql = require('mysql');
 var pg = require('pg');
-var conString = process.env.DATABASE_URL || "postgres://postgres:user@localhost:5433/users";
+var conString = process.env.DATABASE_URL;
 var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
 client.connect()
-app.use(bodyParser.urlencoded({ extended: true }));
-client.query('CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)')
+
+client.query('CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)');
 //make sure i can use the css files, and js files, with the static folder i created
 app.use(express.static(__dirname + '/public'));
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
   res.sendFile(__dirname + "/LogIn.html",);
 
