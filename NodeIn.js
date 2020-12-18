@@ -6,7 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 var mysql = require('mysql');
-const bcrypt = require('bcrypt');
+
 const { syncBuiltinESMExports } = require('module');
 var con = mysql.createConnection({
   host: "localhost",
@@ -115,11 +115,7 @@ app.post('/sign-up', function (req, res) {
 
 
         let text2 = 'some....';
-        bcrypt.hash(text2, 10, (err, hash) => {
-          if (err) throw err;
-          text = hash;
-          console.log('happy hashing', text);
-        });
+       
 
 
         if (flag == 0) {
