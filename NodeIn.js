@@ -1,23 +1,17 @@
 
+
 var url = require('url');
 var fs = require('fs');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
-var mysql = require('mysql');
-
-const { syncBuiltinESMExports } = require('module');
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: ""
-});
+//var mysql = require('mysql');
+var pg = require('pg');
+var conString = "postgres://postgres:user@localhost:5433/users";
+var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
-
-con.connect();
-
-
+client.connect()
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //make sure i can use the css files, and js files, with the static folder i created
@@ -41,29 +35,23 @@ app.get('/sign-up', function (req, res) {
 
 //check if the email and password is in the db, if so will refer to another page
 // if not, will send an error message
-app.post("/log-in", function (req, res) {
+app.post("/log-in", function (req, resol) {
 
 
   var email = req.body.Email1;
   var password1 = req.body.Password1;
 
   console.log(email + password1);
-
-  con.query("SELECT * FROM website.user WHERE email='" + email + "' AND password=SHA1('" + password1 + "')", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result.length);
-    if (result.length == 0)
-      res.send("Error");
-    else {
-      console.log("here")
-      res.redirect('/sign-up');
+  var text ='select password from userforweb where passwords=$1';
+  var r =[password1];
+  client.query(text,r,(err,res)=>{
+    if(res!=undefined)
+    resol.send("Error");
+    else{
+      console.log("HERE");
+      resol.redirect('/sign-up');
     }
-
-  }
-  )
-
-
-
+  })
 })
 
 
@@ -80,7 +68,7 @@ var transporter = nodemailer.createTransport({
 
 //check if the email already in the "DB" if so, will return error,
 // if not, will return to the user a confirmation massege and send confirmation massage to email.
-app.post('/sign-up', function (req, res) {
+app.post('/sign-up', function (req, resul) {
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -91,65 +79,46 @@ app.post('/sign-up', function (req, res) {
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
   var flag = 1;
+  var text = 'select email from userforweb where email =$1'
+  var values = [emailTmp];
+  client.query(text,values,(err,res)=>{
+  
+  if(res.rows[1]!=undefined)
+  {
+    console.log("GOT HERE")
+    
+    resul.send(st[flag]);
+  }
+  else{
+    flag=0;
+    text ='insert into userforweb(firstname,lastname,email,passwords) values($1,$2,$3,$4)'
+    values = [firstNAme,lastName,emailTmp,passwordTmp];
+    client.query(text,values,(err,res)=>{
+    if(err){
+    console.log(err);
+    }else 
+    console.log("good")
+})
+if (flag == 0) {
+  var mailOptions = {
+    from: 'ilan19555@gmail.com',
+    to: emailTmp,
+    subject: 'Welcome to My site',
+    text: "hello from the other side"
+  };
 
-  var reso = 0;
 
-  console.log("connected");
-  con.query("SELECT * FROM website.user WHERE email='" + emailTmp + "'", function (err, result, fields) {
-    if (err) throw err;
-    reso = result.length;
-    console.log(reso);
-    if (reso == 1) {
-      console.log("Here is when check if reso = 1" + reso);
-      res.send(st[flag]);
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
     }
-
-    if (reso == 0) {
-      console.log("here is if it passed" + flag);
-      flag = 0;
-      console.log(flag);
-      var sql = "INSERT INTO website.user (`FirstName`,`LastName`,`email`,`password`,`PromoCode`) VALUES ('" + firstNAme + "', '" + lastName + "','" + emailTmp + "',SHA1('" + passwordTmp + "'),'" + code + "')";
-      con.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("1 record inserted");
-
-
-        let text2 = 'some....';
-       
-
-
-        if (flag == 0) {
-          var mailOptions = {
-            from: 'ilan19555@gmail.com',
-            to: emailTmp,
-            subject: 'Welcome to My site',
-            text: text2
-          };
-
-
-          transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
-        }
-
-
-
-
-
-      })
-      res.send(st[flag]);
-    }
-
-
-  })
-
-
-
-
+  });
+}
+resul.send(st[flag]);
+  }
+ })
 })
 
 app.post('/contact-us', function (req, res) {
@@ -212,55 +181,35 @@ app.get('/reset-password', function (req, res) {
   res.sendFile(__dirname + "/ForgetPassword.html",);
 })
 
-app.post('/reset-password', function (req, res) {
+app.post('/reset-password', function (req, resul) {
   console.log("GOT")
   var email = req.body.Email;
   console.log(email);
-  con.query("SELECT * FROM website.user WHERE email='" + email + "'", function (err, result, fields) {
-    if (err) throw err;
-     if (result.length == 0)
-       res.send("Error")
-      else{
-        var mailOptions = {
-          from: 'ilan19555@gmail.com',
-          to: email,
-          subject: 'Welcome to My site',
-          text: "me"
-        };
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
-        });
-        
-      }
 
+  var text = 'select * from userforweb where email=$1';
+  var act= [email];
+  client.query(text,act,(err,res)=>{
+    if(res==undefined)
+    {
+      resul.send("Error");
+    }
+    else{
+      var mailOptions = {
+        from: 'ilan19555@gmail.com',
+        to: email,
+        subject: 'Welcome to My site',
+        text: "me"
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    }
   })
-    //
-    // else {
-    //   var mailOptions = {
-    //     from: 'ilan19555@gmail.com',
-    //     to: email,
-    //     subject: select,
-    //     text: "The name of the user:"
-    //   };
-
-    //   transporter.sendMail(mailOptions, function (error, info) {
-    //     if (error) {
-    //       console.log(error);
-    //     } else {
-    //       console.log('Email sent: ' + info.response);
-    //     }
-    //   });
-
-    // }
-
-
   
-
-
 })
 
 app.get('/update-password',function(req,res){
@@ -272,6 +221,4 @@ app.post('/update-password',function(req,res){
   console.log("Got here")
 
 })
-app.listen(port, () => {
-	console.log('App listening on port %d!', port);
-});
+app.listen(8080);
