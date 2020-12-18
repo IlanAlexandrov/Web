@@ -75,6 +75,7 @@ app.post('/sign-up', function (req, resul) {
   var lastName = req.body.LastName;
   var code = req.body.Promo;
   console.log(emailTmp + " " + passwordTmp + " " + firstNAme + " " + lastName + " " + code);
+    console.log("HEREEEEEEE")
   var st = [
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
