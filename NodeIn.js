@@ -15,7 +15,7 @@ var con = mysql.createConnection({
 });
 let port = process.env.PORT || 3000;
 
-//con.connect();
+con.connect();
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
