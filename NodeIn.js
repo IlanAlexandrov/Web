@@ -8,11 +8,11 @@ var nodemailer = require('nodemailer');
 //var mysql = require('mysql');
 
 const { syncBuiltinESMExports } = require('module');
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: ""
-});
+// var con = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: ""
+// });
 let port = process.env.PORT || 3000;
 
 //con.connect();
