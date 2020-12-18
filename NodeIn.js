@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   user: "root",
   password: ""
 });
-
+let port = process.env.PORT || 3000;
 
 con.connect();
 
@@ -276,4 +276,6 @@ app.post('/update-password',function(req,res){
   console.log("Got here")
 
 })
-app.listen(8080);
+app.listen(port, () => {
+	console.log('App listening on port %d!', port);
+});
