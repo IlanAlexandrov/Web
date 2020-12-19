@@ -7,13 +7,13 @@ var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 //var mysql = require('mysql');
-var pg = require('pg');
-var conString = process.env.DATABASE_URL;
+//var pg = require('pg');
+var conString = process.env.DATABASE_URL||"postgres";
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
 const { Client } = require("pg");
 const client = new Client({
-  connectionString: conn,
+  connectionString: conString,
   ssl: process.env.DATABASE_URL ? true : false,
 });
 
