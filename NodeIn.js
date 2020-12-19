@@ -26,7 +26,7 @@ app.get('/db', async (req, res) => {
       "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
      
-      res.render('pages/db', results );
+      res.render('/db', results );
       client.release();
     } catch (err) {
       console.error(err);
@@ -105,7 +105,7 @@ app.post('/sign-up', async function (req, resul) {
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
   var flag = 1;
-  var text = 'select email from users where email =$1'
+  var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
     const client = await pool.connect();
   client.query(text,values,(err,res)=>{
@@ -118,7 +118,7 @@ app.post('/sign-up', async function (req, resul) {
   }
   else{
     flag=0;
-    text ='insert into users(firstname,lastname,email,passwords) values($1,$2,$3,$4)'
+    text ='insert into users(Name,FamilyName,Email,Password) values($1,$2,$3,$4)'
     values = [firstNAme,lastName,emailTmp,passwordTmp];
     client.query(text,values,(err,res)=>{
     if(err){
