@@ -19,7 +19,7 @@ const pool = new Pool({
   }
 });
 
-.get('/db', async (req, res) => {
+app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query(
