@@ -11,10 +11,12 @@ var pg = require('pg');
 var conString = process.env.DATABASE_URL;
 var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
-client.connect()
+client.connect(port)
 .then(()=>console.log("connected"))
-.finally(()=>console.log("Really?"))
 
+client.query(
+      "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
+    )
     
   
 //make sure i can use the css files, and js files, with the static folder i created
@@ -85,9 +87,7 @@ app.post('/sign-up', function (req, resul) {
   var flag = 1;
   var text = 'select email from userforweb where email =$1'
   var values = [emailTmp];
-    client.query(
-      "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
-    )
+    
   client.query(text,values,(err,res)=>{
   
   if(res.rows[1]!=undefined)
