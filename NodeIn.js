@@ -110,7 +110,7 @@ app.post('/sign-up', async function (req, resul) {
     const client = await pool.connect();
   client.query(text,values,(err,res)=>{
       
-  if(res!=undefined)
+  if(res.rows[1]!=null)
   {
     console.log("GOT HERE")
     
@@ -118,7 +118,7 @@ app.post('/sign-up', async function (req, resul) {
   }
   else{
     flag=0;
-    text ='insert into userforweb(firstname,lastname,email,passwords) values($1,$2,$3,$4)'
+    text ='insert into users(firstname,lastname,email,passwords) values($1,$2,$3,$4)'
     values = [firstNAme,lastName,emailTmp,passwordTmp];
     client.query(text,values,(err,res)=>{
     if(err){
