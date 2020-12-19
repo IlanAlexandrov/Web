@@ -110,7 +110,7 @@ app.post('/sign-up', async function (req, resul) {
     const client = await pool.connect();
   client.query(text,values,(err,res)=>{
   
-  if(res==undefined)
+  if(res.rows!=undefined)
   {
     console.log("GOT HERE")
     
