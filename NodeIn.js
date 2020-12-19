@@ -70,7 +70,7 @@ app.post("/log-in", async function (req, resol) {
   var r =[password1,email];
     const client = await pool.connect();
   client.query(text,r,(err,res)=>{
-    if(res!=undefined)
+    if(res.rows[1]!=undefined)
     resol.send("Error");
     else{
       console.log("HERE");
