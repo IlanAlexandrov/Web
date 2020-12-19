@@ -11,7 +11,7 @@ var pg = require('pg');
 var conString = process.env.DATABASE_URL;
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
-
+const { Client } = require("pg");
 const client = new Client({
   connectionString: conn,
   ssl: process.env.DATABASE_URL ? true : false,
