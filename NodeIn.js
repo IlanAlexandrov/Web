@@ -69,8 +69,8 @@ app.post("/log-in", async function (req, resol) {
   var text ='select Password from users where Password=$1 and Email=$2';
   var r =[password1,email];
     const client = await pool.connect();
-  client.query(text,r,(err,res)=>{
-    if(res.rows[1]!=undefined)
+    client.query(text,r,(err,res)=>{
+    if(res.rows[1]==undefined)
     resol.send("Error");
     else{
       console.log("HERE");
