@@ -59,15 +59,16 @@ app.get('/sign-up', function (req, res) {
 
 //check if the email and password is in the db, if so will refer to another page
 // if not, will send an error message
-app.post("/log-in", function (req, resol) {
+app.post("/log-in", async function (req, resol) {
 
-
+    
   var email = req.body.Email1;
   var password1 = req.body.Password1;
 
   console.log(email + password1);
   var text ='select password from userforweb where passwords=$1';
   var r =[password1];
+    const client = await pool.connect();
   client.query(text,r,(err,res)=>{
     if(res!=undefined)
     resol.send("Error");
@@ -92,7 +93,7 @@ var transporter = nodemailer.createTransport({
 
 //check if the email already in the "DB" if so, will return error,
 // if not, will return to the user a confirmation massege and send confirmation massage to email.
-app.post('/sign-up', function (req, resul) {
+app.post('/sign-up', async function (req, resul) {
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -106,7 +107,7 @@ app.post('/sign-up', function (req, resul) {
   var flag = 1;
   var text = 'select email from userforweb where email =$1'
   var values = [emailTmp];
-    
+    const client = await pool.connect();
   client.query(text,values,(err,res)=>{
   
   if(res.rows[1]!=undefined)
