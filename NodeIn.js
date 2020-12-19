@@ -11,18 +11,31 @@ var nodemailer = require('nodemailer');
  conString = process.env.DATABASE_URL||"postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
-const { Client } = require("pg");
-const client = new Client({
+const { Pool } = require('pg');
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-client.connect()
-.then(() => console.log("Connectedd"))
-.finally(()=>console.log("NOT"))
-client.query(
+.get('/db', async (req, res) => {
+    try {
+      const client = await pool.connect();
+      const result = await client.query(
       "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
+     
+      res.render('pages/db', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
+
+
+
     
   
 //make sure i can use the css files, and js files, with the static folder i created
