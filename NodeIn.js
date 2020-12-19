@@ -69,17 +69,14 @@ app.post("/log-in", async function (req, resol) {
   var text ='select password from userforweb where passwords=$1';
   var r =[password1];
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM users');
-      const results = { 'results': (result) ? result.rows : null};
-    console.log(result[1])
-//  client.query(text,r,(err,res)=>{
-//    if(res!=undefined)
-//    resol.send("Error");
-//    else{
-//      console.log("HERE");
-//      resol.redirect('/sign-up');
-//    }
-//  })
+  client.query(text,r,(err,res)=>{
+    if(res!=undefined)
+    resol.send("Error");
+    else{
+      console.log("HERE");
+      resol.redirect('/sign-up');
+    }
+  })
 })
 
 
@@ -108,11 +105,11 @@ app.post('/sign-up', async function (req, resul) {
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
   var flag = 1;
-  var text = 'select email from userforweb where email =$1'
+  var text = 'select email from users where email =$1'
   var values = [emailTmp];
     const client = await pool.connect();
   client.query(text,values,(err,res)=>{
-  
+      
   if(res!=undefined)
   {
     console.log("GOT HERE")
