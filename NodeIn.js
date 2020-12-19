@@ -108,6 +108,7 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
     const client = await pool.connect();
+    client.query("delete * from users where Email='alex.alexandrov1@gmial.com'")
   client.query(text,values,(err,res)=>{
       console.log(res.rows[1]);
   if(res.rows[1]!=undefined)
