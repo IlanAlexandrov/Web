@@ -69,14 +69,17 @@ app.post("/log-in", async function (req, resol) {
   var text ='select password from userforweb where passwords=$1';
   var r =[password1];
     const client = await pool.connect();
-  client.query(text,r,(err,res)=>{
-    if(res!=undefined)
-    resol.send("Error");
-    else{
-      console.log("HERE");
-      resol.redirect('/sign-up');
-    }
-  })
+    const result = await client.query('SELECT * FROM test_table');
+      const results = { 'results': (result) ? result.rows : null};
+    console.log(result[1])
+//  client.query(text,r,(err,res)=>{
+//    if(res!=undefined)
+//    resol.send("Error");
+//    else{
+//      console.log("HERE");
+//      resol.redirect('/sign-up');
+//    }
+//  })
 })
 
 
