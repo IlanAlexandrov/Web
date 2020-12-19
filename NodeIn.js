@@ -13,8 +13,8 @@ var nodemailer = require('nodemailer');
 let port = process.env.PORT || 3000;
 const { Client } = require("pg");
 const client = new Client({
-  connectionString: conString,
-  ssl: process.env.DATABASE_URL ? true : false,
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
 });
 
 client.connect()
