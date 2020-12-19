@@ -10,9 +10,9 @@ var nodemailer = require('nodemailer');
 var pg = require('pg');
 var conString = process.env.DATABASE_URL;
 var client = new pg.Client(conString);
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 'postgres';
 client.connect(port)
-.then(()=>console.log("connected"))
+
 
 client.query(
       "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
