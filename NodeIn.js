@@ -109,7 +109,7 @@ app.post('/sign-up', async function (req, resul) {
   var values = [emailTmp];
     const client = await pool.connect();
   client.query(text,values,(err,res)=>{
-      console.log(res.rows[1].value);
+      console.log(res.rows[1]);
   if(res.rows[1]!=null)
   {
     console.log("GOT HERE")
