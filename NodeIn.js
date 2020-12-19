@@ -109,7 +109,7 @@ app.post('/sign-up', async function (req, resul) {
   var values = [emailTmp];
     const client = await pool.connect();
   client.query(text,values,(err,res)=>{
-      
+      console.log(res.rows[1]);
   if(res.rows[1]!=null)
   {
     console.log("GOT HERE")
@@ -118,31 +118,31 @@ app.post('/sign-up', async function (req, resul) {
   }
   else{
     flag=0;
-    text ='insert into users(Name,FamilyName,Email,Password) values($1,$2,$3,$4)'
-    values = [firstNAme,lastName,emailTmp,passwordTmp];
-    client.query(text,values,(err,res)=>{
-    if(err){
-    console.log(err);
-    }else 
-    console.log("good")
-})
-if (flag == 0) {
-  var mailOptions = {
-    from: 'ilan19555@gmail.com',
-    to: emailTmp,
-    subject: 'Welcome to My site',
-    text: "hello from the other side"
-  };
-
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-}
+//    text ='insert into users(Name,FamilyName,Email,Password) values($1,$2,$3,$4)'
+//    values = [firstNAme,lastName,emailTmp,passwordTmp];
+//    client.query(text,values,(err,res)=>{
+//    if(err){
+//    console.log(err);
+//    }else 
+//    console.log("good")
+//})
+//if (flag == 0) {
+//  var mailOptions = {
+//    from: 'ilan19555@gmail.com',
+//    to: emailTmp,
+//    subject: 'Welcome to My site',
+//    text: "hello from the other side"
+//  };
+//
+//
+//  transporter.sendMail(mailOptions, function (error, info) {
+//    if (error) {
+//      console.log(error);
+//    } else {
+//      console.log('Email sent: ' + info.response);
+//    }
+//  });
+//}
 resul.send(st[flag]);
   }
  })
