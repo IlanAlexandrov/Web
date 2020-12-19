@@ -69,7 +69,7 @@ app.post("/log-in", async function (req, resol) {
   var text ='select password from userforweb where passwords=$1';
   var r =[password1];
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM test_table');
+    const result = await client.query('SELECT * FROM users');
       const results = { 'results': (result) ? result.rows : null};
     console.log(result[1])
 //  client.query(text,r,(err,res)=>{
