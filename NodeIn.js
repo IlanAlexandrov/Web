@@ -12,6 +12,8 @@ var conString = process.env.DATABASE_URL;
 var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
 client.connect()
+.then(()=>console.log("connected"))
+.finally(()=>console.log("Really?"))
 
     
   
