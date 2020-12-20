@@ -291,11 +291,11 @@ app.post('/reset-password', async function (req, resul) {
   
 })
 
-app.get('/update-password',async function(req,res){
+app.get('/update-password/:base64', function(req,res){
   res.sendFile(__dirname + "/updatePassword.html",);
 })
 
-app.post('/update-password',function(req,res){
+app.post('/update-password',async function(req,res){
   const client = await pool.connect();
   await client.query('SELECT * FROM users',(err,res)=>{
     console.log("HERE");
