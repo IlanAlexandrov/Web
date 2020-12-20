@@ -106,13 +106,13 @@ app.post("/log-in", async function (req, resol) {
     })
     await client.query(text,r,(err,res)=>{
     if(res.rows.length==0){
-      console.log(res.rows)
+      
       resol.send("Error");
     }
     
     else{
       console.log("HERE");
-      console.log(res.rows)
+      
       resol.redirect('/sign-up');
     }
   })
@@ -257,20 +257,27 @@ app.post('/reset-password', function (req, resul) {
   console.log("GOT")
   var email = req.body.Email;
   console.log(email);
-
-  var text = 'select * from userforweb where email=$1';
+  const client = await pool.connect();
+  var text = 'select * from users where Email=$1';
   var act= [email];
   client.query(text,act,(err,res)=>{
-    if(res==undefined)
+    if(res.rows.length==0)
     {
       resul.send("Error");
     }
     else{
+      var data = { 
+        Email:email
+      };
+      var base64 = urlCrypt.cryptObj(data);
+      
+      var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/'+base64;
       var mailOptions = {
         from: 'ilan19555@gmail.com',
-        to: email,
-        subject: 'Welcome to My site',
-        text: "me"
+        to: 'ilan19555@gmail.com',
+        subject: 'Reset Password!',
+        text: "Click on the link to refer to reset password link",
+        html : '<a href = "'+resetPasswordLink+'">EmailifyNow!</a>'
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -284,13 +291,51 @@ app.post('/reset-password', function (req, resul) {
   
 })
 
-app.get('/update-password',function(req,res){
+app.get('/update-password/:base64',function(req,res){
   res.sendFile(__dirname + "/updatePassword.html",);
 })
 
 app.post('/update-password',function(req,res){
-
+  const client = await pool.connect();
+  await client.query('SELECT * FROM users',(err,res)=>{
+    console.log("HERE");
+    console.log(res.rows)
+    
+})
+  try{
+    console.log(req.body.Email)
+    resul=urlCrypt.decryptObj(req.body.Email);
+    console.log("Succedd")
+  } catch(e){
+    console.log("HERR")
+    return reso.status(404).send('Bad');
+  }
+  newPass = req.body.Password1;
+  console.log(newPass);
   console.log("Got here")
+  var text = "select * from users where Email=$1 and Password=$2"
+  var inser=[resul.Email,newPass]
+    client.query(text,inser,(err,res)=>{
+    if(res.rows.length!=0){
+      reso.send("Error")
+    }else {
+      console.log("good");
+      text ="update users set Password=$1 where email=$2"
+      inser=[newPass,resul.Email]
+      client.query(text,inser,(err,res)=>{
+        if(err)
+        console.log(err);
+      })
+
+      await client.query('SELECT * FROM users',(err,res)=>{
+        console.log("HERE");
+        console.log(res.rows)
+        
+    })
+      reso.redirect('/log-in')
+    }
+    
+})
 
 })
 app.listen(port, () => {
