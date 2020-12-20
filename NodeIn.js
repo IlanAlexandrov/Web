@@ -291,7 +291,7 @@ app.post('/reset-password', async function (req, resul) {
   
 })
 
-app.get('/update-password/:base64',function(req,res){
+app.get('/update-password',async function(req,res){
   res.sendFile(__dirname + "/updatePassword.html",);
 })
 
