@@ -161,7 +161,7 @@ app.post('/sign-up', async function (req, resul) {
     client.query("delete * from users where Email='alex.alexandrov1@gmial.com'")
   client.query(text,values,(err,res)=>{
       console.log(res.rows[1]);
-  if(res.rows[1]!=undefined)
+  if(res.rows[1].length==0)
   {
     console.log("GOT HERE")
     
