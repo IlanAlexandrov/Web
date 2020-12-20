@@ -131,7 +131,7 @@ app.post('/sign-up', async function (req, resul) {
  
   var base64 = urlCrypt.cryptObj(data);
   
-  var registrationiLink = 'http://localhost:8080/sign-up/'+base64;
+  var registrationiLink = 'https://electronicsweb1.herokuapp.com/Sign-Up/'+base64;
   console.log(emailTmp + " " + passwordTmp + " " + firstNAme + " " + lastName + " " + code);
     console.log("HEREEEEEEE")
   var st = [
