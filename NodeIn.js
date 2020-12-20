@@ -152,14 +152,7 @@ app.post('/sign-up', async function (req, resul) {
   }
   else{
     flag=0;
-    text ='insert into users(Name,FamilyName,Email,Password) values($1,$2,$3,$4)'
-    values = [firstNAme,lastName,emailTmp,passwordTmp];
-    client.query(text,values,(err,res)=>{
-    if(err){
-    console.log(err);
-    }else 
-    console.log("good")
-})
+  
 if (flag == 0) {
   var mailOptions = {
     from: 'ilan19555@gmail.com',
