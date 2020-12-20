@@ -23,9 +23,10 @@ const pool = new Pool({
 app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query(
+      const result1 = await client.query(
       "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
+
     const result = await client.query('SELECT * FROM users');
     const results = { 'results': (result) ? result.rows : null};
       res.render('/db', results );
