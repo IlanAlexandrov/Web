@@ -105,8 +105,11 @@ app.post("/log-in", async function (req, resol) {
       console.log(res.rows)
     })
     await client.query(text,r,(err,res)=>{
-    if(res.rows[1]==undefined)
-    resol.send("Error");
+    if(res.rows[1]==undefined){
+      console.log(res.rows[1])
+      resol.send("Error");
+    }
+    
     else{
       console.log("HERE");
       resol.redirect('/sign-up');
