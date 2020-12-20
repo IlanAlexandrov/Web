@@ -11,6 +11,7 @@ var nodemailer = require('nodemailer');
  conString = process.env.DATABASE_URL||"postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
+var urlCrypt = require('url-crypt')('~{ry*I)==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -34,7 +35,28 @@ app.get('/db', async (req, res) => {
     }
   })
 
-
+  app.get('/sign-up/:base64',async function(req,res){
+    var resul;
+    try{
+      
+      resul=urlCrypt.decryptObj(req.params.base64);
+    } catch(e){
+      return res.status(404).send('Bad');
+    }
+    
+  
+    text ='insert into userforweb(firstname,lastname,email,passwords) values($1,$2,$3,$4)'
+      values = [resul.FirstNAmeU,resul.LastNameU,resul.EmailU,resul.PasswordU];
+      client.query(text,values,(err,res)=>{
+      if(err){
+      console.log(err);
+      }else 
+      console.log("good")
+  })
+  
+  res.redirect('/log-in');
+  
+  })
 
     
   
@@ -99,6 +121,17 @@ app.post('/sign-up', async function (req, resul) {
   var firstNAme = req.body.FirstName;
   var lastName = req.body.LastName;
   var code = req.body.Promo;
+  var data = { 
+    FirstNAmeU: firstNAme, 
+    LastNameU: lastName, 
+    EmailU: emailTmp,
+    PasswordU: passwordTmp,
+    CodeU: code
+  };
+ 
+  var base64 = urlCrypt.cryptObj(data);
+  
+  var registrationiLink = 'http://localhost:8080/sign-up/'+base64;
   console.log(emailTmp + " " + passwordTmp + " " + firstNAme + " " + lastName + " " + code);
     console.log("HEREEEEEEE")
   var st = [
@@ -130,9 +163,10 @@ app.post('/sign-up', async function (req, resul) {
 if (flag == 0) {
   var mailOptions = {
     from: 'ilan19555@gmail.com',
-    to: emailTmp,
-    subject: 'Welcome to My site',
-    text: "hello from the other side"
+    to: 'ilan19555@gmail.com',
+    subject: 'Email verification',
+    text: "Paste the url below into your browser to Emailify!"+registrationiLink,
+    html : '<a href = "'+registrationiLink+'">EmailifyNow!</a>'
   };
 
 
