@@ -112,6 +112,7 @@ app.post("/log-in", async function (req, resol) {
     
     else{
       console.log("HERE");
+      console.log(res.rows)
       resol.redirect('/sign-up');
     }
   })
