@@ -32,7 +32,7 @@ app.get('/db', async (req, res) => {
      await client.query('SELECT * FROM users',(err,res)=>{
         console.log("HERE");
         console.log(res.rows)
-      
+        res.redirect('/sign-up');
     })
     
       client.release();
