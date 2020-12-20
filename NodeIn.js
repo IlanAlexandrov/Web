@@ -20,7 +20,7 @@ const pool = new Pool({
   }
 });
 
-app.get('/db', async (req, res) => {
+app.get('/db', async (req, resu) => {
     try {
       const client = await pool.connect();
       const result1 = await client.query(
@@ -32,7 +32,7 @@ app.get('/db', async (req, res) => {
      await client.query('SELECT * FROM users',(err,res)=>{
         console.log("HERE");
         console.log(res.rows)
-        res.redirect('/sign-up');
+        resu.redirect('/sign-up');
     })
     
       client.release();
