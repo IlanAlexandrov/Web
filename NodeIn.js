@@ -105,7 +105,7 @@ app.post("/log-in", async function (req, resol) {
       console.log(res.rows)
     })
     await client.query(text,r,(err,res)=>{
-    if(res.rows==undefined){
+    if(res.rows===""){
       console.log(res.rows)
       resol.send("Error");
     }
