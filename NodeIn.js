@@ -30,12 +30,9 @@ app.get('/db', async (req, res) => {
     await client.query("delete from users")
     
      await client.query('SELECT * FROM users',(err,res)=>{
-      if(res.rows[1]==undefined)
-      resol.send("Error");
-      else{
         console.log("HERE");
         console.log(res.rows)
-      }
+      
     })
     
       client.release();
