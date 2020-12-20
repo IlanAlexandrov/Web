@@ -295,7 +295,7 @@ app.get('/update-password/:base64', function(req,res){
   res.sendFile(__dirname + "/updatePassword.html",);
 })
 
-app.post('/update-password',async function(req,res){
+app.post('/update-password',async function(req,reso){
   const client = await pool.connect();
    client.query('SELECT * FROM users',(err,res)=>{
     console.log("HERE");
