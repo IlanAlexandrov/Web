@@ -48,6 +48,7 @@ app.get('/db', async (req, res) => {
   
     text ='insert into users(Name,FamilyName,Email,Password) values($1,$2,$3,$4)'
       values = [resul.FirstNAmeU,resul.LastNameU,resul.EmailU,resul.PasswordU];
+      const client = await pool.connect();
       client.query(text,values,(err,res)=>{
       if(err){
       console.log(err);
