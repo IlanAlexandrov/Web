@@ -95,11 +95,12 @@ app.post("/log-in", async function (req, resol) {
     
   var email = req.body.Email1;
   var password1 = req.body.Password1;
-
+  
   console.log(email + password1);
   var text ='select Password from users where Password=$1 and Email=$2';
   var r =[password1,email];
     const client = await pool.connect();
+    await client.query("select * from users")
     client.query(text,r,(err,res)=>{
     if(res.rows[1]==undefined)
     resol.send("Error");
