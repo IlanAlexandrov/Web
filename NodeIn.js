@@ -102,11 +102,11 @@ app.post("/log-in", async function (req, resol) {
     const client = await pool.connect();
     await client.query('SELECT * FROM users',(err,res)=>{
       console.log("HERE");
-      console.log(res.rows)
+      console.log(res.rows[1])
     })
     await client.query(text,r,(err,res)=>{
     if(res.rows[1]==undefined){
-      console.log(res.rows[1])
+      console.log(res.rows)
       resol.send("Error");
     }
     
