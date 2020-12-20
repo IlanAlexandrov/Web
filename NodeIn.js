@@ -37,6 +37,7 @@ app.get('/db', async (req, res) => {
 
   app.get('/sign-up/:base64',async function(req,res){
     var resul;
+    console.log("got to get")
     try{
       
       resul=urlCrypt.decryptObj(req.params.base64);
