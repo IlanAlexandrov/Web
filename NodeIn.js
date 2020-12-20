@@ -253,7 +253,7 @@ app.get('/reset-password', function (req, res) {
   res.sendFile(__dirname + "/ForgetPassword.html",);
 })
 
-app.post('/reset-password', function (req, resul) {
+app.post('/reset-password', async function (req, resul) {
   console.log("GOT")
   var email = req.body.Email;
   console.log(email);
