@@ -27,8 +27,8 @@ app.get('/db', async (req, res) => {
       "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
 
-     await client.query('SELECT * FROM users');
-      client.query(text,r,(err,res)=>{
+    
+     await client.query('SELECT * FROM users',(err,res)=>{
       if(res.rows[1]==undefined)
       resol.send("Error");
       else{
