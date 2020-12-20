@@ -297,7 +297,7 @@ app.get('/update-password/:base64', function(req,res){
 
 app.post('/update-password',async function(req,res){
   const client = await pool.connect();
-  await client.query('SELECT * FROM users',(err,res)=>{
+   client.query('SELECT * FROM users',(err,res)=>{
     console.log("HERE");
     console.log(res.rows)
     
@@ -327,7 +327,7 @@ app.post('/update-password',async function(req,res){
         console.log(err);
       })
 
-      await client.query('SELECT * FROM users',(err,res)=>{
+       client.query('SELECT * FROM users',(err,res)=>{
         console.log("HERE");
         console.log(res.rows)
         
