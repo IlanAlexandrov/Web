@@ -381,7 +381,7 @@
                 else if (lastpass != user.pass)
                     alert("Your old password not match your current password")
                 else {
-                    $.post('/updatePasswordProfile', {password: pass,email=user.email})
+                    $.post('/updatePasswordProfile', {password: pass,email:user.email})
                         .done(function (data) {
                             if(data=='good')
                             alert("The password was changed!")
