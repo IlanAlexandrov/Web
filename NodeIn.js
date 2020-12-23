@@ -360,7 +360,7 @@ app.post('/index',function(req,res){
   try{
     
     resul=urlCrypt.decryptObj(req.body.UserName);
-    
+    console.log(resul.FirstNAmeU);
   } catch(e){
     console.log("HERR")
     return res.status(404).send('Bad');

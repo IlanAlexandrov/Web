@@ -283,7 +283,7 @@
             $(document).ready(function () {
                 var url = window.location.href
                 var sURLVariables = url.split('/');
-
+                console.log(sURLVariables);
                 $.post('/index', { UserName: sURLVariables[4] })
                     .done(function (data) {
                         var user = data;
