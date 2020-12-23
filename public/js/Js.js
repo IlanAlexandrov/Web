@@ -1,4 +1,51 @@
 
+function editPasswordProfile(){
+  var atLeast= document.getElementById("6DigitsAtLeast");
+  //var match = document.getElementById("matchPassword");
+  var Onenum= document.getElementById("OneNumber");
+  var numbers = /[0-9]/g;
+  var myInput = document.getElementById("password");
+  
+  myInput.onkeyup =function(){
+    if(myInput.value.match(numbers)) {
+      Onenum.classList.remove("invalid");
+      Onenum.classList.add("valid");
+    } else {
+      Onenum.classList.remove("valid");
+      Onenum.classList.add("invalid");
+    }
+    if(myInput.value.length >= 6) {
+      atLeast.classList.remove("invalid");
+      atLeast.classList.add("valid");
+    } else {
+      atLeast.classList.remove("valid");
+      atLeast.classList.add("invalid");
+    }
+  
+  
+  }
+  }
+  function comPass(){
+    var pass = document.getElementById("password").value;
+    var rePassword = document.getElementById("RePassword");
+    var match= document.getElementById("matchPassword");
+    rePassword.onkeyup =function(){  
+      if(rePassword.value.match(pass)) {
+        match.classList.remove("invalid");
+        match.classList.add("valid");
+      } else {
+        match.classList.remove("valid");
+        match.classList.add("invalid");
+      }
+  
+  
+    }
+    
+  
+  }
+
+  
+  
 function init(){
 var myInput = document.getElementById("password");
 var letter = document.getElementById("letter");
