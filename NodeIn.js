@@ -398,15 +398,15 @@ client.query(tex,re,(err,res)=>{
   if(err)
   console.log(err);
 dat={
-  firstName : res.rows[0].firstname,
-  lastName : res.rows[0].lastname,
-  email : res.rows[0].email,
-  country : res.rows[0].country,
-  city: res.rows[0].city,
-  street : res.rows[0].street,
+  firstName : res.rows[0].Name,
+  lastName : res.rows[0].FamilyName,
+  email : res.rows[0].Email,
+  country : res.rows[0].Country,
+  city: res.rows[0].City,
+  street : res.rows[0].Street,
   zipCode : res.rows[0].ZipCode,
-  phone: res.rows[0].phonenum,
-  pass:res.rows[0].passwords
+  phone: res.rows[0].PhoneNumber,
+  pass:res.rows[0].Password
 }
 reso.send(dat);
 })
