@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 //var mysql = require('mysql');
 //var pg = require('pg');
- conString = process.env.DATABASE_URL||"postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
+conString = process.env.DATABASE_URL || "postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
 var urlCrypt = require('url-crypt')('~{ry*I)==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
@@ -21,63 +21,63 @@ const pool = new Pool({
 });
 
 app.get('/db', async (req, resu) => {
-    try {
-      const client = await pool.connect();
-      const result1 = await client.query(
+  try {
+    const client = await pool.connect();
+    const result1 = await client.query(
       "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
 
     await client.query("delete from users")
-    
-     await client.query('SELECT * FROM users',(err,res)=>{
-        console.log("HERE");
-        console.log(res.rows)
-        resu.redirect('/sign-up');
+
+    await client.query('SELECT * FROM users', (err, res) => {
+      console.log("HERE");
+      console.log(res.rows)
+      resu.redirect('/sign-up');
     })
-    
-      client.release();
-    } catch (err) {
-      console.error(err);
-      res.send("Error " + err);
-    }
+
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
+
+app.get('/sign-up/:base64', async function (req, res) {
+  var resul;
+  const client = await pool.connect();
+
+  try {
+
+    resul = urlCrypt.decryptObj(req.params.base64);
+  } catch (e) {
+    return res.status(404).send('Bad');
+  }
+  await client.query('select * from users order by ID DESC', (err, resi) => {
+    if (resi.rows.length == 0)
+      idNum = 1;
+    else
+      idNum = resi.rows[0].ID + 1;
+    console.log(resi.rows)
+    console.log("ID NUM IS: " + idNum)
+
   })
 
-  app.get('/sign-up/:base64',async function(req,res){
-    var resul;
-    const client = await pool.connect();
-    
-    try{
-      
-      resul=urlCrypt.decryptObj(req.params.base64);
-    } catch(e){
-      return res.status(404).send('Bad');
-    }
-    await client.query('select * from users order by ID DESC',(err,resi)=>{
-      if(resi.rows.length==0)
-        idNum=1;
-        else
-      idNum = resi.rows[0].ID+1;
-      console.log(resi.rows)
-      console.log("ID NUM IS: "+idNum)
-      
-    })
-  
-    text ='insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
-      values = [resul.FirstNAmeU,resul.LastNameU,resul.EmailU,resul.PasswordU,idNum];
-     
-      client.query(text,values,(err,res)=>{
-      if(err){
+  text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
+  values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
+
+  client.query(text, values, (err, res) => {
+    if (err) {
       console.log(err);
-      }else 
+    } else
       console.log("good")
   })
-  
-  res.redirect('/log-in');
-  
-  })
 
-    
-  
+  res.redirect('/log-in');
+
+})
+
+
+
 //make sure i can use the css files, and js files, with the static folder i created
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -101,33 +101,33 @@ app.get('/sign-up', function (req, res) {
 // if not, will send an error message
 app.post("/log-in", async function (req, resol) {
 
-    
+
   var email = req.body.Email1;
   var password1 = req.body.Password1;
-  
+
   console.log(email + password1);
-  var text ='select * from users where Password=$1 and Email=$2';
-  var r =[password1,email];
-    const client = await pool.connect();
-     
-    client.query(text,r,(err,res)=>{
-    if(res.rows.length==0){
+  var text = 'select * from users where Password=$1 and Email=$2';
+  var r = [password1, email];
+  const client = await pool.connect();
+
+  client.query(text, r, (err, res) => {
+    if (res.rows.length == 0) {
       resol.send("Error");
     }
-      else{
-        var data = { 
-          FirstNAmeU: res.rows[0].name,  
-          EmailU: res.rows[0].email,
-          Id : res.rows[0].id
-        };
-        console.log(res.rows[0].name)
-        var base64 = urlCrypt.cryptObj(data);
+    else {
+      var data = {
+        FirstNAmeU: res.rows[0].name,
+        EmailU: res.rows[0].email,
+        Id: res.rows[0].id
+      };
+      console.log(res.rows[0].name)
+      var base64 = urlCrypt.cryptObj(data);
       console.log("HERE");
-      resol.send('/index/'+base64);
-}
-    })
-
+      resol.send('/index/' + base64);
+    }
   })
+
+})
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -148,59 +148,58 @@ app.post('/sign-up', async function (req, resul) {
   var firstNAme = req.body.FirstName;
   var lastName = req.body.LastName;
   var code = req.body.Promo;
-  var data = { 
-    FirstNAmeU: firstNAme, 
-    LastNameU: lastName, 
+  var data = {
+    FirstNAmeU: firstNAme,
+    LastNameU: lastName,
     EmailU: emailTmp,
     PasswordU: passwordTmp,
     CodeU: code
   };
- 
+
   var base64 = urlCrypt.cryptObj(data);
-  
-  var registrationiLink = 'https://electronicsweb1.herokuapp.com/Sign-Up/'+base64;
+
+  var registrationiLink = 'https://electronicsweb1.herokuapp.com/Sign-Up/' + base64;
   console.log(emailTmp + " " + passwordTmp + " " + firstNAme + " " + lastName + " " + code);
-    console.log("HEREEEEEEE")
+  console.log("HEREEEEEEE")
   var st = [
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
   var flag = 1;
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
-    const client = await pool.connect();
-    client.query("delete * from users where Email='alex.alexandrov1@gmial.com'")
-  client.query(text,values,(err,res)=>{
-      console.log(res.rows[1]);
-  if(res.rows.length!=0)
-  {
-    console.log("GOT HERE")
-    
-    resul.send(st[flag]);
-  }
-  else{
-    flag=0;
-  
-if (flag == 0) {
-  var mailOptions = {
-    from: 'ilan19555@gmail.com',
-    to: 'ilan19555@gmail.com',
-    subject: 'Email verification',
-    text: "Paste the url below into your browser to Emailify!"+registrationiLink,
-    html : '<a href = "'+registrationiLink+'">EmailifyNow!</a>'
-  };
+  const client = await pool.connect();
+  client.query("delete * from users where Email='alex.alexandrov1@gmial.com'")
+  client.query(text, values, (err, res) => {
+    console.log(res.rows[1]);
+    if (res.rows.length != 0) {
+      console.log("GOT HERE")
 
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
+      resul.send(st[flag]);
     }
-  });
-}
-resul.send(st[flag]);
-  }
- })
+    else {
+      flag = 0;
+
+      if (flag == 0) {
+        var mailOptions = {
+          from: 'ilan19555@gmail.com',
+          to: 'ilan19555@gmail.com',
+          subject: 'Email verification',
+          text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+          html: '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+        };
+
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      }
+      resul.send(st[flag]);
+    }
+  })
 })
 
 app.post('/contact-us', function (req, res) {
@@ -269,25 +268,24 @@ app.post('/reset-password', async function (req, resul) {
   console.log(email);
   const client = await pool.connect();
   var text = 'select * from users where Email=$1';
-  var act= [email];
-  client.query(text,act,(err,res)=>{
-    if(res.rows.length==0)
-    {
+  var act = [email];
+  client.query(text, act, (err, res) => {
+    if (res.rows.length == 0) {
       resul.send("Error");
     }
-    else{
-      var data = { 
-        Email:email
+    else {
+      var data = {
+        Email: email
       };
       var base64 = urlCrypt.cryptObj(data);
-      
-      var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/'+base64;
+
+      var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
       var mailOptions = {
         from: 'ilan19555@gmail.com',
         to: 'ilan19555@gmail.com',
         subject: 'Reset Password!',
         text: "Click on the link to refer to reset password link",
-        html : '<a href = "'+resetPasswordLink+'">EmailifyNow!</a>'
+        html: '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -298,25 +296,25 @@ app.post('/reset-password', async function (req, resul) {
       });
     }
   })
-  
+
 })
 
-app.get('/update-password/:base64', function(req,res){
+app.get('/update-password/:base64', function (req, res) {
   res.sendFile(__dirname + "/updatePassword.html",);
 })
 
-app.post('/update-password',async function(req,reso){
+app.post('/update-password', async function (req, reso) {
   const client = await pool.connect();
-   client.query('SELECT * FROM users',(err,res)=>{
+  client.query('SELECT * FROM users', (err, res) => {
     console.log("HERE");
     console.log(res.rows)
-    
-})
-  try{
+
+  })
+  try {
     console.log(req.body.Email)
-    resul=urlCrypt.decryptObj(req.body.Email);
+    resul = urlCrypt.decryptObj(req.body.Email);
     console.log("Succedd")
-  } catch(e){
+  } catch (e) {
     console.log("HERR")
     return reso.status(404).send('Bad');
   }
@@ -324,42 +322,42 @@ app.post('/update-password',async function(req,reso){
   console.log(newPass);
   console.log("Got here")
   var text = "select * from users where Email=$1 and Password=$2"
-  var inser=[resul.Email,newPass]
-    client.query(text,inser,(err,res)=>{
-    if(res.rows.length!=0){
+  var inser = [resul.Email, newPass]
+  client.query(text, inser, (err, res) => {
+    if (res.rows.length != 0) {
       reso.send("Error")
-    }else {
+    } else {
       console.log("good");
-      text ="update users set Password=$1 where email=$2"
-      inser=[newPass,resul.Email]
-      client.query(text,inser,(err,res)=>{
-        if(err)
-        console.log(err);
+      text = "update users set Password=$1 where email=$2"
+      inser = [newPass, resul.Email]
+      client.query(text, inser, (err, res) => {
+        if (err)
+          console.log(err);
       })
 
-       client.query('SELECT * FROM users',(err,res)=>{
+      client.query('SELECT * FROM users', (err, res) => {
         console.log("HERE");
         console.log(res.rows)
-        
-    })
+
+      })
       reso.redirect('/log-in')
     }
-    
-})
+
+  })
 
 })
 
-app.get('/index/:base64',function(req,res){
-  
-  res.sendFile(__dirname+'/index.html')
+app.get('/index/:base64', function (req, res) {
+
+  res.sendFile(__dirname + '/index.html')
 })
 
-app.post('/index',function(req,res){
-  try{
-    
-    resul=urlCrypt.decryptObj(req.body.UserName);
+app.post('/index', function (req, res) {
+  try {
+
+    resul = urlCrypt.decryptObj(req.body.UserName);
     console.log(resul.FirstNAmeU);
-  } catch(e){
+  } catch (e) {
     console.log("HERR")
     return res.status(404).send('Bad');
   }
@@ -368,15 +366,69 @@ app.post('/index',function(req,res){
 
 })
 
-app.get("/BuyPc/:base64",function(req,res){
-  res.sendFile(__dirname+'/BuyPc.html');
+app.get("/BuyPc/:base64", function (req, res) {
+  res.sendFile(__dirname + '/BuyPc.html');
 })
 
-app.get('/BuyCellPhone/:base64',function(req,res){
-  res.sendFile(__dirname+'/BuyCellPhone.html')
+app.get('/BuyCellPhone/:base64', function (req, res) {
+  res.sendFile(__dirname + '/BuyCellPhone.html')
+})
+
+app.get('/about/:base64',function(req,res){
+  
+  res.sendFile(__dirname+'/about.html')
+})
+
+app.get('/profile/:base64',function(req,res){
+  res.sendFile(__dirname+'/profile.html')
+})
+app.post('/getProfile',function(req,reso){
+  try{
+    resul=urlCrypt.decryptObj(req.body.UserName);
+  } catch(e){
+    console.log("HERR")
+    return reso.status(404).send('Bad');
+  }
+var email = resul.EmailU;
+var dat;
+var tex = 'select * from userforweb where email=$1'
+var re= [email];
+client.query(tex,re,(err,res)=>{
+  if(err)
+  console.log(err);
+dat={
+  firstName : res.rows[0].firstname,
+  lastName : res.rows[0].lastname,
+  email : res.rows[0].email,
+  country : res.rows[0].country,
+  city: res.rows[0].city,
+  street : res.rows[0].street,
+  zipCode : res.rows[0].ZipCode,
+  phone: res.rows[0].phonenum,
+  pass:res.rows[0].passwords
+}
+reso.send(dat);
 })
 
 
+
+
+
+})
+app.post('/updateProfile',function(req,reso){
+  var tex= 'update userforweb set '
+})
+
+app.post('/updatePasswordProfile',function(req,reso){
+  var text = 'update userforweb set passwords=$1 where email=$2'
+  var variu=[req.body.pass,req.body.email];
+  client.query(text,variu,(err,res)=>{
+    if(err)
+      console.log(err)
+      else
+      reso.send("good")
+  })
+})
 app.listen(port, () => {
-	console.log('App listening on port %d!', port);
+  console.log('App listening on port %d!', port);
 });
