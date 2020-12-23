@@ -56,7 +56,7 @@ app.get('/db', async (req, resu) => {
       if(resi.rows.length==0)
         idNum=1;
         else
-        console.log(resi.rows[1])
+        console.log(resi.rows)
       idNum = resi.rows[1].id+1;
       
     })
