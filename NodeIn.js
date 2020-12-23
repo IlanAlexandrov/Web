@@ -382,7 +382,7 @@ app.get('/about/:base64',function(req,res){
 app.get('/profile/:base64',function(req,res){
   res.sendFile(__dirname+'/profile.html')
 })
-app.post('/getProfile',function(req,reso){
+app.post('/getProfile',async function(req,reso){
   try{
     resul=urlCrypt.decryptObj(req.body.UserName);
   } catch(e){
@@ -420,7 +420,7 @@ app.post('/updateProfile',function(req,reso){
   var tex= 'update userforweb set '
 })
 
-app.post('/updatePasswordProfile',function(req,reso){
+app.post('/updatePasswordProfile',async function(req,reso){
   var text = 'update userforweb set passwords=$1 where email=$2'
   const client = await pool.connect();
   var variu=[req.body.pass,req.body.email];
