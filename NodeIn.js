@@ -53,7 +53,7 @@ app.get('/db', async (req, resu) => {
       return res.status(404).send('Bad');
     }
     await client.query('select * from users order by ID DESC',(err,resi)=>{
-      if(res.rows==undefined)
+      if(resi.rows.length==0)
         idNum=1;
         else
       idNum = resi.rows[1].ID+1;
