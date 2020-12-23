@@ -119,15 +119,13 @@ app.post("/log-in", async function (req, resol) {
     }
       else{
         var data = { 
-          FirstNAmeU: res.rows[0].firstname,  
-          EmailU: res.rows[0].email,
-          Id : res.rows[0].Id
+          FirstNAmeU: res.rows[0].Name,  
+          EmailU: res.rows[0].Email,
+          Id : res.rows[0].ID
         };
         var base64 = urlCrypt.cryptObj(data);
       console.log("HERE");
       resol.send('/index/'+base64);
-      
-  
 }
     })
 
