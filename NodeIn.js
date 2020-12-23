@@ -391,7 +391,7 @@ app.post('/getProfile',async function(req,reso){
   }
 var email = resul.EmailU;
 var dat;
-var tex = 'select * from userforweb where email=$1'
+var tex = 'select * from users where Email=$1'
 var re= [email];
 const client = await pool.connect();
 client.query(tex,re,(err,res)=>{
@@ -421,7 +421,7 @@ app.post('/updateProfile',function(req,reso){
 })
 
 app.post('/updatePasswordProfile',async function(req,reso){
-  var text = 'update userforweb set passwords=$1 where email=$2'
+  var text = 'update users set Password=$1 where Email=$2'
   const client = await pool.connect();
   var variu=[req.body.pass,req.body.email];
   client.query(text,variu,(err,res)=>{
