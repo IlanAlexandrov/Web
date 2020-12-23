@@ -44,18 +44,25 @@ app.get('/db', async (req, resu) => {
 
   app.get('/sign-up/:base64',async function(req,res){
     var resul;
-    console.log("got to get")
+    const client = await pool.connect();
+    
     try{
       
       resul=urlCrypt.decryptObj(req.params.base64);
     } catch(e){
       return res.status(404).send('Bad');
     }
-    
+    await client.query('select * from users order by ID DESC',(err,resi)=>{
+      if(res.rows.length==0)
+        idNum=1;
+        else
+      idNum = resi.rows[1].ID+1;
+      console.log(idNum)
+    })
   
-    text ='insert into users(Name,FamilyName,Email,Password) values($1,$2,$3,$4)'
-      values = [resul.FirstNAmeU,resul.LastNameU,resul.EmailU,resul.PasswordU];
-      const client = await pool.connect();
+    text ='insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
+      values = [resul.FirstNAmeU,resul.LastNameU,resul.EmailU,resul.PasswordU,idNum];
+     
       client.query(text,values,(err,res)=>{
       if(err){
       console.log(err);
