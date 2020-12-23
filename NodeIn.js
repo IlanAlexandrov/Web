@@ -114,15 +114,18 @@ app.post("/log-in", async function (req, resol) {
     })
     await client.query(text,r,(err,res)=>{
     if(res.rows.length==0){
-      
       resol.send("Error");
     }
-    
-    else{
+      else{
+        var data = { 
+          FirstNAmeU: res.rows[0].firstname,  
+          EmailU: res.rows[0].email,
+          Id : res.rows[0].Id
+        };
+        var base64 = urlCrypt.cryptObj(data);
       console.log("HERE");
+      resol.send('/index/'+base64);
       
-      resol.redirect('/sign-up');
-    }
   })
 })
 
@@ -346,6 +349,26 @@ app.post('/update-password',async function(req,reso){
 })
 
 })
+
+app.get('/index/:base64',function(req,res){
+  
+  res.sendFile(__dirname+'/index.html')
+})
+
+app.post('/index',function(req,res){
+  try{
+    
+    resul=urlCrypt.decryptObj(req.body.UserName);
+    
+  } catch(e){
+    console.log("HERR")
+    return res.status(404).send('Bad');
+  }
+
+  res.send(resul.FirstNAmeU);
+
+})
+
 app.listen(port, () => {
 	console.log('App listening on port %d!', port);
 });
