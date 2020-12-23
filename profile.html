@@ -330,7 +330,7 @@
             $.post('/getProfile', { UserName: sURLVariables[4] })
                 .done(function (data) {
                     user = data;
-
+                    console.log(user)
                     $('#nameOfUser').text(user.firstName);
                     $('#firstName').attr("placeholder", user.firstName);
                     $('#lastname').attr("placeholder", user.lastName)
