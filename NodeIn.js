@@ -56,8 +56,9 @@ app.get('/db', async (req, resu) => {
       if(resi.rows.length==0)
         idNum=1;
         else
+        console.log(resi.rows[1].id.Name)
       idNum = resi.rows[1].id+1;
-      console.log(idNum)
+      
     })
   
     text ='insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
