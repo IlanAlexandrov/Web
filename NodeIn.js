@@ -393,6 +393,7 @@ var email = resul.EmailU;
 var dat;
 var tex = 'select * from userforweb where email=$1'
 var re= [email];
+const client = await pool.connect();
 client.query(tex,re,(err,res)=>{
   if(err)
   console.log(err);
@@ -421,6 +422,7 @@ app.post('/updateProfile',function(req,reso){
 
 app.post('/updatePasswordProfile',function(req,reso){
   var text = 'update userforweb set passwords=$1 where email=$2'
+  const client = await pool.connect();
   var variu=[req.body.pass,req.body.email];
   client.query(text,variu,(err,res)=>{
     if(err)
