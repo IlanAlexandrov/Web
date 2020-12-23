@@ -369,6 +369,15 @@ app.post('/index',function(req,res){
 
 })
 
+app.get("/BuyPc/:base64",function(req,res){
+  res.sendFile(__dirname+'/BuyPc.html');
+})
+
+app.get('/BuyCellPhone/:base64',function(req,res){
+  res.sendFile(__dirname+'/BuyCellPhone.html')
+})
+
+
 app.listen(port, () => {
 	console.log('App listening on port %d!', port);
 });
