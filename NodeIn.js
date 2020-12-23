@@ -111,7 +111,7 @@ app.post("/log-in", async function (req, resol) {
     const client = await pool.connect();
     await client.query('SELECT * FROM users',(err,res)=>{
       console.log("HERE");
-      console.log(res.rows[0])
+      console.log(res.rows[0].name)
     })
     await client.query(text,r,(err,res)=>{
     if(res.rows.length==0){
