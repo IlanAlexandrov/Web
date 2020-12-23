@@ -119,11 +119,11 @@ app.post("/log-in", async function (req, resol) {
     }
       else{
         var data = { 
-          FirstNAmeU: res.rows[1].Name,  
-          EmailU: res.rows[1].Email,
-          Id : res.rows[1].ID
+          FirstNAmeU: res.rows[0].name,  
+          EmailU: res.rows[0].email,
+          Id : res.rows[0].id
         };
-        console.log(res.rows[1].Name)
+        console.log(res.rows[0].name)
         var base64 = urlCrypt.cryptObj(data);
       console.log("HERE");
       resol.send('/index/'+base64);
