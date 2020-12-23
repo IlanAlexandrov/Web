@@ -106,7 +106,7 @@ app.post("/log-in", async function (req, resol) {
   var password1 = req.body.Password1;
   
   console.log(email + password1);
-  var text ='select Password from users where Password=$1 and Email=$2';
+  var text ='select * from users where Password=$1 and Email=$2';
   var r =[password1,email];
     const client = await pool.connect();
      client.query('SELECT * FROM users',(err,res)=>{
