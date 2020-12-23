@@ -126,9 +126,11 @@ app.post("/log-in", async function (req, resol) {
       console.log("HERE");
       resol.send('/index/'+base64);
       
-  })
-})
+  
+}
+    })
 
+  })
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
