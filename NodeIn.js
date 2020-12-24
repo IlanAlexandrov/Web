@@ -439,7 +439,7 @@ app.post('/updateProfile',async function(req,reso){
       console.log(err)
       
   })
-  if(newmail!=prevEmail){
+  if(newemail!=prevEmail){
     var data = {
       IdOfUser : req.body.Id,
       emailOfUser :newemail
