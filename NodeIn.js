@@ -54,7 +54,7 @@ app.get('/sign-up/:base64', async function (req, res) {
   } catch (e) {
     return res.status(404).send('Bad');
   }
-   client.query('select * from users order by ID DESC', (err, resi) => {
+  client.query('select * from users order by ID DESC', (err, resi) => {
     if (resi.rows.length == 0)
       idNum = 1;
     else
@@ -62,20 +62,20 @@ app.get('/sign-up/:base64', async function (req, res) {
     console.log(resi.rows)
     console.log("ID NUM IS: " + idNum)
 
-  
-console.log(idNum)
-  text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
-  values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
 
-   client.query(text, values, (err, res) => {
-    if (err) {
-      console.log(err);
-    } else
-      console.log("good")
+    console.log(idNum)
+    text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
+    values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
+
+    client.query(text, values, (err, res) => {
+      if (err) {
+        console.log(err);
+      } else
+        console.log("good")
+    })
+    res.redirect('/log-in');
   })
-  res.redirect('/log-in');
-})
-  
+
 
 })
 
@@ -112,9 +112,9 @@ app.post("/log-in", async function (req, resol) {
   var text = 'select * from users where Password=$1 and Email=$2';
   var r = [password1, email];
   const client = await pool.connect();
-client.query('select * from users',(err,res)=>{
-  console.log(res.rows[0]);
-})
+  client.query('select * from users', (err, res) => {
+    console.log(res.rows[0]);
+  })
   client.query(text, r, (err, res) => {
     if (res.rows.length == 0) {
       resol.send("Error");
@@ -173,7 +173,7 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-  
+
   client.query(text, values, (err, res) => {
     console.log(res.rows[1]);
     if (res.rows.length != 0) {
@@ -379,51 +379,51 @@ app.get('/BuyCellPhone/:base64', function (req, res) {
   res.sendFile(__dirname + '/BuyCellPhone.html')
 })
 
-app.get('/about/:base64',function(req,res){
-  
-  res.sendFile(__dirname+'/about.html')
+app.get('/about/:base64', function (req, res) {
+
+  res.sendFile(__dirname + '/about.html')
 })
 
-app.get('/profile/:base64',function(req,res){
-  res.sendFile(__dirname+'/profile.html')
+app.get('/profile/:base64', function (req, res) {
+  res.sendFile(__dirname + '/profile.html')
 })
-app.post('/getProfile',async function(req,reso){
-  try{
-    resul=urlCrypt.decryptObj(req.body.UserName);
-  } catch(e){
+app.post('/getProfile', async function (req, reso) {
+  try {
+    resul = urlCrypt.decryptObj(req.body.UserName);
+  } catch (e) {
     console.log("HERR")
     return reso.status(404).send('Bad');
   }
-var email = resul.EmailU;
-var dat;
-var tex = 'select * from users where Email=$1'
-var re= [email];
-const client = await pool.connect();
-client.query(tex,re,(err,res)=>{
-  if(err)
-  console.log(err);
-  console.log(res.rows[0])
-dat={
-  firstName : res.rows[0].name,
-  lastName : res.rows[0].familyname,
-  email : res.rows[0].email,
-  country : res.rows[0].country,
-  city: res.rows[0].city,
-  street : res.rows[0].street,
-  zipCode : res.rows[0].zipcode,
-  phone: res.rows[0].phonenumber,
-  pass:res.rows[0].password,
-  id: res.rows[0].id
-}
-reso.send(dat);
-})
+  var email = resul.EmailU;
+  var dat;
+  var tex = 'select * from users where Email=$1'
+  var re = [email];
+  const client = await pool.connect();
+  client.query(tex, re, (err, res) => {
+    if (err)
+      console.log(err);
+    console.log(res.rows[0])
+    dat = {
+      firstName: res.rows[0].name,
+      lastName: res.rows[0].familyname,
+      email: res.rows[0].email,
+      country: res.rows[0].country,
+      city: res.rows[0].city,
+      street: res.rows[0].street,
+      zipCode: res.rows[0].zipcode,
+      phone: res.rows[0].phonenumber,
+      pass: res.rows[0].password,
+      id: res.rows[0].id
+    }
+    reso.send(dat);
+  })
 
 
 
 
 
 })
-app.post('/updateProfile',async function(req,reso){
+app.post('/updateProfile', async function (req, reso) {
   var newUser = req.body.UserName;
   var newLast = req.body.lastName;
   var newemail = req.body.email;
@@ -432,49 +432,58 @@ app.post('/updateProfile',async function(req,reso){
   var newcity = req.body.city;
   var newzipCode = req.body.zipCode;
   var prevEmail = req.body.prevEmail;
-  var newStreet= req.body.street;
-  console.log(newUser+ " "+newLast+" "+newemail+" "+newphone+" "+newcountry+ " "+ newcity+ " "+ newzipCode+" "+prevEmail)
+  var newStreet = req.body.street;
+  console.log(newUser + " " + newLast + " " + newemail + " " + newphone + " " + newcountry + " " + newcity + " " + newzipCode + " " + prevEmail)
   var text = 'update users set Name=$1, FamilyName=$2,PhoneNumber=$3,Country=$4,City=$5,Street=$6,ZipCode=$7 where ID=$8';
-  var options=[newUser,newLast,newphone,newcountry,newcity,newStreet,newzipCode,req.body.Id];
+  var options = [newUser, newLast, newphone, newcountry, newcity, newStreet, newzipCode, req.body.Id];
   const client = await pool.connect();
-  client.query(text,options,(err,res)=>{
-    if(err)
+  client.query(text, options, (err, res) => {
+    if (err)
       console.log(err)
-      
+
   })
-  if(newemail!=prevEmail){
-    var data = {
-      IdOfUser : req.body.Id,
-      emailOfUser :newemail
-    };
-  
-    var base64 = urlCrypt.cryptObj(data);
-  
-    var registrationiLink = 'https://electronicsweb1.herokuapp.com/updateMail/' + base64;
-    var mailOptions = {
-      from: 'ilan19555@gmail.com',
-      to: 'ilan19555@gmail.com',
-      subject: 'Email verification',
-      text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-      html: '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
-    };
+  if (newemail != prevEmail) {
+    client.query('select * from users where Email=$1', [newemail], (err, res) => {
+      if (err)
+        console.log(err);
+      else {
+        if (res.rows.length != 0)
+          reso.send("This email is already in the system, therfore we can't change it. your other data has been saved.")
+        else {
+          var data = {
+            IdOfUser: req.body.Id,
+            emailOfUser: newemail
+          };
 
+          var base64 = urlCrypt.cryptObj(data);
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
+          var registrationiLink = 'https://electronicsweb1.herokuapp.com/updateMail/' + base64;
+          var mailOptions = {
+            from: 'ilan19555@gmail.com',
+            to: 'ilan19555@gmail.com',
+            subject: 'Email verification',
+            text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+            html: '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
+          };
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+          reso.send("The profile has been updated! and email sent to you to change your mail!")
+        }
       }
-    });
-    reso.send("The profile has been updated! and email sent to you to change your mail!")
+    })
   }
-  else{
+  else {
     reso.send("The details has changed successfuly!")
   }
 
+
 })
-app.get('/updateMail/:base64',async function (req,reso){
+app.get('/updateMail/:base64', async function (req, reso) {
   const client = await pool.connect();
 
   try {
@@ -483,28 +492,28 @@ app.get('/updateMail/:base64',async function (req,reso){
     return res.status(404).send('Bad');
   }
   var text = 'update users set Email=$1 where ID=$2'
-  var pu=[resul.emailOfUser,resul.IdOfUser];
-  client.query(text,pu,(err,res)=>{
-    if(err)
-    console.log(err);
-    else{
+  var pu = [resul.emailOfUser, resul.IdOfUser];
+  client.query(text, pu, (err, res) => {
+    if (err)
+      console.log(err);
+    else {
       console.log("updated!")
       reso.redirect('/log-in')
     }
   })
 
 })
-app.post('/updatePasswordProfile',async function(req,reso){
+app.post('/updatePasswordProfile', async function (req, reso) {
   var text = 'update users set Password=$1 where Email=$2'
   const client = await pool.connect();
-  var variu=[req.body.password,req.body.email];
-  client.query(text,variu,(err,res)=>{
-    if(err)
+  var variu = [req.body.password, req.body.email];
+  client.query(text, variu, (err, res) => {
+    if (err)
       console.log(err)
-      else
+    else
       reso.send("good")
   })
-  client.query('select * from users where Email=$1',[req.body.email],(err,res)=>{
+  client.query('select * from users where Email=$1', [req.body.email], (err, res) => {
     console.log(res.rows[0]);
   })
 })
