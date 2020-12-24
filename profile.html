@@ -319,7 +319,7 @@
                 
                 <div class="modal-body" id="modal1"></div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Dismiss</button>
+                    <button id="dismissBtn" class="btn btn-secondary" type="button" data-dismiss="modal">Dismiss</button>
                     
                 </div>
             </div>
@@ -385,6 +385,10 @@
                     {
                         $('#successModal').modal('show');
                         $('#modal1').text('you forbided to erase field that is already in the system, sorry');
+                        $('dismissBtn').click(function(){
+                            window.location.href=window.location.href;
+                        })
+
 
                     }
                 else {
