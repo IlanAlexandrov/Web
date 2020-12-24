@@ -54,7 +54,7 @@ app.get('/sign-up/:base64', async function (req, res) {
   } catch (e) {
     return res.status(404).send('Bad');
   }
-  await client.query('select * from users order by ID DESC', (err, resi) => {
+   client.query('select * from users order by ID DESC', (err, resi) => {
     if (resi.rows.length == 0)
       idNum = 1;
     else
@@ -67,14 +67,15 @@ console.log(idNum)
   text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
   values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
 
-  await client.query(text, values, (err, res) => {
+   client.query(text, values, (err, res) => {
     if (err) {
       console.log(err);
     } else
       console.log("good")
   })
-})
   res.redirect('/log-in');
+})
+  
 
 })
 
