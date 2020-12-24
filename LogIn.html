@@ -172,7 +172,9 @@
             $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val() })
               .done(function (data) {
                 if (data == "Error") {
-                  alert("Email or password is inccorect please try again");
+                  $('#myModal').modal('show');
+                  $('#myModal').text('Email or password is inccorect please try again');
+                  
                   window.location.href=window.location.href;
                 }
 
