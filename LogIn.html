@@ -173,6 +173,7 @@
               .done(function (data) {
                 if (data == "Error") {
                   $('#myModal').modal('show');
+                  $('#modalIn').css('display', 'block');
                   $('#MBody').text('Email or password is inccorect please try again');
                   
                   window.location.href=window.location.href;
