@@ -360,7 +360,7 @@
                 }
                 console.log(newData)
 
-                if (username==""||lastname==""||email==""||user.phone != null && newData.phone == "" || user.country != null && newData.country == "" || user.city != null && newData.city == "" || user.street != null && newData.street == "" || user.zipCode != null && newData.zipCode == "")
+                if (newData.username==""||newData.lastname==""||newData.email==""||user.phone != null && newData.phone == "" || user.country != null && newData.country == "" || user.city != null && newData.city == "" || user.street != null && newData.street == "" || user.zipCode != null && newData.zipCode == "")
                     alert("you forbided to erase field that is already in the system, sorry")
                 else {
                     $.post('/updateProfile', { UserName: newData.username, lastName: newData.lastname, email: newData.email, phone: newData.phone, country: newData.country, city: newData.city, street:newData.street,zipCode: newData.zipCode, prevEmail: user.email,Id:user.id })
