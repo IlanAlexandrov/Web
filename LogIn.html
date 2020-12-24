@@ -115,7 +115,7 @@
 
     <!--Display the modal-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+      aria-hidden="true">
       <div id="modalIn" style="display: none;" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -169,30 +169,36 @@
       $(document).ready(function () {
 
         $("#LGBTN").click(function () {
-          if (when_click() || ($('#email').val() == "admin" && $('#password').val() == 'admin'))
+          if (when_click(){
             $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val() })
               .done(function (data) {
                 if (data == "Error") {
                   $('#myModal').modal('show');
                   $('#modalIn').css('display', 'block');
                   $('#MBody').text('Email or password is inccorect please try again');
-                  $("#CloseModal").click(function(){
+                  $("#CloseModal").click(function () {
                     window.location.href = window.location.href;
                   })
-                  
+
                 }
 
                 else {
                   window.location.href = data;
                 }
               })
-
+          }
+          else{
+            $('#myModal').modal('show');
+          $('#modalIn').css('display', 'block');
+          $('#MBody').text('One or more of the fields are missing!');
+          }
+            
         });
         $("#password").click(function () {
           init();
 
         })
-        
+
       });
     </script>
 
