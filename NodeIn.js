@@ -420,7 +420,7 @@ reso.send(dat);
 
 
 })
-app.post('/updateProfile',function(req,reso){
+app.post('/updateProfile',async function(req,reso){
   var newUser = req.body.UserName;
   var newLast = req.body.lastName;
   var newemail = req.body.email;
