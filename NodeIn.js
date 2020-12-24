@@ -58,7 +58,7 @@ app.get('/sign-up/:base64', async function (req, res) {
     if (resi.rows.length == 0)
       idNum = 1;
     else
-      idNum = resi.rows[0].ID + 1;
+      idNum = resi.rows[0].id + 1;
     console.log(resi.rows)
     console.log("ID NUM IS: " + idNum)
 
