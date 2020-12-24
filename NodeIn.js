@@ -420,7 +420,16 @@ reso.send(dat);
 
 })
 app.post('/updateProfile',function(req,reso){
-  var tex= 'update userforweb set '
+  var newUser = req.body.UserName;
+  var newLast = req.body.lastName;
+  var newemail = req.body.email;
+  var newphone = req.body.phone;
+  var newcountry = req.body.country;
+  var newcity = req.body.city;
+  var newzipCode = req.body.zipCode;
+  var prevEmail = req.body.prevEmail;
+  console.log(newUser+ " "+newLast+" "+newemail+" "+newphone+" "+newcountry+ " "+ newcity+ " "+ newzipCode+" "+prevEmail)
+  
 })
 
 app.post('/updatePasswordProfile',async function(req,reso){
