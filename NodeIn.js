@@ -111,7 +111,9 @@ app.post("/log-in", async function (req, resol) {
   var text = 'select * from users where Password=$1 and Email=$2';
   var r = [password1, email];
   const client = await pool.connect();
-
+client.query('select * from users',(err,res)=>{
+  console.log(res.rows[0]);
+})
   client.query(text, r, (err, res) => {
     if (res.rows.length == 0) {
       resol.send("Error");
