@@ -169,7 +169,7 @@
       $(document).ready(function () {
 
         $("#LGBTN").click(function () {
-          if (when_click(){
+          if (when_click()){
             $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val() })
               .done(function (data) {
                 if (data == "Error") {
