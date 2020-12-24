@@ -409,7 +409,8 @@ dat={
   street : res.rows[0].street,
   zipCode : res.rows[0].zipcode,
   phone: res.rows[0].phonenumber,
-  pass:res.rows[0].password
+  pass:res.rows[0].password,
+  id: res.rows[0].id
 }
 reso.send(dat);
 })
@@ -428,8 +429,18 @@ app.post('/updateProfile',function(req,reso){
   var newcity = req.body.city;
   var newzipCode = req.body.zipCode;
   var prevEmail = req.body.prevEmail;
+  var newStreet= req.body.street;
   console.log(newUser+ " "+newLast+" "+newemail+" "+newphone+" "+newcountry+ " "+ newcity+ " "+ newzipCode+" "+prevEmail)
-  
+  var text = 'update users set Name=$1, FamilyName=$2,PhoneNumber=$3,Country=$4,City=$5,Street=$6,ZipCode=$7 where ID=$8';
+  var options=[newUser,newLast,newphone,newcountry,newcity,newStreet,newzipCode,req.body.Id];
+  const client = await pool.connect();
+  client.query(text,options,(err,res)=>{
+    if(err)
+      console.log(err)
+      else
+      reso.send("good, updated!")
+  })
+
 })
 
 app.post('/updatePasswordProfile',async function(req,reso){
