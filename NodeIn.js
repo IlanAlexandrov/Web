@@ -62,7 +62,7 @@ app.get('/sign-up/:base64', async function (req, res) {
     console.log(resi.rows)
     console.log("ID NUM IS: " + idNum)
 
-  })
+  
 console.log(idNum)
   text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
   values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
@@ -73,7 +73,7 @@ console.log(idNum)
     } else
       console.log("good")
   })
-
+})
   res.redirect('/log-in');
 
 })
