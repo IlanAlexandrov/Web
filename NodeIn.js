@@ -401,15 +401,15 @@ client.query(tex,re,(err,res)=>{
   console.log(err);
   console.log(res.rows[0])
 dat={
-  firstName : res.rows[0].Name,
-  lastName : res.rows[0].FamilyName,
-  email : res.rows[0].Email,
-  country : res.rows[0].Country,
-  city: res.rows[0].City,
-  street : res.rows[0].Street,
-  zipCode : res.rows[0].ZipCode,
-  phone: res.rows[0].PhoneNumber,
-  pass:res.rows[0].Password
+  firstName : res.rows[0].name,
+  lastName : res.rows[0].familyname,
+  email : res.rows[0].email,
+  country : res.rows[0].country,
+  city: res.rows[0].city,
+  street : res.rows[0].street,
+  zipCode : res.rows[0].zipcode,
+  phone: res.rows[0].phonenumber,
+  pass:res.rows[0].password
 }
 reso.send(dat);
 })
