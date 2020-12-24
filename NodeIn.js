@@ -24,17 +24,17 @@ app.get('/db', async (req, resu) => {
   try {
     const client = await pool.connect();
     await client.query('drop table users');
-    const result1 = await client.query(
-      "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PhoneNumber VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
-    )
+    // const result1 = await client.query(
+    //   "CREATE TABLE IF NOT EXISTS users (ID INT,Name VARCHAR(45),FamilyName VARCHAR(45),Email VARCHAR(45),PhoneNumber VARCHAR(45),PromoCode VARCHAR(45),Country VARCHAR(45) NULL,City VARCHAR(45) NULL,Street VARCHAR(45) NULL,ZipCode VARCHAR(45) NULL,Password VARCHAR(45) NULL,Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
+    // )
 
-    await client.query("delete from users")
+    // await client.query("delete from users")
 
-    await client.query('SELECT * FROM users', (err, res) => {
-      console.log("HERE");
-      console.log(res.rows)
-      resu.redirect('/sign-up');
-    })
+    // await client.query('SELECT * FROM users', (err, res) => {
+    //   console.log("HERE");
+    //   console.log(res.rows)
+    //   resu.redirect('/sign-up');
+    // })
 
     client.release();
   } catch (err) {
@@ -169,7 +169,7 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-  client.query("delete * from users where Email='alex.alexandrov1@gmial.com'")
+  
   client.query(text, values, (err, res) => {
     console.log(res.rows[1]);
     if (res.rows.length != 0) {
