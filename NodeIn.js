@@ -437,12 +437,59 @@ app.post('/updateProfile',async function(req,reso){
   client.query(text,options,(err,res)=>{
     if(err)
       console.log(err)
-      else
-      reso.send("good, updated!")
+      
+  })
+  if(newmail!=prevEmail){
+    var data = {
+      IdOfUser = req.body.Id,
+      emailOfUser =newemail
+    };
+  
+    var base64 = urlCrypt.cryptObj(data);
+  
+    var registrationiLink = 'https://electronicsweb1.herokuapp.com/updateMail/' + base64;
+    var mailOptions = {
+      from: 'ilan19555@gmail.com',
+      to: 'ilan19555@gmail.com',
+      subject: 'Email verification',
+      text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+      html: '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
+    };
+
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    reso.send("The profile has been updated! and email sent to you to change your mail!")
+  }
+  else{
+    reso.send("The details has changed successfuly!")
+  }
+
+})
+app.post('/updateMail/:base64',async function (error, info){
+  const client = await pool.connect();
+
+  try {
+    resul = urlCrypt.decryptObj(req.params.base64);
+  } catch (e) {
+    return res.status(404).send('Bad');
+  }
+  var text = 'update user set Email=$1 where ID=$2'
+  var pu=[resul.emailOfUser,resul.IdOfUser];
+  client.query(text,pu,(err,res)=>{
+    if(err)
+    console.log(err);
+    else{
+      console.log("updated!")
+    }
   })
 
 })
-
 app.post('/updatePasswordProfile',async function(req,reso){
   var text = 'update users set Password=$1 where Email=$2'
   const client = await pool.connect();

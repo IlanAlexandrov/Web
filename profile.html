@@ -332,7 +332,7 @@
                     user = data;
                     console.log(user.lastName)
                     $('#nameOfUser').text(user.firstName);
-                    $('#firstName').text(user.firstName);
+                    $('#firstName').attr("placeholder", user.firstName);
                     $('#lastname').attr("placeholder", user.lastName)
                     $('#email').attr("placeholder", user.email);
                     if (user.phone != null)
@@ -365,7 +365,7 @@
                 else {
                     $.post('/updateProfile', { UserName: newData.username, lastName: newData.lastname, email: newData.email, phone: newData.phone, country: newData.country, city: newData.city, street:newData.street,zipCode: newData.zipCode, prevEmail: user.email,Id:user.id })
                         .done(function (data) {
-
+                            alert(data)
                         })
                 }
 
