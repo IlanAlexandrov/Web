@@ -479,7 +479,7 @@ app.get('/updateMail/:base64',async function (req,reso){
   } catch (e) {
     return res.status(404).send('Bad');
   }
-  var text = 'update user set Email=$1 where ID=$2'
+  var text = 'update users set Email=$1 where ID=$2'
   var pu=[resul.emailOfUser,resul.IdOfUser];
   client.query(text,pu,(err,res)=>{
     if(err)
