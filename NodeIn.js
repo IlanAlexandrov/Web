@@ -426,7 +426,7 @@ app.post('/updateProfile',function(req,reso){
 app.post('/updatePasswordProfile',async function(req,reso){
   var text = 'update users set Password=$1 where Email=$2'
   const client = await pool.connect();
-  var variu=[req.body.pass,req.body.email];
+  var variu=[req.body.password,req.body.email];
   client.query(text,variu,(err,res)=>{
     if(err)
       console.log(err)
