@@ -316,11 +316,12 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                
+
                 <div class="modal-body" id="modal1"></div>
                 <div class="modal-footer">
-                    <button id="dismissBtn" class="btn btn-secondary" type="button" data-dismiss="modal">Dismiss</button>
-                    
+                    <button id="dismissBtn" class="btn btn-secondary" type="button"
+                        data-dismiss="modal">Dismiss</button>
+
                 </div>
             </div>
         </div>
@@ -368,6 +369,7 @@
                         $('#zipCode').val(user.zipCode);
                 })
             $("#updateBtn").click(function () {
+                var numbers = /[0-9]/g;
                 newData = {
                     username: $('#firstName').val(),
                     lastname: $('#lastname').val(),
@@ -380,19 +382,26 @@
 
                 }
                 console.log(newData)
+                if (newData.email.indexOf("@") == -1) {
+                    $('#successModal').modal('show');
+                    $('#modal1').text('The email is not valid, please try again!');
+                }
+                if(newData.username.contains(numbers))
+                {
+                    $('#successModal').modal('show');
+                    $('#modal1').text('The User Name forbided to be with numbers ');
+                }
+                if (user.firstName != "" && newData.username == "" || user.lastName != "" && newData.lastname == "" || user.email != "" && newData.email == "" || user.phone != "" && newData.phone == "" || user.country != "" && newData.country == "" || user.city != "" && newData.city == "" || user.street != "" && newData.street == "" || user.zipCode != "" && newData.zipCode == "") {
+                    $('#successModal').modal('show');
+                    $('#modal1').text('you forbided to erase field that is already in the system, sorry');
+                    $('#dismissBtn').click(function () {
+                        window.location.href = window.location.href;
+                    })
 
-                if (user.firstName!=""&&newData.username==""||user.lastName!=""&&newData.lastname==""||user.email!=""&&newData.email==""||user.phone != "" && newData.phone == "" || user.country != "" && newData.country == "" || user.city != "" && newData.city == "" || user.street != "" && newData.street == "" || user.zipCode != "" && newData.zipCode == "")
-                    {
-                        $('#successModal').modal('show');
-                        $('#modal1').text('you forbided to erase field that is already in the system, sorry');
-                        $('#dismissBtn').click(function(){
-                            window.location.href=window.location.href;
-                        })
 
-
-                    }
+                }
                 else {
-                    $.post('/updateProfile', { UserName: newData.username, lastName: newData.lastname, email: newData.email, phone: newData.phone, country: newData.country, city: newData.city, street:newData.street,zipCode: newData.zipCode, prevEmail: user.email,Id:user.id })
+                    $.post('/updateProfile', { UserName: newData.username, lastName: newData.lastname, email: newData.email, phone: newData.phone, country: newData.country, city: newData.city, street: newData.street, zipCode: newData.zipCode, prevEmail: user.email, Id: user.id })
                         .done(function (data) {
                             $('#successModal').modal('show');
                             $('#modal1').text(data);
@@ -406,24 +415,24 @@
                 var repass = $('#RePassword').val();
                 var lastpass = $('#oldPass').val();
                 console.log(pass + "  and re  " + repass + " and last  " + lastpass + " and the current  " + user.pass)
-                if (pass != repass || pass == lastpass){
+                if (pass != repass || pass == lastpass) {
                     $('#successModal').modal('show');
                     $('#modal1').text("The passwords are not the same or Your new password is your old password");
                 }
-                    
-                else if (lastpass != user.pass){
+
+                else if (lastpass != user.pass) {
                     $('#successModal').modal('show');
                     $('#modal1').text("Your old password not match your current password");
                 }
-                    
+
                 else {
-                    $.post('/updatePasswordProfile', {password: pass,email:user.email})
+                    $.post('/updatePasswordProfile', { password: pass, email: user.email })
                         .done(function (data) {
-                            if(data=='good'){
+                            if (data == 'good') {
                                 $('#successModal').modal('show');
-                                 $('#modal1').text("The password was changed!");
+                                $('#modal1').text("The password was changed!");
                             }
-                            
+
                         })
                 }
             })
@@ -458,11 +467,11 @@
                 url = '/about/' + sURLVariables[4];
                 window.location.href = url;
             })
-            $("#clickLogout").click(function(){
-                    window.location.href = '/log-in';
-                })
+            $("#clickLogout").click(function () {
+                window.location.href = '/log-in';
+            })
 
-            
+
 
         })
 
