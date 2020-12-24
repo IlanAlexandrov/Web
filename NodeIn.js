@@ -471,7 +471,7 @@ app.post('/updateProfile',async function(req,reso){
   }
 
 })
-app.post('/updateMail/:base64',async function (error, info){
+app.get('/updateMail/:base64',async function (error, info){
   const client = await pool.connect();
 
   try {
