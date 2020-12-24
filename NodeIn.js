@@ -399,6 +399,7 @@ const client = await pool.connect();
 client.query(tex,re,(err,res)=>{
   if(err)
   console.log(err);
+  console.log(res.rows[0])
 dat={
   firstName : res.rows[0].Name,
   lastName : res.rows[0].FamilyName,
