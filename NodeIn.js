@@ -433,6 +433,9 @@ app.post('/updatePasswordProfile',async function(req,reso){
       else
       reso.send("good")
   })
+  client.query('select * from users where Email=$1',[req.body.email],(err,res)=>{
+    console.log(res.rows[0]);
+  })
 })
 app.listen(port, () => {
   console.log('App listening on port %d!', port);
