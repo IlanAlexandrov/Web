@@ -381,7 +381,7 @@
                 }
                 console.log(newData)
 
-                if (user.firstName!=null&&newData.username==""||user.lastName!=null&&newData.lastname==""||user.email!=null&&newData.email==""||user.phone != null && newData.phone == "" || user.country != null && newData.country == "" || user.city != null && newData.city == "" || user.street != null && newData.street == "" || user.zipCode != null && newData.zipCode == "")
+                if (user.firstName!=""&&newData.username==""||user.lastName!=""&&newData.lastname==""||user.email!=""&&newData.email==""||user.phone != "" && newData.phone == "" || user.country != "" && newData.country == "" || user.city != "" && newData.city == "" || user.street != "" && newData.street == "" || user.zipCode != "" && newData.zipCode == "")
                     {
                         $('#successModal').modal('show');
                         $('#modal1').text('you forbided to erase field that is already in the system, sorry');
