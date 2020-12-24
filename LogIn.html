@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Architects Daughter" </link>
   <link rel="stykesheeet" href="https://fonts.googleapis.com/css?family=Antic Slab" </link>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
@@ -55,55 +55,55 @@
               <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
               <div class="col-lg-6">
                 <div class="p-5">
-                  
+
                   <h3 style='font-family: Antic Slab;
                   margin-bottom: 10%;'>Welcome Back!</h3>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><span class="material-icons">
-                            account_circle
-                          </span></span>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><span class="material-icons">
+                          account_circle
+                        </span></span>
 
-                        <input name="Email1" style="width: 280px;" type="text" id="email"
-                          placeholder="Email or phone or username" title="Enter valid email with @, phone, or username">
-                      </div>
+                      <input name="Email1" style="width: 280px;" type="text" id="email"
+                        placeholder="Email or phone or username" title="Enter valid email with @, phone, or username">
                     </div>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><span class="material-icons">
-                            https
-                          </span></span>
-                        <input class="form-control form-control-user" name="Password1" style="width:280px;"
-                          type="Password" id="password" placeholder="Password"
-                          title="Must contain at least one number,Special charecter and one uppercase and lowercase letter, and at least 6 or more characters"><br>
-                      </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><span class="material-icons">
+                          https
+                        </span></span>
+                      <input class="form-control form-control-user" name="Password1" style="width:280px;"
+                        type="Password" id="password" placeholder="Password"
+                        title="Must contain at least one number,Special charecter and one uppercase and lowercase letter, and at least 6 or more characters"><br>
                     </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label style="margin-bottom: 5%;" class="custom-control-label" for="customCheck">Remember
-                          Me</label>
-                      </div>
-
-                      <div style="width: inherit;" class="g-recaptcha"
-                        data-sitekey="6LcZrwAaAAAAAOZ29UEYlCDxEl3QF679viXPer24"></div>
-
-                      <div class="but">
-                        <input id="LGBTN" data-toggle="modal" data-target="#myModal" type="submit"
-                          class="btn btn-primary btn-user btn-block" style='font-family: Antic Slab'
-                          value="Log-In"></input>
-                      </div>
-
-                      <div class="reset">
-                        <a id="Change" href="/reset-password">Forget
-                          Password?</a><br>
-
-                        <br>
-
-                        <a href="/sign-up">Sign up</a></p>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox small">
+                      <input type="checkbox" class="custom-control-input" id="customCheck">
+                      <label style="margin-bottom: 5%;" class="custom-control-label" for="customCheck">Remember
+                        Me</label>
                     </div>
-                  
+
+                    <div style="width: inherit;" class="g-recaptcha"
+                      data-sitekey="6LcZrwAaAAAAAOZ29UEYlCDxEl3QF679viXPer24"></div>
+
+                    <div class="but">
+                      <input id="LGBTN" data-toggle="modal" data-target="#myModal" type="submit"
+                        class="btn btn-primary btn-user btn-block" style='font-family: Antic Slab'
+                        value="Log-In"></input>
+                    </div>
+
+                    <div class="reset">
+                      <a id="Change" href="/reset-password">Forget
+                        Password?</a><br>
+
+                      <br>
+
+                      <a href="/sign-up">Sign up</a></p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -175,8 +175,10 @@
                   $('#myModal').modal('show');
                   $('#modalIn').css('display', 'block');
                   $('#MBody').text('Email or password is inccorect please try again');
+                  $("#CloseModal").click(function(){
+                    window.location.href = window.location.href;
+                  })
                   
-                  window.location.href=window.location.href;
                 }
 
                 else {
@@ -189,9 +191,7 @@
           init();
 
         })
-        $("#CloseModal").click(function () {
-          $('#modalIn').css('display', 'none');
-        })
+        
       });
     </script>
 
