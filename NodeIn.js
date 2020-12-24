@@ -441,8 +441,8 @@ app.post('/updateProfile',async function(req,reso){
   })
   if(newmail!=prevEmail){
     var data = {
-      IdOfUser = req.body.Id,
-      emailOfUser =newemail
+      IdOfUser : req.body.Id,
+      emailOfUser :newemail
     };
   
     var base64 = urlCrypt.cryptObj(data);
