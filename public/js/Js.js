@@ -46,8 +46,10 @@ function editPasswordProfile(){
 
   function checkUser(){
     var userName = document.getElementById("firstName").value;
+    var last = document.getElementById("lastName").value;
+    
     var numbers = /[0-9]/g;
-    if (userName.match(numbers))
+    if (userName.match(numbers)||last.match(numbers))
       return false;
     else
     return true ;
