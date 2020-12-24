@@ -44,7 +44,14 @@ function editPasswordProfile(){
   
   }
 
-  
+  function checkUser(){
+    var userName = document.getElementById("firstName").value;
+    var numbers = /[0-9]/g;
+    if (userName.match(numbers))
+      return false;
+    else
+    return true ;
+  }
   
 function init(){
 var myInput = document.getElementById("password");

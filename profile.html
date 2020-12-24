@@ -387,7 +387,7 @@
                     $('#modal1').text('The email is not valid, please try again!');
                 }
 
-                if($.isNumeric(newData.username))
+                if(!(checkUser()))
                 {
                     $('#successModal').modal('show');
                     $('#modal1').text('The User Name forbided to be with numbers ');
