@@ -187,10 +187,13 @@ app.post('/sign-up', async function (req, resul) {
       if (flag == 0) {
         var mailOptions = {
           from: 'ilan19555@gmail.com',
-          to: 'ilan19555@gmail.com',
+          to: emailTmp,
           subject: 'Email verification',
           text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-          html: '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+          html: '<h1>Wellcome to ElectronicWebSite!</h1>'+
+                '<br><h3>Please click on the link below to complete your registeration!</h3><br>'+
+                '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+
         };
 
 
@@ -287,7 +290,7 @@ app.post('/reset-password', async function (req, resul) {
       var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
       var mailOptions = {
         from: 'ilan19555@gmail.com',
-        to: 'ilan19555@gmail.com',
+        to: email,
         subject: 'Reset Password!',
         text: "Click on the link to refer to reset password link",
         html: '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
@@ -460,7 +463,7 @@ app.post('/updateProfile', async function (req, reso) {
           var registrationiLink = 'https://electronicsweb1.herokuapp.com/updateMail/' + base64;
           var mailOptions = {
             from: 'ilan19555@gmail.com',
-            to: 'ilan19555@gmail.com',
+            to: prevEmail,
             subject: 'Email verification',
             text: "Paste the url below into your browser to Emailify!" + registrationiLink,
             html: '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
