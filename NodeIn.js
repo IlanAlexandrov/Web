@@ -63,11 +63,11 @@ app.get('/sign-up/:base64', async function (req, res) {
     console.log("ID NUM IS: " + idNum)
 
   })
-
+console.log(idNum)
   text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
   values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
 
-  client.query(text, values, (err, res) => {
+  await client.query(text, values, (err, res) => {
     if (err) {
       console.log(err);
     } else
