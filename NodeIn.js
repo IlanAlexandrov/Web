@@ -45,6 +45,7 @@ app.get('/db', async (req, resu) => {
 
 app.get('/sign-up/:base64', async function (req, res) {
   var resul;
+  var idNum;
   const client = await pool.connect();
 
   try {
