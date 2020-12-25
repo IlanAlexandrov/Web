@@ -413,7 +413,7 @@ app.post('/update-password', async function (req, reso) {
 
 app.get('/index', function (req, res) {
   if (req.cookies.Id != undefined){
-    console.log("CHECK?!?!")
+    console.log("CHECK?!?!"+req.cookies.Id)
     res.sendFile(__dirname + '/index.html')
   }
   
