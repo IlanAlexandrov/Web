@@ -412,10 +412,16 @@ app.post('/update-password', async function (req, reso) {
 })
 
 app.get('/index', function (req, res) {
-  if (req.cookies.Id != undefined)
+  if (req.cookies.Id != undefined){
+    console.log("CHECK?!?!")
     res.sendFile(__dirname + '/index.html')
-  else
+  }
+  
+  else{
+    console.log("WE GOT IT!")
     res.sendFile(__dirname + '/LogIn.html')
+  }
+    
 })
 
 app.post('/index', function (req, res) {
