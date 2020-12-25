@@ -410,7 +410,7 @@ app.get('/index', function (req, res) {
 
 app.post('/index', function (req, res) {
   var iD=req.cookies.Id;
-  console.log(iD);
+  console.log("THE COKIE IS:"+iD);
 
   res.send(req.cookies.FirstNAmeU);
 

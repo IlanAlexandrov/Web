@@ -468,7 +468,7 @@
                 window.location.href = url;
             })
             $("#clickLogout").click(function () {
-                console.log($.removeCookie('Id'))
+                $.removeCookie('Id', { path: '/log-in' });
 
                 window.location.href = '/log-in';
             })
