@@ -144,9 +144,9 @@ app.post("/log-in", async function (req, resol) {
       resol.send("Error");
     }
     else {
-      resol.cookie('Id', res.rows[0].id, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
-      resol.cookie('FirstNAmeU', res.rows[0].name, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
-      resol.cookie('EmailU', res.rows[0].email, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+      resol.cookie('Id', res.rows[0].id, { maxAge: 5 });
+      resol.cookie('FirstNAmeU', res.rows[0].name, { maxAge: 5 });
+      resol.cookie('EmailU', res.rows[0].email, { maxAge: 5 });
       console.log(res.rows[0].name)
       console.log("HERE");
       resol.send('/index');
@@ -430,16 +430,12 @@ app.get('/profile', function (req, res) {
   res.sendFile(__dirname + '/profile.html')
 })
 app.post('/getProfile', async function (req, reso) {
-  try {
-    resul = urlCrypt.decryptObj(req.body.UserName);
-  } catch (e) {
-    console.log("HERR")
-    return reso.status(404).send('Bad');
-  }
-  var email = resul.EmailU;
+  var iD=req.cookies.Id;
+
+ 
   var dat;
-  var tex = 'select * from users where Email=$1'
-  var re = [email];
+  var tex = 'select * from users where ID=$1'
+  var re = [iD];
   const client = await pool.connect();
   client.query(tex, re, (err, res) => {
     if (err)
