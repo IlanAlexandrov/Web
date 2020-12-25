@@ -413,20 +413,20 @@ app.post('/index', function (req, res) {
 
 })
 
-app.get("/BuyPc/:base64", function (req, res) {
+app.get("/BuyPc", function (req, res) {
   res.sendFile(__dirname + '/BuyPc.html');
 })
 
-app.get('/BuyCellPhone/:base64', function (req, res) {
+app.get('/BuyCellPhone', function (req, res) {
   res.sendFile(__dirname + '/BuyCellPhone.html')
 })
 
-app.get('/about/:base64', function (req, res) {
+app.get('/about', function (req, res) {
 
   res.sendFile(__dirname + '/about.html')
 })
 
-app.get('/profile/:base64', function (req, res) {
+app.get('/profile', function (req, res) {
   res.sendFile(__dirname + '/profile.html')
 })
 app.post('/getProfile', async function (req, reso) {
