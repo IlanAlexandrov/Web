@@ -195,7 +195,7 @@ app.post('/sign-up', async function (req, resul) {
     client.query('select * from promocode where PromoCode=$1',code,(err,res)=>{
       if(err)
         console.log(err)
-        if(res.rows.lengt==0)
+        if(res.rows.length==0)
         resul.send('The promo code not exist!')
     })
   client.query(text, values, (err, res) => {
