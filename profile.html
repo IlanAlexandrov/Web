@@ -347,9 +347,8 @@
         $(document).ready(function () {
             var newData;
             var user;
-            var url = window.location.href
-            var sURLVariables = url.split('/');
-            $.post('/getProfile', { UserName: sURLVariables[4] })
+            
+            $.post('/getProfile')
                 .done(function (data) {
                     user = data;
                     console.log(user.lastName)

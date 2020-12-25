@@ -144,13 +144,11 @@ app.post("/log-in", async function (req, resol) {
       resol.send("Error");
     }
     else {
-      resol.clearCookie("Id");
-      resol.clearCookie("FirstNAmeU");
-      resol.clearCookie("EmailU");
+      //setting cookies for 2 hourse;
       console.log(req.cookies.EmailU)
-      resol.cookie('Id', res.rows[0].id,{maxAge: 10000000, httpOnly: true });
-      resol.cookie('FirstNAmeU', res.rows[0].name);
-      resol.cookie('EmailU', res.rows[0].email);
+      resol.cookie('Id', res.rows[0].id,{maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+      resol.cookie('FirstNAmeU', res.rows[0].name,{maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+      resol.cookie('EmailU', res.rows[0].email,{maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
       console.log(res.rows[0].name)
       console.log("HERE");
       resol.send('/index');
