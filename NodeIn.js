@@ -419,9 +419,6 @@ app.post('/index', function (req, res) {
 
 })
 
-app.get('/remove',function(req,res){
-
-})
 
 app.get("/BuyPc", function (req, res) {
   res.sendFile(__dirname + '/BuyPc.html');
