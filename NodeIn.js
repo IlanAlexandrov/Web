@@ -208,7 +208,7 @@ app.post('/sign-up', async function (req, resul) {
   client.query('select * from promocode where PromoCode=$1', code, (err, resi) => {
     if (err)
       console.log(err);
-    if (resi.rows[0].length == 0) {
+    if (resi==undefined) {
       console.log("Got to the no promo")
       resul.send("This promo code is not in the system.");
     }
@@ -229,9 +229,11 @@ app.post('/sign-up', async function (req, resul) {
               to: emailTmp,
               subject: 'Email verification',
               text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-              html: '<h1>Wellcome to ElectronicWebSite!</h1>' +
+              html: '<h1>Wellcome to Electronic web site!</h1><br>' +
+                '<span>Here you will find everything you need! but first..</span>'+
                 '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
-                '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+                '<a href = "' + registrationiLink + '">EmailifyNow!</a><br>'+
+                '<span>Thank you, Team web.</span>'
 
             };
 
