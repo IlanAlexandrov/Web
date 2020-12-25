@@ -205,10 +205,10 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-  client.query('select * from promocode where PromoCode=$1', code, (err, res) => {
+  client.query('select * from promocode where PromoCode=$1', code, (err, resi) => {
     if (err)
       console.log(err);
-    if (res.rows[0].length == 0) {
+    if (resi.rows[0].length == 0) {
       console.log("Got to the no promo")
       resul.send("This promo code is not in the system.");
     }
