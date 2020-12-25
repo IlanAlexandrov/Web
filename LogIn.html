@@ -167,10 +167,13 @@
     <script src="/js/Js.js"></script>
     <script>
       $(document).ready(function () {
-
+        var flag=false;
         $("#LGBTN").click(function () {
           if (when_click()){
-            $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val() })
+            if ($("#customCheck").prop("checked")) {
+              flag=true;
+            }
+            $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val(),Flag:flag })
               .done(function (data) {
                 if (data == "Error") {
                   $('#myModal').modal('show');

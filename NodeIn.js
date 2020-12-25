@@ -107,10 +107,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
 
-  console.log("THE COOCKIE IS+)"+req.cookies.Id)
-   //if (req.cookies.Id != undefined)
-   // res.sendFile(__dirname + "/index.html");
-  //else
+  if (req.cookies.Id != undefined)
+    res.sendFile(__dirname + "/index.html");
+  else
     res.sendFile(__dirname + "/LogIn.html");
 });
 
@@ -132,8 +131,8 @@ app.post("/log-in", async function (req, resol) {
 
   var email = req.body.Email1;
   var password1 = req.body.Password1;
-
-
+  var rememberOn = req.body.Flag;
+  console.log("THE REMEMBER MEIS: "+ rememberOn)
   console.log(email + password1);
   var text = 'select * from users where Password=$1 and Email=$2';
   var r = [password1, email];
@@ -146,11 +145,19 @@ app.post("/log-in", async function (req, resol) {
       resol.send("Error");
     }
     else {
-      //setting cookies for 2 hourse;
-      console.log(req.cookies.EmailU)
-      resol.cookie('Id', res.rows[0].id,{maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
-      resol.cookie('FirstNAmeU', res.rows[0].name,{maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
-      resol.cookie('EmailU', res.rows[0].email,{maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+      //setting cookies until press log-out
+      if (rememberOn) {
+        resol.cookie('Id', res.rows[0].id);
+        resol.cookie('FirstNAmeU', res.rows[0].name);
+        resol.cookie('EmailU', res.rows[0].email);
+      }
+      else{
+        //setting coockies for one houre
+        resol.cookie('Id', res.rows[0].id, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
+        resol.cookie('FirstNAmeU', res.rows[0].name, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
+        resol.cookie('EmailU', res.rows[0].email, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
+      }
+      
       console.log(res.rows[0].name)
       console.log("HERE");
       resol.send('/index');
@@ -405,15 +412,15 @@ app.post('/update-password', async function (req, reso) {
 })
 
 app.get('/index', function (req, res) {
-  if(req.cookies.Id!=undefined)
-  res.sendFile(__dirname + '/index.html')
-  else 
-  res.sendFile(__dirname+'/LogIn.html')
+  if (req.cookies.Id != undefined)
+    res.sendFile(__dirname + '/index.html')
+  else
+    res.sendFile(__dirname + '/LogIn.html')
 })
 
 app.post('/index', function (req, res) {
-  var iD=req.cookies.Id;
-  console.log("THE COKIE IS:"+iD);
+  var iD = req.cookies.Id;
+  console.log("THE COKIE IS:" + iD);
 
   res.send(req.cookies.FirstNAmeU);
 
@@ -437,9 +444,9 @@ app.get('/profile', function (req, res) {
   res.sendFile(__dirname + '/profile.html')
 })
 app.post('/getProfile', async function (req, reso) {
-  var iD=req.cookies.Id;
+  var iD = req.cookies.Id;
 
- 
+
   var dat;
   var tex = 'select * from users where ID=$1'
   var re = [iD];
@@ -529,7 +536,7 @@ app.post('/updateProfile', async function (req, reso) {
 
 })
 
-app.post('/remove' ,function(req,res){
+app.post('/remove', function (req, res) {
   res.clearCookie("Id");
   res.clearCookie("EmailU");
   res.clearCookie("FirstNAmeU")
