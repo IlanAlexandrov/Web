@@ -408,7 +408,7 @@ app.get('/index', function (req, res) {
   if(req.cookies.Id!=undefined)
   res.sendFile(__dirname + '/index.html')
   else 
-  res.sendFile(__dirname+'/log-in.html')
+  res.sendFile(__dirname+'/LogIn.html')
 })
 
 app.post('/index', function (req, res) {
