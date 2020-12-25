@@ -210,7 +210,7 @@ app.post('/sign-up', async function (req, resul) {
   await client.query('select * from promocode where PromoCode=$1', code, (err, resi) => {
     if (err)
       console.log(err);
-    if (resi==undefined) {
+    if (resi.rows.length==0) {
       console.log("Got to the no promo")
       resul.send("This promo code is not in the system.");
     }
