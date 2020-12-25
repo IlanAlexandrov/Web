@@ -144,7 +144,7 @@ app.post("/log-in", async function (req, resol) {
       resol.send("Error");
     }
     else {
-      resol.cookie('Id', res.rows[0].id,{maxAge: 10000, httpOnly: true });
+      resol.cookie('Id', res.rows[0].id,{maxAge: 100000, httpOnly: true });
       resol.cookie('FirstNAmeU', res.rows[0].name);
       resol.cookie('EmailU', res.rows[0].email);
       console.log(res.rows[0].name)
