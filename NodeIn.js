@@ -183,27 +183,7 @@ app.post('/sign-up', async function (req, resul) {
 
 
   app.use(function (req, res, next) {
-    // check if client sent cookie
-    var cookie = req.cookies.cookieName;
-    if (cookie === undefined) {
-      // no: set a new cookie
-      var randomNumber = Math.random().toString();
-      randomNumber = randomNumber.substring(2, randomNumber.length);
-      res.cookie('cookieName', randomNumber, { maxAge: 900000, httpOnly: true });
-      console.log('cookie created successfully');
-    } else {
-      // yes, cookie was already present 
-      console.log('cookie exists', cookie);
-    }
-    next(); // <-- important!
-  });
-
-
-
-
-
-
-
+    
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -229,7 +209,14 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-
+    client.query('select * from promocode where PromoCode=$1',code,(err,res)=>
+    {
+      if(err)
+        console.log(err);
+        else{
+          resul.send("This promo code is not in the system.");
+        }
+    })
   client.query(text, values, (err, res) => {
     console.log(res.rows[1]);
     if (res.rows.length != 0) {
