@@ -205,15 +205,19 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-  client.query('select * from promocode where PromoCode=$1', code, (err, resi) => {
+  console.log(code);
+  if(code!="")
+  await client.query('select * from promocode where PromoCode=$1', code, (err, resi) => {
     if (err)
       console.log(err);
     if (resi==undefined) {
       console.log("Got to the no promo")
       resul.send("This promo code is not in the system.");
     }
+    })
+    
     else {
-      client.query(text, values, (err, res) => {
+     await client.query(text, values, (err, res) => {
         console.log(res.rows[1]);
         if (res.rows.length != 0) {
           console.log("GOT HERE")
@@ -250,7 +254,7 @@ app.post('/sign-up', async function (req, resul) {
         }
       })
     }
-  })
+ 
 })
 
 app.post('/contact-us', function (req, res) {
@@ -336,7 +340,9 @@ app.post('/reset-password', async function (req, resul) {
         to: email,
         subject: 'Reset Password!',
         text: "Click on the link to refer to reset password link",
-        html: '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
+        html: '<h1 style="color:red;">Reset Password Now!</h1>'+
+        +'<h3>Please click on the link below to reset your password</h3>'+
+        '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
