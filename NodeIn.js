@@ -206,56 +206,58 @@ app.post('/sign-up', async function (req, resul) {
   var values = [emailTmp];
   const client = await pool.connect();
   console.log(code);
-  if(code!="")
-  
-  await client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
-    if (err)
-      console.log(err);
-    if (resi.rows.length==0) {
-      console.log("Got to the no promo")
-      resul.send("This promo code is not in the system.");
-    }
+  if (code != "") {
+
+
+    await client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
+      if (err)
+        console.log(err);
+      if (resi.rows.length == 0) {
+        console.log("Got to the no promo")
+        resul.send("This promo code is not in the system.");
+      }
     })
-    
-    else {
-     await client.query(text, values, (err, res) => {
-        console.log(res.rows[1]);
-        if (res.rows.length != 0) {
-          console.log("GOT HERE")
-
-          resul.send(st[flag]);
-        }
-        else {
-          flag = 0;
-
-          if (flag == 0) {
-            var mailOptions = {
-              from: 'ilan19555@gmail.com',
-              to: emailTmp,
-              subject: 'Email verification',
-              text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-              html: '<h1>Wellcome to Electronic web site!</h1><br>' +
-                '<span>Here you will find everything you need! but first..</span>'+
-                '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
-                '<a href = "' + registrationiLink + '">EmailifyNow!</a><br>'+
-                '<span>Thank you, Team web.</span>'
-
-            };
+  }
 
 
-            transporter.sendMail(mailOptions, function (error, info) {
-              if (error) {
-                console.log(error);
-              } else {
-                console.log('Email sent: ' + info.response);
-              }
-            });
-          }
-          resul.send(st[flag]);
-        }
-      })
+  await client.query(text, values, (err, res) => {
+    console.log(res.rows[1]);
+    if (res.rows.length != 0) {
+      console.log("GOT HERE")
+
+      resul.send(st[flag]);
     }
- 
+    else {
+      flag = 0;
+
+      if (flag == 0) {
+        var mailOptions = {
+          from: 'ilan19555@gmail.com',
+          to: emailTmp,
+          subject: 'Email verification',
+          text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+          html: '<h1>Wellcome to Electronic web site!</h1><br>' +
+            '<span>Here you will find everything you need! but first..</span>' +
+            '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
+            '<a href = "' + registrationiLink + '">EmailifyNow!</a><br>' +
+            '<span>Thank you, Team web.</span>'
+
+        };
+
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      }
+      resul.send(st[flag]);
+    }
+  })
+
+
 })
 
 app.post('/contact-us', function (req, res) {
@@ -341,9 +343,9 @@ app.post('/reset-password', async function (req, resul) {
         to: email,
         subject: 'Reset Password!',
         text: "Click on the link to refer to reset password link",
-        html: '<h1 style="color:red;">Reset Password Now!</h1>'+
-        +'<h3>Please click on the link below to reset your password</h3>'+
-        '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
+        html: '<h1 style="color:red;">Reset Password Now!</h1>' +
+          +'<h3>Please click on the link below to reset your password</h3>' +
+          '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -516,7 +518,10 @@ app.post('/updateProfile', async function (req, reso) {
             to: prevEmail,
             subject: 'Email verification',
             text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-            html: '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
+            html: '<h1>Change Email</h1><br>' +
+              '<h4>You just wish to change your email, we need to confirm that it is you.</h4><br>' +
+              '<span> Click on the link below to complete the change</span><br>' +
+              '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
           };
           transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
