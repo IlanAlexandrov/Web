@@ -24,6 +24,7 @@ app.get('/db', async (req, resu) => {
   try {
     const client = await pool.connect();
     //await client.query('drop table users');
+    await client.query("delete from promocode")
     const result1 = await client.query(
       "CREATE TABLE IF NOT EXISTS users (ID INT UNIQUE,Name VARCHAR(45) DEFAULT '',FamilyName VARCHAR(45) DEFAULT '',Email VARCHAR(45) DEFAULT '',PhoneNumber VARCHAR(45) DEFAULT '',PromoCode VARCHAR(45) DEFAULT '',Country VARCHAR(45) DEFAULT '',City VARCHAR(45) DEFAULT '',Street VARCHAR(45) DEFAULT '',ZipCode VARCHAR(45) DEFAULT '',Password VARCHAR(45) DEFAULT '',Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
