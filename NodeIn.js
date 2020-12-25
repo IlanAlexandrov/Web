@@ -28,7 +28,7 @@ app.get('/db', async (req, resu) => {
       "CREATE TABLE IF NOT EXISTS users (ID INT UNIQUE,Name VARCHAR(45) DEFAULT '',FamilyName VARCHAR(45) DEFAULT '',Email VARCHAR(45) DEFAULT '',PhoneNumber VARCHAR(45) DEFAULT '',PromoCode VARCHAR(45) DEFAULT '',Country VARCHAR(45) DEFAULT '',City VARCHAR(45) DEFAULT '',Street VARCHAR(45) DEFAULT '',ZipCode VARCHAR(45) DEFAULT '',Password VARCHAR(45) DEFAULT '',Spare1 VARCHAR(45) NULL,Spare2 VARCHAR(45) NULL,Spare3 INT NULL,Spare INT NULL)"
     )
     const result2 = await client.query(
-      "CREATE TABLE IF NOT EXISTS promocode (ID INT UNIQUE,PromoCode VARCHAR(45) DEFAULT '',Description VARCHAR(45) DEFAULT '')"
+      "CREATE TABLE IF NOT EXISTS promocode (ID INT,PromoCode VARCHAR(45) DEFAULT '',Description VARCHAR(45) DEFAULT '')"
     )
     var text= 'insert into promocode (ID,PromoCode,Description) values($1,$2,$3)'
     var valu= ['1','3XCRt','10% discount'];
@@ -194,7 +194,7 @@ app.post('/sign-up', async function (req, resul) {
     client.query('select * from promocode where PromoCode=$1',code,(err,res)=>{
       if(err)
         console.log(err)
-        if(res.rows==undefined)
+        if(res.rows.lengt==0)
         resul.send('The promo code not exist!')
     })
   client.query(text, values, (err, res) => {
