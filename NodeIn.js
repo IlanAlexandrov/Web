@@ -147,8 +147,8 @@ app.post("/log-in", async function (req, resol) {
       resol.clearCookie("Id");
       resol.clearCookie("FirstNAmeU");
       resol.clearCookie("EmailU");
-      console.log(req.cookies.Id)
-      resol.cookie('Id', res.rows[0].id,{maxAge: 100000, httpOnly: true });
+      console.log(req.cookies.EmailU)
+      resol.cookie('Id', res.rows[0].id,{maxAge: 10000000, httpOnly: true });
       resol.cookie('FirstNAmeU', res.rows[0].name);
       resol.cookie('EmailU', res.rows[0].email);
       console.log(res.rows[0].name)
