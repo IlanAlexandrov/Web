@@ -425,8 +425,7 @@ app.get('/index', function (req, res) {
 })
 
 app.post('/index', function (req, res) {
-  if(req.cookies.Id==undefined)
-    res.send("Go Back")
+  
   var iD = req.cookies.Id;
   console.log("THE COKIE IS:" + iD);
 
