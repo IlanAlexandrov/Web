@@ -529,7 +529,7 @@ app.post('/updateProfile', async function (req, reso) {
 
 })
 
-app.get('/remove' ,function(req,res){
+app.post('/remove' ,function(req,res){
   res.clearCookie("Id");
   res.clearCookie("EmailU");
   res.clearCookie("FirstNAmeU")
