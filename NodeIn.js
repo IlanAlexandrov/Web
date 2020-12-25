@@ -13,6 +13,8 @@ conString = process.env.DATABASE_URL || "postgres://ouvmdownggiddy:8a530e591dd1b
 let port = process.env.PORT || 3000;
 var urlCrypt = require('url-crypt')('~{ry*I)==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
 const { Pool } = require('pg');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -31,21 +33,21 @@ app.get('/db', async (req, resu) => {
     const result2 = await client.query(
       "CREATE TABLE IF NOT EXISTS promocode (ID INT UNIQUE,PromoCode VARCHAR(45) DEFAULT '',Description VARCHAR(45) DEFAULT '')"
     )
-    var text= 'insert into promocode (ID,PromoCode,Description) values($1,$2,$3)'
-    var valu= [1,'3XCRt','10% discount'];
-    var valu1 = [2,'4DFG','My desc.'];
-    var valu2 = [3,'6DSQW','My new description'];
-    await client.query(text,valu,(err,res)=>{
+    var text = 'insert into promocode (ID,PromoCode,Description) values($1,$2,$3)'
+    var valu = [1, '3XCRt', '10% discount'];
+    var valu1 = [2, '4DFG', 'My desc.'];
+    var valu2 = [3, '6DSQW', 'My new description'];
+    await client.query(text, valu, (err, res) => {
       if (err)
-      console.log(err)
+        console.log(err)
     })
-    await client.query(text,valu1,(err,res)=>{
+    await client.query(text, valu1, (err, res) => {
       if (err)
-      console.log(err)
+        console.log(err)
     })
-    await client.query(text,valu2,(err,res)=>{
+    await client.query(text, valu2, (err, res) => {
       if (err)
-      console.log(err)
+        console.log(err)
     })
     await client.query("delete from users")
 
@@ -104,8 +106,10 @@ app.get('/sign-up/:base64', async function (req, res) {
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
-  res.sendFile(__dirname + "/LogIn.html",);
-
+  if (req.cookies.Id != undefined)
+    res.sendFile(__dirname + "/index");
+  else
+    res.sendFile(__dirname + "/LogIn.html");
 });
 
 app.get('/Contact-Us', function (req, res) {
@@ -127,6 +131,7 @@ app.post("/log-in", async function (req, resol) {
   var email = req.body.Email1;
   var password1 = req.body.Password1;
 
+
   console.log(email + password1);
   var text = 'select * from users where Password=$1 and Email=$2';
   var r = [password1, email];
@@ -139,15 +144,12 @@ app.post("/log-in", async function (req, resol) {
       resol.send("Error");
     }
     else {
-      var data = {
-        FirstNAmeU: res.rows[0].name,
-        EmailU: res.rows[0].email,
-        Id: res.rows[0].id
-      };
+      resol.cookie('Id', res.rows[0].id, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+      resol.cookie('FirstNAmeU', res.rows[0].name, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+      resol.cookie('EmailU', res.rows[0].email, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
       console.log(res.rows[0].name)
-      var base64 = urlCrypt.cryptObj(data);
       console.log("HERE");
-      resol.send('/index/' + base64);
+      resol.send('/index');
     }
   })
 
@@ -167,6 +169,30 @@ var transporter = nodemailer.createTransport({
 //check if the email already in the "DB" if so, will return error,
 // if not, will return to the user a confirmation massege and send confirmation massage to email.
 app.post('/sign-up', async function (req, resul) {
+
+
+  app.use(function (req, res, next) {
+    // check if client sent cookie
+    var cookie = req.cookies.cookieName;
+    if (cookie === undefined) {
+      // no: set a new cookie
+      var randomNumber = Math.random().toString();
+      randomNumber = randomNumber.substring(2, randomNumber.length);
+      res.cookie('cookieName', randomNumber, { maxAge: 900000, httpOnly: true });
+      console.log('cookie created successfully');
+    } else {
+      // yes, cookie was already present 
+      console.log('cookie exists', cookie);
+    }
+    next(); // <-- important!
+  });
+
+
+
+
+
+
+
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -192,7 +218,7 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-    
+
   client.query(text, values, (err, res) => {
     console.log(res.rows[1]);
     if (res.rows.length != 0) {
@@ -209,9 +235,9 @@ app.post('/sign-up', async function (req, resul) {
           to: emailTmp,
           subject: 'Email verification',
           text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-          html: '<h1>Wellcome to ElectronicWebSite!</h1>'+
-                '<br><h3>Please click on the link below to complete your registeration!</h3><br>'+
-                '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+          html: '<h1>Wellcome to ElectronicWebSite!</h1>' +
+            '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
+            '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
 
         };
 
@@ -374,22 +400,16 @@ app.post('/update-password', async function (req, reso) {
 
 })
 
-app.get('/index/:base64', function (req, res) {
+app.get('/index', function (req, res) {
 
   res.sendFile(__dirname + '/index.html')
 })
 
 app.post('/index', function (req, res) {
-  try {
+  var iD=req.cookies.Id;
+  console.log(iD);
 
-    resul = urlCrypt.decryptObj(req.body.UserName);
-    console.log(resul.FirstNAmeU);
-  } catch (e) {
-    console.log("HERR")
-    return res.status(404).send('Bad');
-  }
-
-  res.send(resul.FirstNAmeU);
+  res.send(req.cookies.FirstNAmeU);
 
 })
 

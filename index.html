@@ -268,7 +268,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
-
+            <script src="path/to/jquery.cookie.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
             integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
             crossorigin="anonymous"></script>
@@ -281,10 +281,8 @@
 
         <script>
             $(document).ready(function () {
-                var url = window.location.href
-                var sURLVariables = url.split('/');
-                console.log(sURLVariables);
-                $.post('/index', { UserName: sURLVariables[4] })
+      
+                $.post('/index')
                     .done(function (data) {
                         var user = data;
 
