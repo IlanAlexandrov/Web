@@ -182,7 +182,7 @@ var transporter = nodemailer.createTransport({
 app.post('/sign-up', async function (req, resul) {
 
 
-  app.use(function (req, res, next) {
+  
     
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
