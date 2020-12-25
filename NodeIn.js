@@ -106,9 +106,9 @@ app.get('/sign-up/:base64', async function (req, res) {
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
-  // if (req.cookies.Id != undefined)
-  //   res.sendFile(__dirname + "/index.html");
-  //else
+   if (req.cookies.Id != undefined)
+    res.sendFile(__dirname + "/index.html");
+  else
     res.sendFile(__dirname + "/LogIn.html");
 });
 
