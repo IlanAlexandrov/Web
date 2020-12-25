@@ -338,8 +338,10 @@
                     window.location.href = url;
                 })
                 $("#clickLogout").click(function(){
-                    window.location.href = '/log-in';
+                    $.post('/remove')
+                window.location.href = '/index';
                 })
+
 
             })
 
