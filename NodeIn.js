@@ -132,7 +132,7 @@ app.post("/log-in", async function (req, resol) {
   var email = req.body.Email1;
   var password1 = req.body.Password1;
   var rememberOn = req.body.Flag;
-  console.log("THE REMEMBER MEIS: "+ rememberOn)
+  console.log("THE REMEMBER MEIS: " + rememberOn)
   console.log(email + password1);
   var text = 'select * from users where Password=$1 and Email=$2';
   var r = [password1, email];
@@ -151,13 +151,13 @@ app.post("/log-in", async function (req, resol) {
         resol.cookie('FirstNAmeU', res.rows[0].name);
         resol.cookie('EmailU', res.rows[0].email);
       }
-      else{
+      else {
         //setting coockies for one houre
         resol.cookie('Id', res.rows[0].id, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
         resol.cookie('FirstNAmeU', res.rows[0].name, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
         resol.cookie('EmailU', res.rows[0].email, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
       }
-      
+
       console.log(res.rows[0].name)
       console.log("HERE");
       resol.send('/index');
@@ -180,10 +180,6 @@ var transporter = nodemailer.createTransport({
 //check if the email already in the "DB" if so, will return error,
 // if not, will return to the user a confirmation massege and send confirmation massage to email.
 app.post('/sign-up', async function (req, resul) {
-
-
-  
-    
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -209,46 +205,48 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-    client.query('select * from promocode where PromoCode=$1',code,(err,res)=>
-    {
-      if(err)
-        console.log(err);
-        else{
-          resul.send("This promo code is not in the system.");
-        }
-    })
-  client.query(text, values, (err, res) => {
-    console.log(res.rows[1]);
-    if (res.rows.length != 0) {
-      console.log("GOT HERE")
-
-      resul.send(st[flag]);
+  client.query('select * from promocode where PromoCode=$1', code, (err, res) => {
+    if (err)
+      console.log(err);
+    if (res.rows[0].length == 0) {
+      console.log("Got to the no promo")
+      resul.send("This promo code is not in the system.");
     }
     else {
-      flag = 0;
+      client.query(text, values, (err, res) => {
+        console.log(res.rows[1]);
+        if (res.rows.length != 0) {
+          console.log("GOT HERE")
 
-      if (flag == 0) {
-        var mailOptions = {
-          from: 'ilan19555@gmail.com',
-          to: emailTmp,
-          subject: 'Email verification',
-          text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-          html: '<h1>Wellcome to ElectronicWebSite!</h1>' +
-            '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
-            '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+          resul.send(st[flag]);
+        }
+        else {
+          flag = 0;
 
-        };
+          if (flag == 0) {
+            var mailOptions = {
+              from: 'ilan19555@gmail.com',
+              to: emailTmp,
+              subject: 'Email verification',
+              text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+              html: '<h1>Wellcome to ElectronicWebSite!</h1>' +
+                '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
+                '<a href = "' + registrationiLink + '">EmailifyNow!</a>'
+
+            };
 
 
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
           }
-        });
-      }
-      resul.send(st[flag]);
+          resul.send(st[flag]);
+        }
+      })
     }
   })
 })
@@ -399,20 +397,20 @@ app.post('/update-password', async function (req, reso) {
 })
 
 app.get('/index', function (req, res) {
-  if (req.cookies.Id != undefined){
-    console.log("CHECK?!?!"+req.cookies.Id)
+  if (req.cookies.Id != undefined) {
+    console.log("CHECK?!?!" + req.cookies.Id)
     res.sendFile(__dirname + '/index.html')
   }
-  
-  else{
+
+  else {
     console.log("WE GOT IT!")
     res.sendFile(__dirname + '/LogIn.html')
   }
-    
+
 })
 
 app.post('/index', function (req, res) {
-  
+
   var iD = req.cookies.Id;
   console.log("THE COKIE IS:" + iD);
 
