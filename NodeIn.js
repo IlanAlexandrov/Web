@@ -106,7 +106,7 @@ app.get('/sign-up/:base64', async function (req, res) {
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
- res.clearCookie("Id");
+
   console.log("THE COOCKIE IS+)"+req.cookies.Id)
    //if (req.cookies.Id != undefined)
    // res.sendFile(__dirname + "/index.html");
@@ -405,8 +405,10 @@ app.post('/update-password', async function (req, reso) {
 })
 
 app.get('/index', function (req, res) {
-
+  if(req.cookies.Id!=undefined)
   res.sendFile(__dirname + '/index.html')
+  else 
+  res.sendFile(__dirname+'/log-in.html')
 })
 
 app.post('/index', function (req, res) {
@@ -527,6 +529,14 @@ app.post('/updateProfile', async function (req, reso) {
     reso.send("The details has changed successfuly!")
   }
 
+
+})
+
+app.get('/remove' ,function(req,res){
+  res.clearCookie("Id");
+  res.clearCookie("EmailU");
+  res.clearCookie("FirstNAmeU")
+  res.send("Dne");
 
 })
 app.get('/updateMail/:base64', async function (req, reso) {
