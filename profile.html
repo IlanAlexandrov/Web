@@ -468,7 +468,8 @@
                 window.location.href = url;
             })
             $("#clickLogout").click(function () {
-                $.removeCookie('Id');
+                console.log($.removeCookie('Id'))
+
                 window.location.href = '/log-in';
             })
 
