@@ -177,7 +177,7 @@
           }
        
 
-          if (checker()) {
+         else if (checker()) {
             $.post('/sign-up', { Email: $('#email').val(), Password: $("#password").val(), FirstName: $("#firstName").val(), LastName: $("#lastName").val(), Promo: $("#promoCode").val() })
               .done(function (data) {
                 console.log(data);
