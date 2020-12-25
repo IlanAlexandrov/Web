@@ -180,7 +180,7 @@ var transporter = nodemailer.createTransport({
 //check if the email already in the "DB" if so, will return error,
 // if not, will return to the user a confirmation massege and send confirmation massage to email.
 app.post('/sign-up', async function (req, resul) {
-  var flag=0;
+  var flagForCheck=0;
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -214,18 +214,18 @@ app.post('/sign-up', async function (req, resul) {
       if (err)
         console.log(err);
       if (resi.rows.length == 0) {
-        flag++;
+        flagForCheck++;
         console.log("Got to the no promo")
         resul.send("This promo code is not in the system.");
       }
     })
   }
 
-  if(flag==0)
+  if(flagForCheck==0)
   {
 
   
-  await client.query(text, values, (err, res) => {
+   client.query(text, values, (err, res) => {
     console.log(res.rows[1]);
     if (res.rows.length != 0) {
       console.log("GOT HERE")
