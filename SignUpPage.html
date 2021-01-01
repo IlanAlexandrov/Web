@@ -80,12 +80,20 @@
 
 
           <div class="form-group col-md-6">
-            <input class="form-control" onclick="pass_check()" type="Password" id="passwordS"
+            <input class="form-control" onclick="pass_check()" type="Password" id="RePassword"
               title="Enter the password again"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}(?=.*[!@#$%^&*()-_=+\|[]{};:/?.><])"
               placeholder="RePassword"><br>
           </div>
         </div>
+
+        <div id="whenClickOnPassword"  style="display:none">
+          <span id="matchPassword" class="invalid">Password must match</span><br>
+          <span id="OneNumber" class="invalid">The password must contain at least one number</span>
+          <br><span id="6DigitsAtLeast" class="invalid">The password must be at least 6 charecter
+            long</span><br>
+        </div>
+
 
         <input style="width:50%;" title="Enter promoCode if have" type="text" id="promoCode" placeholder="PromoCode">
         <br>
@@ -118,20 +126,7 @@
 </div>
 </div>
     <!---------------Showing verification------------------>
-    <div class="container">
-
-      <div id="message" style="display: none;">
-        <div class="jumbotron">
-          <h3>Password must contain the following:</h3>
-          <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-          <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-          <p id="number" class="invalid">A <b>number</b></p>
-          <p id="charechter" class="invalid">Special Charecter</p>
-          <p id="length" class="invalid">Minimum <b>6 characters</b></p><br>
-
-        </div>
-      </div>
-    </div>
+  
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -192,6 +187,15 @@
           }
 
         })
+
+        $("#password").click(function(){
+            console.log("D")
+            ne()  ;
+              
+          })
+          $("#RePassword").click(function(){
+            ne();
+          })
       })
 
 
@@ -206,6 +210,30 @@ function submitUserForm(){
     return true;
 }
 </script>
+
+<script>
+  function ne()   {
+   var myInput = document.getElementById("password");
+   var myReInput = document.getElementById("RePassword");
+ myInput.onblur = function() {
+   document.getElementById("whenClickOnPassword").style.display = "none";
+ }
+ myInput.onfocus = function() {
+     
+   document.getElementById("whenClickOnPassword").style.display = "block";
+     
+ }
+ myReInput.onblur = function() {
+   document.getElementById("whenClickOnPassword").style.display = "none";
+ }
+ myReInput.onfocus = function() {
+     
+   document.getElementById("whenClickOnPassword").style.display = "block";
+     
+ }
+  }    
+ 
+       </script>
 
 
     <!---------------END of signUpPage------------------>
