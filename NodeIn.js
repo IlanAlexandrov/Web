@@ -437,9 +437,7 @@ app.post('/index', function (req, res) {
 
 })
 
-// app.get('*',function(req,res){
-//   res.sendFile(__dirname + '/404Error.html')
-// })
+
 
 
 app.get("/BuyPc", function (req, res) {
@@ -595,6 +593,11 @@ app.post('/updatePasswordProfile', async function (req, reso) {
     console.log(res.rows[0]);
   })
 })
+
+app.get('*',function(req,res){
+  res.sendFile(__dirname + '/404Error.html')
+})
+
 app.listen(port, () => {
   console.log('App listening on port %d!', port);
 });
