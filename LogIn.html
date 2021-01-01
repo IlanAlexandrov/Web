@@ -173,7 +173,8 @@
             if ($("#customCheck").prop("checked")) {
               flag=true;
             }
-            $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val(),Flag:flag })
+            if( submitUserForm()){
+              $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val(),Flag:flag })
               .done(function (data) {
                 if (data == "Error") {
                   $('#myModal').modal('show');
@@ -189,6 +190,11 @@
                   window.location.href = data;
                 }
               })
+            }else{
+              $('#myModal').modal('show');
+            $('#MBody').text('Reckapcha must be filled');
+            }
+            
           }
           else{
             $('#myModal').modal('show');
@@ -206,14 +212,14 @@
     </script>
 <script>
 
-  //SUBMIT THE RECAPTHCAAAA
-  // function submitUserForm(){
-  //   var response = grecaptcha.getResponse();
-  //   if(response.length==0)
-  //     return false;
-  //     else
-  //     return true;
-  // }
+  
+  function submitUserForm(){
+    var response = grecaptcha.getResponse();
+    if(response.length==0)
+      return false;
+      else
+      return true;
+  }
 
 </script>
     <!---------------END of Login page------------------>
