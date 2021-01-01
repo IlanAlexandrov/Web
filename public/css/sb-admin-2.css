@@ -47,7 +47,12 @@
 *::after {
   box-sizing: border-box;
 }
-
+.center{text-align:center}
+#space-invaders {
+  margin: 0 auto;
+  display: block;
+  background: white
+}
 html {
   font-family: sans-serif;
   line-height: 1.15;
