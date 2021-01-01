@@ -6,6 +6,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
+const encryption = require("./encryption");
 //var mysql = require('mysql');
 //var pg = require('pg');
 conString = process.env.DATABASE_URL || "postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
@@ -83,10 +84,11 @@ app.get('/sign-up/:base64', async function (req, res) {
     console.log(resi.rows)
     console.log("ID NUM IS: " + idNum)
 
+   var EncryptedPassword = encryption.encrypt(resul.PasswordU);
 
     console.log(idNum)
     text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
-    values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, resul.PasswordU, idNum];
+    values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, EncryptedPassword, idNum];
 
     client.query(text, values, (err, res) => {
       if (err) {
@@ -135,6 +137,9 @@ app.post("/log-in", async function (req, resol) {
   var email = req.body.Email1;
   var password1 = req.body.Password1;
   var rememberOn = req.body.Flag;
+
+  var EncryptedPassword = encryption.encrypt(password1);
+
   console.log("THE REMEMBER MEIS: " + rememberOn)
   console.log(email + password1);
   var text = 'select * from users where Password=$1 and Email=$2';
@@ -387,17 +392,18 @@ app.post('/update-password', async function (req, reso) {
     return reso.status(404).send('Bad');
   }
   newPass = req.body.Password1;
+  var EncryptedPassword = encryption.encrypt(newPass);
   console.log(newPass);
   console.log("Got here")
   var text = "select * from users where Email=$1 and Password=$2"
-  var inser = [resul.Email, newPass]
+  var inser = [resul.Email, EncryptedPassword]
   client.query(text, inser, (err, res) => {
     if (res.rows.length != 0) {
       reso.send("Error")
     } else {
       console.log("good");
       text = "update users set Password=$1 where email=$2"
-      inser = [newPass, resul.Email]
+      inser = [EncryptedPassword, resul.Email]
       client.query(text, inser, (err, res) => {
         if (err)
           console.log(err);
@@ -582,7 +588,8 @@ app.get('/updateMail/:base64', async function (req, reso) {
 app.post('/updatePasswordProfile', async function (req, reso) {
   var text = 'update users set Password=$1 where Email=$2'
   const client = await pool.connect();
-  var variu = [req.body.password, req.body.email];
+  var EncryptedPassword = encryption.encrypt(req.body.password);
+  var variu = [EncryptedPassword, req.body.email];
   client.query(text, variu, (err, res) => {
     if (err)
       console.log(err)
