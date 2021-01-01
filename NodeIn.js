@@ -423,7 +423,7 @@ app.get('/index', function (req, res) {
 
   else {
     console.log("WE GOT IT!")
-    res.sendFile(__dirname + '/LogIn.html')
+    res.redirect('/log-in')
   }
 
 })
