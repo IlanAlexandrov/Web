@@ -469,7 +469,10 @@
             })
             $("#clickLogout").click(function () {
                 $.post('/remove')
-                window.location = '/log-in';
+                    .done(function (data){
+                        console.log(data)
+                        window.location = '/log-in';
+                    })
                 
             })
 

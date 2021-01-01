@@ -264,7 +264,10 @@
             })
             $("#clickLogout").click(function () {
                 $.post('/remove')
-                window.location.href = '/index';
+                    .done(function (data){
+                        console.log(data)
+                        window.location = '/index';
+                    })
             })
 
         })
