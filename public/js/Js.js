@@ -139,7 +139,7 @@ function when_click(){
                    ,'There was no numbers\n'
                    ,'The email was inccorect\n'
                   ];
-    var final_message=['Please Follow the form and make sure all requirments are marked! \n'];
+    var final_message=['\nPlease Follow the form and make sure all requirments are marked! \n'];
     var counter =[0,0,0,0,0,0];
     var lowerCaseLetters = /[a-z]/g;
     var specialCharacter=/[!,#,$,%,@,>,<,=,+]/g;
