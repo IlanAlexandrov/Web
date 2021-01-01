@@ -136,10 +136,7 @@ function when_click(){
     var email_check=document.getElementById("email").value;
     var pass_res= document.getElementById("password").value;
     var messages =['There was less then 6 Charecters!'
-                   ,'There was no upper case!\n'
-                   ,'There was no lower case\n'
                    ,'There was no numbers\n'
-                   ,'There was no Characters!\n'
                    ,'The email was inccorect\n'
                   ];
     var final_message=['Please Follow the form and make sure all requirments are marked! \n'];
@@ -151,23 +148,15 @@ function when_click(){
     // Check for minimum 6 charecters
     if (pass_res.length<6)
         counter[0] ++;
-    // check for having upper case
-    if (!(pass_res.match(upperCaseLetters)))
-        counter[1]++;
-    // check for having lower case
-        if (!(pass_res.match(lowerCaseLetters)))
-        counter[2]++;
+
     // check if includes number
         if (!(pass_res.match(numbers)))
-        counter[3]++;
-    // check if includes Special Character
-        if (!(pass_res.match(specialCharacter)))
-        counter[4]++;
+        counter[1]++;
         if(!(email_check.match(specialCharacter)))
-        counter[5]++;
+        counter[2]++;
     var res=[];
     var flag=0;
-    for (var i =0;i<6;i++){
+    for (var i =0;i<3;i++){
         if(counter[i]>0){
             flag++;
             res+= messages[i];   
