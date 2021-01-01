@@ -554,7 +554,7 @@ app.post('/remove', function (req, res) {
   res.clearCookie("Id");
   res.clearCookie("EmailU");
   res.clearCookie("FirstNAmeU")
-  res.send("Dne");
+  res.redirect('/log-in');
 
 })
 app.get('/updateMail/:base64', async function (req, reso) {
