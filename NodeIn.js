@@ -475,6 +475,7 @@ app.post('/getProfile', async function (req, reso) {
       console.log(err);
     console.log(res.rows[0])
     var EncryptedPassword = encryption.decrypt(res.rows[0].password);
+    console.log("THE PASSWORD WASSSSSS: "+EncryptedPassword)
     dat = {
       firstName: res.rows[0].name,
       lastName: res.rows[0].familyname,

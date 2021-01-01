@@ -421,7 +421,7 @@
                     $('#modal1').text("The passwords are not the same or Your new password is your old password");
                 }
 
-                else if (lastpass != tmp_pass) {
+                else if (lastpass != user.pass) {
                     
                     $('#successModal').modal('show');
                     $('#modal1').text("Your old password not match your current password");
