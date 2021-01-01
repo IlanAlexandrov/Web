@@ -414,13 +414,15 @@
                 var pass = $('#password').val();
                 var repass = $('#RePassword').val();
                 var lastpass = $('#oldPass').val();
+                var tmp_pass = encrypt(user.pass);
                 console.log(pass + "  and re  " + repass + " and last  " + lastpass + " and the current  " + user.pass)
                 if (pass != repass || pass == lastpass) {
                     $('#successModal').modal('show');
                     $('#modal1').text("The passwords are not the same or Your new password is your old password");
                 }
 
-                else if (lastpass != user.pass) {
+                else if (lastpass != tmp_pass) {
+                    
                     $('#successModal').modal('show');
                     $('#modal1').text("Your old password not match your current password");
                 }
@@ -483,6 +485,7 @@
 
     </script>
     <script src="/js/Js.js"></script>
+    <script src= "/encryption.js"
 
 
 
