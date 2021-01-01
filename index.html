@@ -339,8 +339,12 @@
                 })
                 $("#clickLogout").click(function(){
                     $.post('/remove')
-                    window.location = '/index';
-                    location.reload();
+                    .done(function (data){
+                        console.log(data)
+                        window.location = '/index';
+                    })
+                    
+                  
                    
                   
                 })
