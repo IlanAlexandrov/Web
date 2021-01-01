@@ -437,6 +437,10 @@ app.post('/index', function (req, res) {
 
 })
 
+app.get('*',function(req,res){
+  res.sendFile(__dirname + '/404Error.html')
+})
+
 
 app.get("/BuyPc", function (req, res) {
   res.sendFile(__dirname + '/BuyPc.html');
