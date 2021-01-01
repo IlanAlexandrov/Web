@@ -474,7 +474,8 @@ app.post('/getProfile', async function (req, reso) {
     if (err)
       console.log(err);
     console.log(res.rows[0])
-    
+    var EncryptedPassword = encryption.decrypt(newPass);
+    console.log(EncryptedPassword);
     dat = {
       firstName: res.rows[0].name,
       lastName: res.rows[0].familyname,
@@ -484,7 +485,7 @@ app.post('/getProfile', async function (req, reso) {
       street: res.rows[0].street,
       zipCode: res.rows[0].zipcode,
       phone: res.rows[0].phonenumber,
-      pass:res.rows[0].password ,
+      pass:EncryptedPassword ,
       id: res.rows[0].id
     }
     reso.send(dat);

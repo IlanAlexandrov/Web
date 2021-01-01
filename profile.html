@@ -414,7 +414,7 @@
                 var pass = $('#password').val();
                 var repass = $('#RePassword').val();
                 var lastpass = $('#oldPass').val();
-                var tmp_pass = encrypt(user.pass);
+                
                 console.log(pass + "  and re  " + repass + " and last  " + lastpass + " and the current  " + user.pass)
                 if (pass != repass || pass == lastpass) {
                     $('#successModal').modal('show');
@@ -485,7 +485,7 @@
 
     </script>
     <script src="/js/Js.js"></script>
-    <script src= "/encryption.js"></script>
+   
 
 
 
