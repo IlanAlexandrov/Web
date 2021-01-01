@@ -339,7 +339,8 @@
                 })
                 $("#clickLogout").click(function(){
                     $.post('/remove')
-                   window.location.reload(true);
+                    $.get('/log-in');
+                  
                 })
 
 
