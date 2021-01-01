@@ -257,7 +257,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a id="clickLogout" class="btn btn-primary" href="#">Logout</a>
+                        <a id="clickLogout" class="btn btn-primary" href="/log-in">Logout</a>
                     </div>
                 </div>
             </div>
@@ -339,7 +339,7 @@
                 })
                 $("#clickLogout").click(function(){
                     $.post('/remove')
-                window.location.replace = '/log-in';
+               
                 })
 
 
