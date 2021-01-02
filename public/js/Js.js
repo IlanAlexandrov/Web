@@ -204,7 +204,7 @@ function checker(){
     
     var pass= document.getElementById("password").value;
    
-    var confirm = document.getElementById("passwordS").value;
+    var confirm = document.getElementById("RePassword").value;
     
    
     if (pass==confirm){
