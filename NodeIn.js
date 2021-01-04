@@ -407,7 +407,7 @@ app.post('/reset-password', async function (req, resul) {
         console.log("GOTHERE1")
         var template = handlebars.compile(processedSource);
         
-        var data ={"username":firstNAme,"lastname":lastName,"link":resetPasswordLink}
+        var data ={"link":resetPasswordLink}
         console.log("GOTHERE1111")
         console.log("GOTHERE21312")
         var result=template(data);
