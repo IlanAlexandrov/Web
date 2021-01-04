@@ -359,6 +359,7 @@ app.post('/reset-password', async function (req, resul) {
   console.log("GOT")
   var email = req.body.Email;
   console.log(email);
+  var originalSource = fs.readFileSync(__dirname + '/emailConfirmation.html', 'utf8');
   const client = await pool.connect();
   var text = 'select * from users where Email=$1';
   var act = [email];
@@ -373,21 +374,44 @@ app.post('/reset-password', async function (req, resul) {
       var base64 = urlCrypt.cryptObj(data);
 
       var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
-      var mailOptions = {
-        from: 'ilan19555@gmail.com',
-        to: email,
-        subject: 'Reset Password!',
-        text: "Click on the link to refer to reset password link",
-        html: '<h1 style="color:red;">Reset Password Now!</h1>' +
-          +'<h3>Please click on the link below to reset your password</h3>' +
-          '<a href = "' + resetPasswordLink + '">EmailifyNow!</a>'
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
+      function sendEmail(source) {
+        var mailOptions = {
+          from: 'ilan19555@gmail.com',
+          to: emailTmp,
+          subject: 'Email verification',
+          text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+          html: source,
+          attachments:[{
+            filename:"email",
+            path:__dirname+"/public/pic/email.png",
+            cid:"uniqueID@creata.ee"
+          }]
+        };
+
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+
+      }
+      styliner.processHTML(originalSource)
+      .then(function(processedSource) {
+        var template = handlebars.compile(processedSource);
+        var data ={"username":firstNAme,"lastname":lastName,"link":resetPasswordLink}
+        var result=template(data);
+        sendEmail(result)
+        fs.writeFile("basic.html", processedSource, function (err) {
+          if (err) {
+              return console.log(err);
+          }
+
+          console.log("The file was saved!");
+      });
+          // Do something with this string
       });
     }
   })
