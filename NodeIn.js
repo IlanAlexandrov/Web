@@ -374,11 +374,11 @@ app.post('/reset-password', async function (req, resul) {
       var base64 = urlCrypt.cryptObj(data);
 
       var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
-      function sendEmail(source) {
+      function sendEmail1(source) {
         var mailOptions = {
           from: 'ilan19555@gmail.com',
           to: emailTmp,
-          subject: 'Email verification',
+          subject: 'Reset password',
           text: "Paste the url below into your browser to Emailify!" + registrationiLink,
           html: source,
           attachments:[{
@@ -402,16 +402,11 @@ app.post('/reset-password', async function (req, resul) {
       .then(function(processedSource) {
         var template = handlebars.compile(processedSource);
         var data ={"username":firstNAme,"lastname":lastName,"link":resetPasswordLink}
+        console.log("GOTHERE")
         var result=template(data);
-        sendEmail(result)
-        fs.writeFile("basic.html", processedSource, function (err) {
-          if (err) {
-              return console.log(err);
-          }
-
-          console.log("The file was saved!");
-      });
-          // Do something with this string
+        sendEmail1(result)
+ 
+         
       });
     }
   })
