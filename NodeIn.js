@@ -401,8 +401,10 @@ app.post('/reset-password', async function (req, resul) {
       styliner.processHTML(originalSource)
       .then(function(processedSource) {
         var template = handlebars.compile(processedSource);
+        console.log("GOTHERE1")
         var data ={"username":firstNAme,"lastname":lastName,"link":resetPasswordLink}
-        console.log("GOTHERE")
+        console.log("GOTHERE1111")
+        console.log("GOTHERE21312")
         var result=template(data);
         sendEmail1(result)
  
