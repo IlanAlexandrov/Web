@@ -377,7 +377,7 @@ app.post('/reset-password', async function (req, resul) {
       function sendEmail1(source) {
         var mailOptions = {
           from: 'ilan19555@gmail.com',
-          to: emailTmp,
+          to: email,
           subject: 'Reset password',
           text: "Paste the url below into your browser to Emailify!" + registrationiLink,
           html: source,
