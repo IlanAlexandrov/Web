@@ -287,11 +287,12 @@ app.post('/sign-up', async function (req, resul) {
         });
             // Do something with this string
         });
+      }
       resul.send(st[flag]);
     }
+  
   })
 }
-
 })
 
 app.post('/contact-us', function (req, res) {
