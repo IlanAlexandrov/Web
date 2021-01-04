@@ -375,8 +375,9 @@ app.post('/reset-password', async function (req, resul) {
       var base64 = urlCrypt.cryptObj(data);
 
       var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
-      console.log("GOTHERE1")
+      
       function sendEmail1(source) {
+        console.log("GOTHERE1")
         var mailOptions = {
           from: 'ilan19555@gmail.com',
           to: email,
