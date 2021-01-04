@@ -356,10 +356,11 @@ app.get('/reset-password', function (req, res) {
 })
 
 app.post('/reset-password', async function (req, resul) {
-  console.log("GOT")
+  
   var email = req.body.Email;
   console.log(email);
   var originalSource = fs.readFileSync(__dirname + '/emailConfirmation.html', 'utf8');
+  console.log("GOT");
   const client = await pool.connect();
   var text = 'select * from users where Email=$1';
   var act = [email];
@@ -374,6 +375,7 @@ app.post('/reset-password', async function (req, resul) {
       var base64 = urlCrypt.cryptObj(data);
 
       var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
+      console.log("GOTHERE1")
       function sendEmail1(source) {
         var mailOptions = {
           from: 'ilan19555@gmail.com',
@@ -401,7 +403,7 @@ app.post('/reset-password', async function (req, resul) {
       styliner.processHTML(originalSource)
       .then(function(processedSource) {
         var template = handlebars.compile(processedSource);
-        console.log("GOTHERE1")
+        
         var data ={"username":firstNAme,"lastname":lastName,"link":resetPasswordLink}
         console.log("GOTHERE1111")
         console.log("GOTHERE21312")
