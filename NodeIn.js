@@ -7,11 +7,15 @@ var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 const encryption = require("./encryption");
+var Styliner = require('styliner');
+var options = { urlPrefix: "dir/", noCSS : true };
+var styliner = new Styliner(__dirname,options);
 //var mysql = require('mysql');
 //var pg = require('pg');
 conString = process.env.DATABASE_URL || "postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
+var handlebars = require('handlebars');
 var urlCrypt = require('url-crypt')('~{ry*I)==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
 const { Pool } = require('pg');
 var cookieParser = require('cookie-parser');
@@ -203,7 +207,7 @@ app.post('/sign-up', async function (req, resul) {
   };
 
   var base64 = urlCrypt.cryptObj(data);
-
+  var originalSource = fs.readFileSync(__dirname + '/emailConfirmation.html', 'utf8');
   var registrationiLink = 'https://electronicsweb1.herokuapp.com/Sign-Up/' + base64;
   console.log(emailTmp + " " + passwordTmp + " " + firstNAme + " " + lastName + " " + code);
   console.log("HEREEEEEEE")
@@ -244,28 +248,45 @@ app.post('/sign-up', async function (req, resul) {
       flag = 0;
 
       if (flag == 0) {
-        var mailOptions = {
-          from: 'ilan19555@gmail.com',
-          to: emailTmp,
-          subject: 'Email verification',
-          text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-          html: '<h1>Wellcome to Electronic web site!</h1><br>' +
-            '<span>Here you will find everything you need! but first..</span>' +
-            '<br><h3>Please click on the link below to complete your registeration!</h3><br>' +
-            '<a href = "' + registrationiLink + '">EmailifyNow!</a><br>' +
-            '<span>Thank you, Team web.</span>'
+        function sendEmail(source) {
+          var mailOptions = {
+            from: 'ilan19555@gmail.com',
+            to: emailTmp,
+            subject: 'Email verification',
+            text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+            html: source,
+            attachments:[{
+              filename:"email",
+              path:__dirname+"/public/pic/email.png",
+              cid:"uniqueID@creata.ee"
+            }]
+          };
 
-        };
 
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
 
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
+        }
+        styliner.processHTML(originalSource)
+        .then(function(processedSource) {
+          var template = handlebars.compile(processedSource);
+          var data ={"username":firstNAme,"lastname":lastName,"link":registrationiLink}
+          var result=template(data);
+          sendEmail(result)
+          fs.writeFile("basic.html", processedSource, function (err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log("The file was saved!");
         });
-      }
+            // Do something with this string
+        });
       resul.send(st[flag]);
     }
   })
