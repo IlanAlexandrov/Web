@@ -251,7 +251,7 @@ app.post('/sign-up', async function (req, resul) {
         function sendEmail(source) {
           var mailOptions = {
             from: 'ilan19555@gmail.com',
-            to: 'ilan19555@gmail.com',
+            to: emailTmp,
             subject: 'Email verification',
             text: "Paste the url below into your browser to Emailify!" + registrationiLink,
             html: source,
