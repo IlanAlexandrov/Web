@@ -274,6 +274,7 @@ app.post('/sign-up', async function (req, resul) {
         }
         styliner.processHTML(originalSource)
         .then(function(processedSource) {
+          console.log(processedSource)
           var template = handlebars.compile(processedSource);
           var data ={"username":firstNAme,"lastname":lastName,"link":"https://www.facebook.com/"}
           var result=template(data);
