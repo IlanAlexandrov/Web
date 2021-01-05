@@ -218,7 +218,7 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
-  console.log(code);
+ 
   if (code != "") {
 
 
@@ -278,14 +278,7 @@ app.post('/sign-up', async function (req, resul) {
           var data ={"username":firstNAme,"lastname":lastName,"link":registrationiLink}
           var result=template(data);
           sendEmail(result)
-          fs.writeFile("basic.html", processedSource, function (err) {
-            if (err) {
-                return console.log(err);
-            }
-
-            console.log("The file was saved!");
-        });
-            // Do something with this string
+  
         });
       }
       resul.send(st[flag]);
