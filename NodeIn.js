@@ -377,7 +377,7 @@ app.post('/reset-password', async function (req, resul) {
           from: 'ilan19555@gmail.com',
           to: email,
           subject: 'Reset password',
-          text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+          text: "Paste the url below into your browser to getPassword!",
           html: source,
           attachments:[{
             filename:"email",
@@ -398,6 +398,7 @@ app.post('/reset-password', async function (req, resul) {
       }
       styliner.processHTML(originalSource)
       .then(function(processedSource) {
+        console.log(processedSource)
         console.log("GOTHERE1")
         var template = handlebars.compile(processedSource);
         var data ={"link":resetPasswordLink}
