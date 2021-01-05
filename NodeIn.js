@@ -276,7 +276,7 @@ app.post('/sign-up', async function (req, resul) {
         .then(function(processedSource) {
           console.log("WE GOT"+processedSource)
           var template = handlebars.compile(processedSource);
-          var data ={"username":firstNAme,"lastname":lastName,"link":"https://www.facebook.com/"}
+          var data ={"username":firstNAme,"lastname":lastName,"link":registrationiLink}
           var result=template(data);
           sendEmail(result)
           
