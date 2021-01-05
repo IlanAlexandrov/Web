@@ -251,7 +251,7 @@ app.post('/sign-up', async function (req, resul) {
         function sendEmail(source) {
           var mailOptions = {
             from: 'ilan19555@gmail.com',
-            to: emailTmp,
+            to: 'ilan19555@gmail.com',
             subject: 'Email verification',
             text: "Paste the url below into your browser to Emailify!" + registrationiLink,
             html: source,
@@ -275,10 +275,11 @@ app.post('/sign-up', async function (req, resul) {
         styliner.processHTML(originalSource)
         .then(function(processedSource) {
           var template = handlebars.compile(processedSource);
-          var data ={"username":firstNAme,"lastname":lastName,"link":registrationiLink}
+          var data ={"username":firstNAme,"lastname":lastName,"link":"https://www.facebook.com/"}
           var result=template(data);
           sendEmail(result)
-  
+          
+            // Do something with this string
         });
       }
       resul.send(st[flag]);
