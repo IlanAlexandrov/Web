@@ -274,7 +274,7 @@ app.post('/sign-up', async function (req, resul) {
         }
         styliner.processHTML(originalSource)
         .then(function(processedSource) {
-          console.log("WE GOT"+processedSource)
+          
           var template = handlebars.compile(processedSource);
           var data ={"username":firstNAme,"lastname":lastName,"link":registrationiLink}
           var result=template(data);
@@ -397,18 +397,14 @@ app.post('/reset-password', async function (req, resul) {
 
       }
       styliner.processHTML(originalSource)
-      
       .then(function(processedSource) {
         console.log("GOTHERE1")
         var template = handlebars.compile(processedSource);
-        
         var data ={"link":resetPasswordLink}
         console.log("GOTHERE1111")
         console.log("GOTHERE21312")
         var result=template(data);
-        sendEmail1(result)
- 
-         
+        sendEmail1(result)   
       });
     }
   })
