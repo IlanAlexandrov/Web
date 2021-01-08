@@ -409,7 +409,7 @@ app.post('/reset-password', async function (req, resul) {
       });
     }
   })
-
+  resul.send("Good");
 })
 
 app.get('/update-password/:base64', function (req, res) {
