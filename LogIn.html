@@ -137,7 +137,7 @@
 
 
     <!---------------Display confirmation massege when clicking on password------------------>
-   
+
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -152,53 +152,70 @@
     <script src="/js/Js.js"></script>
     <script>
       $(document).ready(function () {
-        var flag=false;
+        var flag = false;
         $("#LGBTN").click(function () {
-          if (when_click()){
+          if (when_click()) {
             if ($("#customCheck").prop("checked")) {
-              flag=true;
+              flag = true;
             }
-            if( submitUserForm()){
-              $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val(),Flag:flag })
-              .done(function (data) {
-                if (data == "Error") {
-                  $('#myModal').modal('show');
-                  $('#modalIn').css('display', 'block');
-                  $('#MBody').text('Email or password is inccorect please try again');
-                  $("#CloseModal").click(function () {
-                    window.location.href = window.location.href;
-                  })
+            if (submitUserForm()) {
+              $.post('/log-in', { Email1: $('#email').val(), Password1: $('#password').val(), Flag: flag })
+                .done(function (data) {
+                  if (data == "Error") {
+                    $('#myModal').modal('show');
+                    $('#modalIn').css('display', 'block');
+                    $('#MBody').text('Email or password is inccorect please try again');
+                    $("#CloseModal").click(function () {
+                      window.location.href = window.location.href;
+                    })
 
-                }
-                else {
-                  window.location.href = data;
-                }
-              })
-            }else{
+                  }
+
+                  else {
+                    window.location.href = data;
+                  }
+                })
+            } else {
               $('#myModal').modal('show');
-            $('#MBody').text('Reckapcha must be filled');
+              $('#MBody').text('Reckapcha must be filled');
             }
-            
+
+          }
+          if(!(checkIFEntered())){
+            $('#myModal').modal('show');
+          $('#modalIn').css('display', 'block');
+          $('#MBody').text('One or more of the fields are missing!');
           }
           
-            
+
+
         });
-      
+
 
       });
     </script>
-<script>
+    <script>
 
-  
-  function submitUserForm(){
-    var response = grecaptcha.getResponse();
-    if(response.length==0)
-      return false;
-      else
-      return true;
-  }
 
-</script>
+      function submitUserForm() {
+        var response = grecaptcha.getResponse();
+        if (response.length == 0)
+          return false;
+        else
+          return true;
+      }
+
+    </script>
+    <script>
+      function checkIFEntered() {
+        var x = document.getElementById("email").value;
+        var y = document.getElementById("password").value;
+        if (x == '' || y == '')
+          return false;
+        return true;
+      }
+
+    </script>
     <!---------------END of Login page------------------>
 </body>
 
