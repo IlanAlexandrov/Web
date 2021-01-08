@@ -422,7 +422,9 @@
                 var pass = $('#password').val();
                 var repass = $('#RePassword').val();
                 var lastpass = $('#oldPass').val();
-                
+                $("#matchPassword").css("display","block");
+                $("#6DigitsAtLeast").css("display","block");
+                $("#OneNumber").css("display","block");
                 console.log(pass + "  and re  " + repass + " and last  " + lastpass + " and the current  " + user.pass)
                 if (pass != repass || pass == lastpass) {
                     $('#successModal').modal('show');
