@@ -225,8 +225,8 @@
                                 title="Enter valid email with @, phone, or username" placeholder="----">
                         </div>
                         <div class="col-lg-6 mb-3">
-                            <br><span id="matchPassword" class="invalid">Password must match</span><br><br>
-                            <span id="OneNumber" class="invalid">The password must contain at least one number</span>
+                            <br><span style="display:none" id="matchPassword" class="invalid">Password must match</span><br><br>
+                            <span id="OneNumber" style="display:none" class="invalid">The password must contain at least one number</span>
 
                         </div>
 
@@ -248,7 +248,7 @@
                                 id="RePassword" title="Enter valid email with @, phone, or username" placeholder="----">
                         </div>
                         <div class="col-lg-6 mb-3">
-                            <br><span id="6DigitsAtLeast" class="invalid">The password must be at least 6 charecter
+                            <br><span id="6DigitsAtLeast" style="display:none" class="invalid">The password must be at least 6 charecter
                                 long</span>
 
 
@@ -385,6 +385,14 @@
                     $('#successModal').modal('show');
                     $('#modal1').text('The email is not valid, please try again!');
                 }
+                //this will be responsible to show  to the user
+                //all of the information about how to put the
+                //right password in
+                $("#password").click(function(){
+                $("#matchPassword").css("display","block");
+                $("#6DigitsAtLeast").css("display","block");
+                $("#OneNumber").css("display","block");
+            })
 
                 if (!(checkUser())) {
                     $('#successModal').modal('show');
