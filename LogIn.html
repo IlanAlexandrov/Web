@@ -116,7 +116,7 @@
     <!--Display the modal-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
-      <div id="modalIn" style="display: none;" class="modal-dialog">
+      <div id="modalIn" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Information</h5>
@@ -163,7 +163,7 @@
                 .done(function (data) {
                   if (data == "Error") {
                     $('#myModal').modal('show');
-                    $('#modalIn').css('display', 'block');
+                   
                     $('#MBody').text('Email or password is inccorect please try again');
                     $("#CloseModal").click(function () {
                       window.location.href = window.location.href;
@@ -183,7 +183,7 @@
           }
           if(!(checkIFEntered())){
             $('#myModal').modal('show');
-          $('#modalIn').css('display', 'block');
+         
           $('#MBody').text('One or more of the fields are missing!');
           }
           
