@@ -170,12 +170,9 @@
                   })
 
                 }
-
-                else{
-            $('#myModal').modal('show');
-          $('#modalIn').css('display', 'block');
-          $('#MBody').text('One or more of the fields are missing!');
-          }
+                else {
+                  window.location.href = data;
+                }
               })
             }else{
               $('#myModal').modal('show');
