@@ -164,7 +164,7 @@ app.post("/log-in", async function (req, resol) {
         resol.cookie('EmailU', res.rows[0].email);
       }
       else {
-        //setting coockies for one houre
+        //setting coockies for one hour
         resol.cookie('Id', res.rows[0].id, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
         resol.cookie('FirstNAmeU', res.rows[0].name, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
         resol.cookie('EmailU', res.rows[0].email, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });

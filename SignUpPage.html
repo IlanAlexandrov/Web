@@ -13,7 +13,7 @@
   <link rel="stykesheeet" href="https://fonts.googleapis.com/css?family=Antic Slab" </link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  
+
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
@@ -45,201 +45,201 @@
 
       <div class="col-xl-10 col-lg-12 col-md-9">
 
-          <div class="card o-hidden border-0 shadow-lg my-5">
-              <div class="card-body p-0">
-                  <!-- Nested Row within Card Bodyyy -->
-                  <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                      <div class="col-lg-6">
-                          <div class="p-5">
-      <h3 style='font-family: Antic Slab;
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Bodyyy -->
+            <div class="row">
+              <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <h3 style='font-family: Antic Slab;
                margin-bottom: 10%;'>Create an Account!</h3>
 
 
-      <!--This is the form for the user last name email password etc-->
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control form-control-user" id="firstName" placeholder="First Name">
-        </div>
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control form-control-user" id="lastName" placeholder="Last Name">
+                  <!--This is the form for the user last name email password etc-->
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control form-control-user" id="firstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control form-control-user" id="lastName" placeholder="Last Name">
 
-        </div>
-      </div>
-      <div class="form-group">
-        <input class="form-control form-control-user" type="Email" id="email"
-          title="Enter valid email with @, phone, or username" placeholder="Email address">
-        <br>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <input class="form-control" onclick="editPasswordProfile()" type="Password" id="password"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}(?=.*[!@#$%^&*()-_=+\|[]{};:/?.><])"
-              title="Must contain at least one number,Special charecter and one uppercase and lowercase letter, and at least 6 or more characters"
-              placeholder="Password"><br>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control form-control-user" type="Email" id="email"
+                      title="Enter valid email with @, phone, or username" placeholder="Email address">
+                    <br>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <input class="form-control" onclick="editPasswordProfile()" type="Password" id="password"
+                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}(?=.*[!@#$%^&*()-_=+\|[]{};:/?.><])"
+                          title="Must contain at least one number,Special charecter and one uppercase and lowercase letter, and at least 6 or more characters"
+                          placeholder="Password"><br>
+                      </div>
+
+
+                      <div class="form-group col-md-6">
+                        <input class="form-control" onclick="comPass()" type="Password" id="RePassword"
+                          title="Enter the password again"
+                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}(?=.*[!@#$%^&*()-_=+\|[]{};:/?.><])"
+                          placeholder="RePassword"><br>
+                      </div>
+                    </div>
+
+                    <div id="whenClickOnPassword" style="display:none">
+                      <span id="matchPassword" class="invalid">Password must match</span><br>
+                      <span id="OneNumber" class="invalid">The password must contain at least one number</span>
+                      <br><span id="6DigitsAtLeast" class="invalid">The password must be at least 6 charecter
+                        long</span><br>
+                    </div>
+
+
+                    <input style="width:50%;" title="Enter promoCode if have" type="text" id="promoCode"
+                      placeholder="PromoCode">
+                    <br>
+
+
+
+
+
+                    <div class="butC">
+                      <br>
+
+                      <div class="g-recaptcha" data-sitekey="6LcZrwAaAAAAAOZ29UEYlCDxEl3QF679viXPer24"></div>
+
+                      <input data-toggle="modal" data-target="#myModal" type="submit"
+                        class="btn btn-primary btn-user btn-block" id="butS"
+                        style='font-family: Antic Slab; margin-top: 5%;'></input>
+
+                    </div>
+                  </div>
+
+
+
+                  <p style='font-family: Catamaran;'>Already a member?
+                    <a href="log-in">Sign-in</a>
+                  </p>
+
+
+                </div>
+              </div>
+            </div>
           </div>
-
-
-          <div class="form-group col-md-6">
-            <input class="form-control" onclick="comPass()" type="Password" id="RePassword"
-              title="Enter the password again"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}(?=.*[!@#$%^&*()-_=+\|[]{};:/?.><])"
-              placeholder="RePassword"><br>
-          </div>
-        </div>
-
-        <div id="whenClickOnPassword"  style="display:none">
-          <span id="matchPassword" class="invalid">Password must match</span><br>
-          <span id="OneNumber" class="invalid">The password must contain at least one number</span>
-          <br><span id="6DigitsAtLeast" class="invalid">The password must be at least 6 charecter
-            long</span><br>
-        </div>
-
-
-        <input style="width:50%;" title="Enter promoCode if have" type="text" id="promoCode" placeholder="PromoCode">
-        <br>
-
-
-
-
-
-        <div class="butC">
-          <br>
-
-          <div class="g-recaptcha" data-sitekey="6LcZrwAaAAAAAOZ29UEYlCDxEl3QF679viXPer24"></div>
-
-          <input data-toggle="modal" data-target="#myModal" type="submit" class="btn btn-primary btn-user btn-block"
-            id="butS" style='font-family: Antic Slab; margin-top: 5%;'></input>
-
         </div>
       </div>
+      <!---------------Showing verification------------------>
 
 
-
-      <p style='font-family: Catamaran;'>Already a member?
-        <a href="log-in">Sign-in</a></p>
-
-    
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-    <!---------------Showing verification------------------>
-  
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-      <div id="modalIn" class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Information</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body" id="MBody">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div id="modalIn" class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="MBody">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 
 
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-      crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-      crossorigin="anonymous"></script>
-    <script src="/js/Js.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+      <script src="/js/Js.js"></script>
 
-    <script>
-      $(document).ready(function () {
-        $("#butS").click(function () {
-          if(!checkUser()){
-            $('#myModal').modal('show');
-            $('#MBody').text('The User Name or Last name forbided to be with numbers');
-          }
-       
+      <script>
+        $(document).ready(function () {
+          $("#butS").click(function () {
+            if (!checkUser()) {
+              $('#myModal').modal('show');
+              $('#MBody').text('The User Name or Last name forbided to be with numbers');
+            }
 
-         else if (checker()) {
-           if(submitUserForm()){
-            $.post('/sign-up', { Email: $('#email').val(), Password: $("#password").val(), FirstName: $("#firstName").val(), LastName: $("#lastName").val(), Promo: $("#promoCode").val() })
-              .done(function (data) {
-                console.log(data);
-                $("#MBody").html(data);
-              })
-           }else
-           $('#myModal').modal('show');
-            $('#MBody').text('Reckapcha must be filled');
-            
 
-          }
+            else if (checker()) {
+              if (submitUserForm()) {
+                $.post('/sign-up', { Email: $('#email').val(), Password: $("#password").val(), FirstName: $("#firstName").val(), LastName: $("#lastName").val(), Promo: $("#promoCode").val() })
+                  .done(function (data) {
+                    console.log(data);
+                    $("#MBody").html(data);
+                  })
+              } else
+                $('#myModal').modal('show');
+              $('#MBody').text('Reckapcha must be filled');
 
-        })
 
-        $("#password").click(function(){
-            console.log("D")
-            ne()  ;
-              
+            }
+
           })
-          $("#RePassword").click(function(){
+
+          $("#password").click(function () {
+            console.log("D")
+            ne();
+
+          })
+          $("#RePassword").click(function () {
             ne();
           })
-      })
+        })
 
 
-    </script>
-<script>
+      </script>
+      <script>
 
-function submitUserForm(){
-  var response = grecaptcha.getResponse();
-  if(response.length==0)
-    return false;
-    else
-    return true;
-}
-</script>
+        function submitUserForm() {
+          var response = grecaptcha.getResponse();
+          if (response.length == 0)
+            return false;
+          else
+            return true;
+        }
+      </script>
 
-<script>
-  function ne()   {
-   var myInput = document.getElementById("password");
-   var myReInput = document.getElementById("RePassword");
- myInput.onblur = function() {
-   document.getElementById("whenClickOnPassword").style.display = "none";
- }
- myInput.onfocus = function() {
-     
-   document.getElementById("whenClickOnPassword").style.display = "block";
-     
- }
- myReInput.onblur = function() {
-   document.getElementById("whenClickOnPassword").style.display = "none";
- }
- myReInput.onfocus = function() {
-     
-   document.getElementById("whenClickOnPassword").style.display = "block";
-     
- }
-  }    
- 
-       </script>
+      <script>
+        function ne() {
+          var myInput = document.getElementById("password");
+          var myReInput = document.getElementById("RePassword");
+          myInput.onblur = function () {
+            document.getElementById("whenClickOnPassword").style.display = "none";
+          }
+          myInput.onfocus = function () {
+
+            document.getElementById("whenClickOnPassword").style.display = "block";
+
+          }
+          myReInput.onblur = function () {
+            document.getElementById("whenClickOnPassword").style.display = "none";
+          }
+          myReInput.onfocus = function () {
+
+            document.getElementById("whenClickOnPassword").style.display = "block";
+
+          }
+        }
+
+      </script>
 
 
-    <!---------------END of signUpPage------------------>
+      <!---------------END of signUpPage------------------>
 </body>
 
 </html>
-
-
- 
