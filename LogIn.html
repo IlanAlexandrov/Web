@@ -171,9 +171,11 @@
 
                 }
 
-                else {
-                  window.location.href = data;
-                }
+                else{
+            $('#myModal').modal('show');
+          $('#modalIn').css('display', 'block');
+          $('#MBody').text('One or more of the fields are missing!');
+          }
               })
             }else{
               $('#myModal').modal('show');
@@ -181,11 +183,7 @@
             }
             
           }
-          else{
-            $('#myModal').modal('show');
-          $('#modalIn').css('display', 'block');
-          $('#MBody').text('One or more of the fields are missing!');
-          }
+          
             
         });
       
