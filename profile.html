@@ -388,12 +388,7 @@
                 //this will be responsible to show  to the user
                 //all of the information about how to put the
                 //right password in
-                $("#password").click(function(){
-                    console.log("Clicked!!!!!!!!!")
-                $("#matchPassword").css("display","block");
-                $("#6DigitsAtLeast").css("display","block");
-                $("#OneNumber").css("display","block");
-            })
+            
 
                 if (!(checkUser())) {
                     $('#successModal').modal('show');
@@ -449,7 +444,12 @@
                         })
                 }
             })
-
+            $("#password").click(function(){
+                    console.log("Clicked!!!!!!!!!")
+                $("#matchPassword").css("display","block");
+                $("#6DigitsAtLeast").css("display","block");
+                $("#OneNumber").css("display","block");
+            })
 
             $("#PcBtn").click(function () {
 
