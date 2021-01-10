@@ -222,7 +222,7 @@ app.post('/sign-up', async function (req, resul) {
   if (code != "") {
 
 
-    await client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
+     client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
       if (err)
         console.log(err);
       if (resi.rows.length == 0) {
