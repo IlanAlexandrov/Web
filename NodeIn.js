@@ -464,10 +464,8 @@ app.post('/update-password', async function (req, reso) {
 
 app.get('/index', function (req, res) {
   if (req.cookies.Id != undefined) {
-    console.log("CHECK?!?!" + req.cookies.Id)
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(__dirname + '/index.html');
   }
-
   else {
     console.log("WE GOT IT!")
     res.redirect('/log-in')
@@ -476,19 +474,23 @@ app.get('/index', function (req, res) {
 })
 
 app.post('/index', function (req, res) {
-
   var iD = req.cookies.Id;
   console.log("THE COKIE IS:" + iD);
-
   res.send(req.cookies.FirstNAmeU);
-
 })
 
 
 
 
 app.get("/BuyPc", function (req, res) {
-  res.sendFile(__dirname + '/BuyPc.html');
+  if (req.cookies.Id != undefined) {
+    res.sendFile(__dirname + '/index.html');
+  }
+  else {
+    console.log("WE GOT IT!")
+    res.redirect('/BuyPc')
+  }
+ 
 })
 
 app.get('/BuyCellPhone', function (req, res) {
