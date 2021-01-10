@@ -487,7 +487,6 @@ app.get("/BuyPc", function (req, res) {
     res.sendFile(__dirname + '/BuyPc.html');
   }
   else {
-    console.log("WE GOT IT!")
     res.redirect('/log-in')
   }
  
@@ -498,18 +497,26 @@ app.get('/BuyCellPhone', function (req, res) {
     res.sendFile(__dirname + '/BuyCellPhone.html');
   }
   else {
-    console.log("WE GOT IT!")
     res.redirect('/log-in')
   }
 })
 
 app.get('/about', function (req, res) {
-
-  res.sendFile(__dirname + '/about.html')
+  if (req.cookies.Id != undefined) {
+    res.sendFile(__dirname + '/about.html');
+  }
+  else {
+    res.redirect('/log-in')
+  }
 })
 
 app.get('/profile', function (req, res) {
-  res.sendFile(__dirname + '/profile.html')
+  if (req.cookies.Id != undefined) {
+    res.sendFile(__dirname + '/profile.html');
+  }
+  else {
+    res.redirect('/log-in')
+  }
 })
 app.post('/getProfile', async function (req, reso) {
   var iD = req.cookies.Id;
