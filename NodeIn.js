@@ -219,22 +219,19 @@ app.post('/sign-up', async function (req, resul) {
   var values = [emailTmp];
   const client = await pool.connect();
  
-  if (code != "") {
+   if (code != "") {
 
 
-     client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
+    await client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
       if (err)
         console.log(err);
       if (resi.rows.length == 0) {
         flagForCheck++;
         console.log("Got to the no promo")
         resul.send("This promo code is not in the system.");
-        return;
+        
       }
-    })
-    
-
-    
+    }) 
   }
 
   if(flagForCheck==0)
