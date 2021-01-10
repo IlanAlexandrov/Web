@@ -361,7 +361,7 @@ app.post('/reset-password', async function (req, resul) {
   var act = [email];
   client.query(text, act, (err, res) => {
     if (res.rows.length == 0) {
-     
+     console.log("seems that im here and i dont know what is this email is")
       resul.send("Error");
     }
     else {
