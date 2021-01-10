@@ -171,7 +171,7 @@ function when_click(){
         return false;
     }
     else{
-        document.getElementById("MBody").style.display = "none";
+        
         document.getElementById("MBody").innerHTML=document.getElementById('email').value+"<br>"+pass_res;
         
         return true;
