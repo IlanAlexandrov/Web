@@ -407,6 +407,7 @@ app.post('/reset-password', async function (req, resul) {
         console.log("GOTHERE21312")
         var result=template(data);
         sendEmail1(result)   
+        resul.send("Success");
       });
     }
   })
