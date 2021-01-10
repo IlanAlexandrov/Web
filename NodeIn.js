@@ -114,7 +114,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
 
   if (req.cookies.Id != undefined){
-    console.log("ERH");
     res.sendFile(__dirname + "/index.html");
   }
     
