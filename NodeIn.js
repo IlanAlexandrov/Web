@@ -494,7 +494,13 @@ app.get("/BuyPc", function (req, res) {
 })
 
 app.get('/BuyCellPhone', function (req, res) {
-  res.sendFile(__dirname + '/BuyCellPhone.html')
+  if (req.cookies.Id != undefined) {
+    res.sendFile(__dirname + '/BuyCellPhone.html');
+  }
+  else {
+    console.log("WE GOT IT!")
+    res.redirect('/log-in')
+  }
 })
 
 app.get('/about', function (req, res) {
