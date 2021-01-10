@@ -238,7 +238,7 @@ app.post('/sign-up', async function (req, resul) {
 
   
    client.query(text, values, (err, res) => {
-    console.log(res.rows[1]);
+    console.log("Im getting here but i dont need to"+res.rows[1]);
     if (res.rows.length != 0) {
       console.log("GOT HERE")
 
