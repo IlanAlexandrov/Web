@@ -484,11 +484,11 @@ app.post('/index', function (req, res) {
 
 app.get("/BuyPc", function (req, res) {
   if (req.cookies.Id != undefined) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/BuyPc.html');
   }
   else {
     console.log("WE GOT IT!")
-    res.redirect('/BuyPc')
+    res.redirect('/log-in')
   }
  
 })
