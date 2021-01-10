@@ -209,8 +209,7 @@ app.post('/sign-up', async function (req, resul) {
   var base64 = urlCrypt.cryptObj(data);
   var originalSource = fs.readFileSync(__dirname + '/emailConfirmation.html', 'utf8');
   var registrationiLink = 'https://electronicsweb1.herokuapp.com/Sign-Up/' + base64;
-  console.log(emailTmp + " " + passwordTmp + " " + firstNAme + " " + lastName + " " + code);
-  console.log("HEREEEEEEE")
+  
   var st = [
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
@@ -548,6 +547,7 @@ app.post('/updateProfile', async function (req, reso) {
   var newzipCode = req.body.zipCode;
   var prevEmail = req.body.prevEmail;
   var newStreet = req.body.street;
+  var originalSource = fs.readFileSync(__dirname + '/emailWantToChange.html', 'utf8');
   console.log(newUser + " " + newLast + " " + newemail + " " + newphone + " " + newcountry + " " + newcity + " " + newzipCode + " " + prevEmail)
   var text = 'update users set Name=$1, FamilyName=$2,PhoneNumber=$3,Country=$4,City=$5,Street=$6,ZipCode=$7 where ID=$8';
   var options = [newUser, newLast, newphone, newcountry, newcity, newStreet, newzipCode, req.body.Id];
@@ -573,22 +573,39 @@ app.post('/updateProfile', async function (req, reso) {
           var base64 = urlCrypt.cryptObj(data);
 
           var registrationiLink = 'https://electronicsweb1.herokuapp.com/updateMail/' + base64;
-          var mailOptions = {
-            from: 'ilan19555@gmail.com',
-            to: prevEmail,
-            subject: 'Email verification',
-            text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-            html: '<h1>Change Email</h1><br>' +
-              '<h4>You just wish to change your email, we need to confirm that it is you.</h4><br>' +
-              '<span> Click on the link below to complete the change</span><br>' +
-              '<a href = "' + registrationiLink + '">ChangeEmailNow</a>'
-          };
-          transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
+          function sendEmail1(source) {
+        
+            var mailOptions = {
+              from: 'ilan19555@gmail.com',
+              to: newemail,
+              subject: 'Confirm Changing email',
+              text: "Paste the url below into your browser to getPassword!",
+              html: source,
+              attachments:[{
+                filename:"email",
+                path:__dirname+"/public/pic/email.png",
+                cid:"uniqueID@creata.ee"
+              }]
+            };
+    
+    
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+          }
+
+          styliner.processHTML(originalSource)
+          .then(function(processedSource) {
+            console.log(processedSource)
+            console.log("GOTHERE1")
+            var template = handlebars.compile(processedSource);
+            var data ={"username":newUser,"lastname": newLast , "link":registrationiLink}
+            var result=template(data);
+            sendEmail1(result)   
           });
           reso.send("The profile has been updated! and email sent to you to change your mail!")
         }
