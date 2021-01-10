@@ -229,8 +229,12 @@ app.post('/sign-up', async function (req, resul) {
         flagForCheck++;
         console.log("Got to the no promo")
         resul.send("This promo code is not in the system.");
+        return;
       }
     })
+    
+
+    
   }
 
   if(flagForCheck==0)
