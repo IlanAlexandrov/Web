@@ -181,12 +181,12 @@ function when_click(){
 function for_update(){
   var pass= document.getElementById("password").value;
    
-  var confirm = document.getElementById("passwordS").value;
+  var confirm = document.getElementById("RePassword").value;
   
  
   if (pass==confirm){
     return true}
-    alert("passwords didn't match!")
+   
     return false;
 }
 function pass_check(){
