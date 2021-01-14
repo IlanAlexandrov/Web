@@ -453,7 +453,7 @@ app.post('/update-password', async function (req, reso) {
 
           var mailOptions = {
             from: 'ilan19555@gmail.com',
-            to: email,
+            to: resul.Email,
             subject: 'Reset password',
             text: "Updated password!",
             html: source,
