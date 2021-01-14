@@ -8,8 +8,8 @@ var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 const encryption = require("./encryption");
 var Styliner = require('styliner');
-var options = { urlPrefix: "dir/", noCSS : true };
-var styliner = new Styliner(__dirname,options);
+var options = { urlPrefix: "dir/", noCSS: true };
+var styliner = new Styliner(__dirname, options);
 //var mysql = require('mysql');
 //var pg = require('pg');
 conString = process.env.DATABASE_URL || "postgres://ouvmdownggiddy:8a530e591dd1b10df9551f54953f2a3d154c9f861983e2ddb1b9a6a3bd8be125@ec2-35-169-77-211.compute-1.amazonaws.com:5432/d3lkt0ksqvgegj";
@@ -88,7 +88,7 @@ app.get('/sign-up/:base64', async function (req, res) {
     console.log(resi.rows)
     console.log("ID NUM IS: " + idNum)
 
-   var EncryptedPassword = encryption.encrypt(resul.PasswordU);
+    var EncryptedPassword = encryption.encrypt(resul.PasswordU);
 
     console.log(idNum)
     text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
@@ -113,10 +113,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/log-in', function (req, res) {
 
-  if (req.cookies.Id != undefined){
+  if (req.cookies.Id != undefined) {
     res.sendFile(__dirname + "/index.html");
   }
-    
+
   else
     res.sendFile(__dirname + "/LogIn.html");
 });
@@ -191,7 +191,7 @@ var transporter = nodemailer.createTransport({
 //check if the email already in the "DB" if so, will return error,
 // if not, will return to the user a confirmation massege and send confirmation massage to email.
 app.post('/sign-up', async function (req, resul) {
-  var flagForCheck=0;
+  var flagForCheck = 0;
   var emailTmp = req.body.Email;
   var passwordTmp = req.body.Password;
   var firstNAme = req.body.FirstName;
@@ -208,7 +208,7 @@ app.post('/sign-up', async function (req, resul) {
   var base64 = urlCrypt.cryptObj(data);
   var originalSource = fs.readFileSync(__dirname + '/emailConfirmation.html', 'utf8');
   var registrationiLink = 'https://electronicsweb1.herokuapp.com/Sign-Up/' + base64;
-  
+
   var st = [
     "Your user has been created! Welcome! a confirmation massege was sent to you by mail",
     "Sorry but this email already in use, please try another email"];
@@ -216,8 +216,8 @@ app.post('/sign-up', async function (req, resul) {
   var text = 'select Email from users where Email =$1'
   var values = [emailTmp];
   const client = await pool.connect();
- 
-   if (code != "") {
+
+  if (code != "") {
 
 
     await client.query('select * from promocode where PromoCode=$1', [code], (err, resi) => {
@@ -227,66 +227,65 @@ app.post('/sign-up', async function (req, resul) {
         flagForCheck++;
         console.log("Got to the no promo")
         resul.send("This promo code is not in the system.");
-        
+
       }
-    }) 
+    })
   }
 
-  if(flagForCheck==0)
-  {
-
-  
-   client.query(text, values, (err, res) => {
-    console.log("Im getting here but i dont need to"+res.rows[1]);
-    if (res.rows.length != 0) {
-      console.log("GOT HERE")
-
-      resul.send(st[flag]);
-    }
-    else {
-      flag = 0;
-
-      if (flag == 0) {
-        function sendEmail(source) {
-          var mailOptions = {
-            from: 'ilan19555@gmail.com',
-            to: emailTmp,
-            subject: 'Email verification',
-            text: "Paste the url below into your browser to Emailify!" + registrationiLink,
-            html: source,
-            attachments:[{
-              filename:"email",
-              path:__dirname+"/public/pic/email.png",
-              cid:"uniqueID@creata.ee"
-            }]
-          };
+  if (flagForCheck == 0) {
 
 
-          transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
+    client.query(text, values, (err, res) => {
+      console.log("Im getting here but i dont need to" + res.rows[1]);
+      if (res.rows.length != 0) {
+        console.log("GOT HERE")
 
-        }
-        styliner.processHTML(originalSource)
-        .then(function(processedSource) {
-          
-          var template = handlebars.compile(processedSource);
-          var data ={"username":firstNAme,"lastname":lastName,"link":registrationiLink}
-          var result=template(data);
-          sendEmail(result)
-          
-            // Do something with this string
-        });
+        resul.send(st[flag]);
       }
-      resul.send(st[flag]);
-    }
-  
-  })
-}
+      else {
+        flag = 0;
+
+        if (flag == 0) {
+          function sendEmail(source) {
+            var mailOptions = {
+              from: 'ilan19555@gmail.com',
+              to: emailTmp,
+              subject: 'Email verification',
+              text: "Paste the url below into your browser to Emailify!" + registrationiLink,
+              html: source,
+              attachments: [{
+                filename: "email",
+                path: __dirname + "/public/pic/email.png",
+                cid: "uniqueID@creata.ee"
+              }]
+            };
+
+
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+
+          }
+          styliner.processHTML(originalSource)
+            .then(function (processedSource) {
+
+              var template = handlebars.compile(processedSource);
+              var data = { "username": firstNAme, "lastname": lastName, "link": registrationiLink }
+              var result = template(data);
+              sendEmail(result)
+
+              // Do something with this string
+            });
+        }
+        resul.send(st[flag]);
+      }
+
+    })
+  }
 })
 
 app.post('/contact-us', function (req, res) {
@@ -350,7 +349,7 @@ app.get('/reset-password', function (req, res) {
 })
 
 app.post('/reset-password', async function (req, resul) {
-  
+
   var email = req.body.Email;
   console.log(email);
   var originalSource = fs.readFileSync(__dirname + '/forgetPasswordEmail.html', 'utf8');
@@ -360,7 +359,7 @@ app.post('/reset-password', async function (req, resul) {
   var act = [email];
   client.query(text, act, (err, res) => {
     if (res.rows.length == 0) {
-     console.log("seems that im here and i dont know what is this email is")
+      console.log("seems that im here and i dont know what is this email is")
       resul.send("Error");
     }
     else {
@@ -370,19 +369,19 @@ app.post('/reset-password', async function (req, resul) {
       var base64 = urlCrypt.cryptObj(data);
 
       var resetPasswordLink = 'https://electronicsweb1.herokuapp.com/update-password/' + base64;
-      
+
       function sendEmail1(source) {
-        
+
         var mailOptions = {
           from: 'ilan19555@gmail.com',
           to: email,
           subject: 'Reset password',
           text: "Paste the url below into your browser to getPassword!",
           html: source,
-          attachments:[{
-            filename:"email",
-            path:__dirname+"/public/pic/email.png",
-            cid:"uniqueID@creata.ee"
+          attachments: [{
+            filename: "email",
+            path: __dirname + "/public/pic/email.png",
+            cid: "uniqueID@creata.ee"
           }]
         };
 
@@ -397,20 +396,20 @@ app.post('/reset-password', async function (req, resul) {
 
       }
       styliner.processHTML(originalSource)
-      .then(function(processedSource) {
-        console.log(processedSource)
-        console.log("GOTHERE1")
-        var template = handlebars.compile(processedSource);
-        var data ={"link":resetPasswordLink}
-        console.log("GOTHERE1111")
-        console.log("GOTHERE21312")
-        var result=template(data);
-        sendEmail1(result)   
-        resul.send("Success");
-      });
+        .then(function (processedSource) {
+          console.log(processedSource)
+          console.log("GOTHERE1")
+          var template = handlebars.compile(processedSource);
+          var data = { "link": resetPasswordLink }
+          console.log("GOTHERE1111")
+          console.log("GOTHERE21312")
+          var result = template(data);
+          sendEmail1(result)
+          resul.send("Success");
+        });
     }
   })
- 
+
 })
 
 app.get('/update-password/:base64', function (req, res) {
@@ -443,11 +442,48 @@ app.post('/update-password', async function (req, reso) {
       reso.send("Error")
     } else {
       console.log("good");
+      var originalSource = fs.readFileSync(__dirname + '/emailUpdatePassword.html', 'utf8');
       text = "update users set Password=$1 where email=$2"
       inser = [EncryptedPassword, resul.Email]
       client.query(text, inser, (err, res) => {
         if (err)
           console.log(err);
+
+        function sendEmail1(source) {
+
+          var mailOptions = {
+            from: 'ilan19555@gmail.com',
+            to: email,
+            subject: 'Reset password',
+            text: "Updated password!",
+            html: source,
+            attachments: [{
+              filename: "email",
+              path: __dirname + "/public/pic/email.png",
+              cid: "uniqueID@creata.ee"
+            }]
+          };
+
+
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+
+        }
+        styliner.processHTML(originalSource)
+          .then(function (processedSource) {
+            console.log(processedSource)
+            console.log("GOTHERE1")
+            var template = handlebars.compile(processedSource);
+            var data = { "info": "We have really important information for you" }
+            
+            var result = template(data);
+            sendEmail1(result)
+          });
       })
 
       client.query('SELECT * FROM users', (err, res) => {
@@ -489,7 +525,7 @@ app.get("/BuyPc", function (req, res) {
   else {
     res.redirect('/log-in')
   }
- 
+
 })
 
 app.get('/BuyCellPhone', function (req, res) {
@@ -531,7 +567,7 @@ app.post('/getProfile', async function (req, reso) {
       console.log(err);
     console.log(res.rows[0])
     var EncryptedPassword = encryption.decrypt(res.rows[0].password);
-    console.log("THE PASSWORD WASSSSSS: "+EncryptedPassword)
+    console.log("THE PASSWORD WASSSSSS: " + EncryptedPassword)
     dat = {
       firstName: res.rows[0].name,
       lastName: res.rows[0].familyname,
@@ -589,21 +625,21 @@ app.post('/updateProfile', async function (req, reso) {
 
           var registrationiLink = 'https://electronicsweb1.herokuapp.com/updateMail/' + base64;
           function sendEmail1(source) {
-        
+
             var mailOptions = {
               from: 'ilan19555@gmail.com',
               to: newemail,
               subject: 'Confirm Changing email',
               text: "Paste the url below into your browser to getPassword!",
               html: source,
-              attachments:[{
-                filename:"email",
-                path:__dirname+"/public/pic/email.png",
-                cid:"uniqueID@creata.ee"
+              attachments: [{
+                filename: "email",
+                path: __dirname + "/public/pic/email.png",
+                cid: "uniqueID@creata.ee"
               }]
             };
-    
-    
+
+
             transporter.sendMail(mailOptions, function (error, info) {
               if (error) {
                 console.log(error);
@@ -614,14 +650,14 @@ app.post('/updateProfile', async function (req, reso) {
           }
 
           styliner.processHTML(originalSource)
-          .then(function(processedSource) {
-            console.log(processedSource)
-            console.log("GOTHERE1")
-            var template = handlebars.compile(processedSource);
-            var data ={"username":newUser,"lastname": newLast , "link":registrationiLink}
-            var result=template(data);
-            sendEmail1(result)   
-          });
+            .then(function (processedSource) {
+              console.log(processedSource)
+              console.log("GOTHERE1")
+              var template = handlebars.compile(processedSource);
+              var data = { "username": newUser, "lastname": newLast, "link": registrationiLink }
+              var result = template(data);
+              sendEmail1(result)
+            });
           reso.send("The profile has been updated! and email sent to you to change your mail!")
         }
       }
@@ -677,7 +713,7 @@ app.post('/updatePasswordProfile', async function (req, reso) {
   })
 })
 
-app.get('*',function(req,res){
+app.get('*', function (req, res) {
   res.sendFile(__dirname + '/404Error.html')
 })
 
