@@ -86,7 +86,7 @@ app.get('/sign-up/:base64', async function (req, res) {
     else
       idNum = resi.rows[0].id + 1;
     console.log(resi.rows)
-    console.log("ID NUM IS: " + idNum)
+    
 
     var EncryptedPassword = encryption.encrypt(resul.PasswordU);
 
@@ -170,7 +170,7 @@ app.post("/log-in", async function (req, resol) {
       }
 
       console.log(res.rows[0].name)
-      console.log("HERE");
+      
       resol.send('/index');
     }
   })
@@ -225,7 +225,7 @@ app.post('/sign-up', async function (req, resul) {
         console.log(err);
       if (resi.rows.length == 0) {
         flagForCheck++;
-        console.log("Got to the no promo")
+       
         resul.send("This promo code is not in the system.");
 
       }
@@ -238,7 +238,7 @@ app.post('/sign-up', async function (req, resul) {
     client.query(text, values, (err, res) => {
       console.log("Im getting here but i dont need to" + res.rows[1]);
       if (res.rows.length != 0) {
-        console.log("GOT HERE")
+        
 
         resul.send(st[flag]);
       }
@@ -353,7 +353,7 @@ app.post('/reset-password', async function (req, resul) {
   var email = req.body.Email;
   console.log(email);
   var originalSource = fs.readFileSync(__dirname + '/forgetPasswordEmail.html', 'utf8');
-  console.log("GOT");
+ 
   const client = await pool.connect();
   var text = 'select * from users where Email=$1';
   var act = [email];
@@ -419,14 +419,14 @@ app.get('/update-password/:base64', function (req, res) {
 app.post('/update-password', async function (req, reso) {
   const client = await pool.connect();
   client.query('SELECT * FROM users', (err, res) => {
-    console.log("HERE");
+    
     console.log(res.rows)
 
   })
   try {
     console.log(req.body.Email)
     resul = urlCrypt.decryptObj(req.body.Email);
-    console.log("Succedd")
+    
   } catch (e) {
     console.log("HERR")
     return reso.status(404).send('Bad');
@@ -487,7 +487,7 @@ app.post('/update-password', async function (req, reso) {
       })
 
       client.query('SELECT * FROM users', (err, res) => {
-        console.log("HERE");
+       
         console.log(res.rows)
 
       })
@@ -503,7 +503,7 @@ app.get('/index', function (req, res) {
     res.sendFile(__dirname + '/index.html');
   }
   else {
-    console.log("WE GOT IT!")
+   
     res.redirect('/log-in')
   }
 
@@ -511,7 +511,7 @@ app.get('/index', function (req, res) {
 
 app.post('/index', function (req, res) {
   var iD = req.cookies.Id;
-  console.log("THE COKIE IS:" + iD);
+  
   res.send(req.cookies.FirstNAmeU);
 })
 
@@ -567,7 +567,7 @@ app.post('/getProfile', async function (req, reso) {
       console.log(err);
     console.log(res.rows[0])
     var EncryptedPassword = encryption.decrypt(res.rows[0].password);
-    console.log("THE PASSWORD WASSSSSS: " + EncryptedPassword)
+    
     dat = {
       firstName: res.rows[0].name,
       lastName: res.rows[0].familyname,
@@ -691,7 +691,7 @@ app.get('/updateMail/:base64', async function (req, reso) {
     if (err)
       console.log(err);
     else {
-      console.log("updated!")
+      
       reso.redirect('/log-in')
     }
   })
