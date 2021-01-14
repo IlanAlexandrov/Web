@@ -455,7 +455,7 @@ app.post('/update-password', async function (req, reso) {
         console.log(res.rows)
 
       })
-      reso.redirect('/log-in')
+      reso.send("GOOD");
     }
 
   })
