@@ -97,7 +97,7 @@ app.get('/sign-up/:base64', async function (req, res) {
     client.query(text, values, (err, res) => {
       if (err) {
         console.log(err);
-      } else
+      } 
         
     })
     res.redirect('/log-in');
