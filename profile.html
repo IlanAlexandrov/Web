@@ -446,10 +446,7 @@
             })
             $("#password").click(function(){
                 ne();
-                //     console.log("Clicked!!!!!!!!!")
-                // $("#matchPassword").css("display","block");
-                // $("#6DigitsAtLeast").css("display","block");
-                // $("#OneNumber").css("display","block");
+               
             })
 
             $("#PcBtn").click(function () {
@@ -471,20 +468,20 @@
                 window.location.href = url;
             })
             $("#dashbordClick").click(function () {
-                console.log("clickSe")
-                url = '/index'
+                
+                url = '/dashboard'
                 window.location.href = url;
             })
 
             $("#AboutBtn").click(function () {
-                console.log("clickSe")
+                
                 url = '/about'
                 window.location.href = url;
             })
             $("#clickLogout").click(function () {
                 $.post('/remove')
                     .done(function (data){
-                        console.log(data)
+                       
                         window.location = '/log-in';
                     })
                 
