@@ -171,7 +171,7 @@ app.post("/log-in", async function (req, resol) {
 
       console.log(res.rows[0].name)
       
-      resol.send('/index');
+      resol.send('/dashboard');
     }
   })
 
@@ -498,7 +498,7 @@ app.post('/update-password', async function (req, reso) {
 
 })
 
-app.get('/index', function (req, res) {
+app.get('/dashboard', function (req, res) {
   if (req.cookies.Id != undefined) {
     res.sendFile(__dirname + '/index.html');
   }
