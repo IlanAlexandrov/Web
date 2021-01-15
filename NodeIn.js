@@ -57,8 +57,8 @@ app.get('/db', async (req, resu) => {
     await client.query("delete from users")
 
     await client.query('SELECT * FROM promocode', (err, res) => {
-      console.log("HERE");
-      console.log(res.rows)
+     
+     
       resu.redirect('/sign-up');
     })
 
@@ -85,12 +85,12 @@ app.get('/sign-up/:base64', async function (req, res) {
       idNum = 1;
     else
       idNum = resi.rows[0].id + 1;
-    console.log(resi.rows)
+   
     
 
     var EncryptedPassword = encryption.encrypt(resul.PasswordU);
 
-    console.log(idNum)
+    
     text = 'insert into users(Name,FamilyName,Email,Password,ID) values($1,$2,$3,$4,$5)'
     values = [resul.FirstNAmeU, resul.LastNameU, resul.EmailU, EncryptedPassword, idNum];
 
@@ -98,7 +98,7 @@ app.get('/sign-up/:base64', async function (req, res) {
       if (err) {
         console.log(err);
       } else
-        console.log("good")
+        
     })
     res.redirect('/log-in');
   })
@@ -143,13 +143,13 @@ app.post("/log-in", async function (req, resol) {
 
   var EncryptedPassword = encryption.encrypt(password1);
 
-  console.log("THE REMEMBER MEIS: " + rememberOn)
-  console.log(email + password1);
+ 
+  
   var text = 'select * from users where Password=$1 and Email=$2';
   var r = [EncryptedPassword, email];
   const client = await pool.connect();
   client.query('select * from users', (err, res) => {
-    console.log(res.rows[0]);
+    
   })
   client.query(text, r, (err, res) => {
     if (res.rows.length == 0) {
@@ -169,7 +169,7 @@ app.post("/log-in", async function (req, resol) {
         resol.cookie('EmailU', res.rows[0].email, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
       }
 
-      console.log(res.rows[0].name)
+      
       
       resol.send('/dashboard');
     }
@@ -236,7 +236,7 @@ app.post('/sign-up', async function (req, resul) {
 
 
     client.query(text, values, (err, res) => {
-      console.log("Im getting here but i dont need to" + res.rows[1]);
+      
       if (res.rows.length != 0) {
         
 
@@ -310,7 +310,7 @@ app.post('/contact-us', function (req, res) {
   });
 
   res.redirect('/sign-up');
-  console.log(tx);
+  
 })
 
 app.get('/getAllData', function (req, res) {
@@ -351,7 +351,7 @@ app.get('/reset-password', function (req, res) {
 app.post('/reset-password', async function (req, resul) {
 
   var email = req.body.Email;
-  console.log(email);
+ 
   var originalSource = fs.readFileSync(__dirname + '/forgetPasswordEmail.html', 'utf8');
  
   const client = await pool.connect();
@@ -359,7 +359,7 @@ app.post('/reset-password', async function (req, resul) {
   var act = [email];
   client.query(text, act, (err, res) => {
     if (res.rows.length == 0) {
-      console.log("seems that im here and i dont know what is this email is")
+      
       resul.send("Error");
     }
     else {
@@ -397,12 +397,8 @@ app.post('/reset-password', async function (req, resul) {
       }
       styliner.processHTML(originalSource)
         .then(function (processedSource) {
-          console.log(processedSource)
-          console.log("GOTHERE1")
           var template = handlebars.compile(processedSource);
-          var data = { "link": resetPasswordLink }
-          console.log("GOTHERE1111")
-          console.log("GOTHERE21312")
+          var data = { "link": resetPasswordLink }         
           var result = template(data);
           sendEmail1(result)
           resul.send("Success");
@@ -419,29 +415,22 @@ app.get('/update-password/:base64', function (req, res) {
 app.post('/update-password', async function (req, reso) {
   const client = await pool.connect();
   client.query('SELECT * FROM users', (err, res) => {
-    
-    console.log(res.rows)
 
   })
   try {
-    console.log(req.body.Email)
     resul = urlCrypt.decryptObj(req.body.Email);
     
   } catch (e) {
-    console.log("HERR")
     return reso.status(404).send('Bad');
   }
   newPass = req.body.Password1;
   var EncryptedPassword = encryption.encrypt(newPass);
-  console.log(newPass);
-  console.log("Got here")
   var text = "select * from users where Email=$1 and Password=$2"
   var inser = [resul.Email, EncryptedPassword]
   client.query(text, inser, (err, res) => {
     if (res.rows.length != 0) {
       reso.send("Error")
     } else {
-      console.log("good");
       var originalSource = fs.readFileSync(__dirname + '/emailUpdatePassword.html', 'utf8');
       text = "update users set Password=$1 where email=$2"
       inser = [EncryptedPassword, resul.Email]
@@ -476,20 +465,12 @@ app.post('/update-password', async function (req, reso) {
         }
         styliner.processHTML(originalSource)
           .then(function (processedSource) {
-            console.log(processedSource)
-            console.log("GOTHERE1")
             var template = handlebars.compile(processedSource);
             var data = { "info": "We have really important information for you" }
             
             var result = template(data);
             sendEmail1(result)
           });
-      })
-
-      client.query('SELECT * FROM users', (err, res) => {
-       
-        console.log(res.rows)
-
       })
       reso.send("GOOD");
     }
@@ -565,7 +546,7 @@ app.post('/getProfile', async function (req, reso) {
   client.query(tex, re, (err, res) => {
     if (err)
       console.log(err);
-    console.log(res.rows[0])
+
     var EncryptedPassword = encryption.decrypt(res.rows[0].password);
     
     dat = {
@@ -599,7 +580,6 @@ app.post('/updateProfile', async function (req, reso) {
   var prevEmail = req.body.prevEmail;
   var newStreet = req.body.street;
   var originalSource = fs.readFileSync(__dirname + '/emailWantToChange.html', 'utf8');
-  console.log(newUser + " " + newLast + " " + newemail + " " + newphone + " " + newcountry + " " + newcity + " " + newzipCode + " " + prevEmail)
   var text = 'update users set Name=$1, FamilyName=$2,PhoneNumber=$3,Country=$4,City=$5,Street=$6,ZipCode=$7 where ID=$8';
   var options = [newUser, newLast, newphone, newcountry, newcity, newStreet, newzipCode, req.body.Id];
   const client = await pool.connect();
@@ -651,8 +631,6 @@ app.post('/updateProfile', async function (req, reso) {
 
           styliner.processHTML(originalSource)
             .then(function (processedSource) {
-              console.log(processedSource)
-              console.log("GOTHERE1")
               var template = handlebars.compile(processedSource);
               var data = { "username": newUser, "lastname": newLast, "link": registrationiLink }
               var result = template(data);
