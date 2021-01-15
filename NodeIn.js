@@ -8,8 +8,7 @@ const encryption = require("./encryption");
 var Styliner = require('styliner');
 var options = { urlPrefix: "dir/", noCSS: true };
 var styliner = new Styliner(__dirname, options);
-//var mysql = require('mysql');
-//var pg = require('pg');
+
 conString = process.env.DATABASE_URL || "postgres://postgres:user@localhost:5433/users";
 //var client = new pg.Client(conString);
 let port = process.env.PORT || 3000;
@@ -25,6 +24,7 @@ const pool = new Pool({
   // }
 });
 
+//This get is if you  want to restart your data base, you can just instert the db at the end, and all data will be deleted!
 app.get('/db', async (req, resu) => {
   try {
     const client = await pool.connect();
