@@ -1,5 +1,3 @@
-
-
 var url = require('url');
 var fs = require('fs');
 var express = require('express');
@@ -132,6 +130,7 @@ app.get('/sign-up', function (req, res) {
 
 )
 
+/
 //check if the email and password is in the db, if so will refer to another page
 // if not, will send an error message
 app.post("/log-in", async function (req, resol) {
@@ -679,12 +678,48 @@ app.post('/updatePasswordProfile', async function (req, reso) {
   var text = 'update users set Password=$1 where Email=$2'
   const client = await pool.connect();
   var EncryptedPassword = encryption.encrypt(req.body.password);
+  var originalSource = fs.readFileSync(__dirname + '/emailUpdatePassword.html', 'utf8');
   var variu = [EncryptedPassword, req.body.email];
   client.query(text, variu, (err, res) => {
     if (err)
       console.log(err)
-    else
-      reso.send("good")
+    else{
+      function sendEmail1(source) {
+
+        var mailOptions = {
+          from: 'ilan19555@gmail.com',
+          to: resul.Email,
+          subject: 'Reset password',
+          text: "Updated password!",
+          html: source,
+          attachments: [{
+            filename: "email",
+            path: __dirname + "/public/pic/email.png",
+            cid: "uniqueID@creata.ee"
+          }]
+        };
+
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+
+      }
+      styliner.processHTML(originalSource)
+        .then(function (processedSource) {
+          var template = handlebars.compile(processedSource);
+          var data = { "info": "We have really important information for you" }
+          
+          var result = template(data);
+          sendEmail1(result)
+        });
+        reso.send("good")
+    }
+      
   })
   client.query('select * from users where Email=$1', [req.body.email], (err, res) => {
     console.log(res.rows[0]);
