@@ -240,30 +240,30 @@
                 window.location.href = url;
             })
             $("#dashbordClick").click(function () {
-                console.log("clickSe")
-                url = '/index'
+
+                url = '/dashboard'
                 window.location.href = url;
             })
             $("#dashbordClick1").click(function () {
-                console.log("clickSe")
-                url = '/index'
+
+                url = '/dashboard'
                 window.location.href = url;
             })
             $("#AboutBtn").click(function () {
-                console.log("clickSe")
+
                 url = '/about'
                 window.location.href = url;
             })
             $("#ProfileBtn").click(function () {
-                console.log("clickSe")
+
                 url = '/profile'
                 window.location.href = url;
             })
             $("#clickLogout").click(function () {
                 $.post('/remove')
-                    .done(function (data){
-                        console.log(data)
-                        window.location = '/index';
+                    .done(function (data) {
+
+                        window.location = '/dashboard';
                     })
             })
 
