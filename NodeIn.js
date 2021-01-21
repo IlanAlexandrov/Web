@@ -729,6 +729,11 @@ app.get('*', function (req, res) {
   res.sendFile(__dirname + '/404Error.html')
 })
 
+
+app.get('/',function(req,res){
+  res.redirect('/log-in')
+})
+
 app.listen(port, () => {
   console.log('App listening on port %d!', port);
 });
