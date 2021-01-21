@@ -338,7 +338,7 @@ app.get('/getAllData', function (req, res) {
 })
 
 app.get('/', function (req, res) {
-  res.redirect('/SignUp');
+  res.redirect('/log-in');
 
 })
 
@@ -730,9 +730,7 @@ app.get('*', function (req, res) {
 })
 
 
-app.get('/',function(req,res){
-  res.redirect('/log-in')
-})
+
 
 app.listen(port, () => {
   console.log('App listening on port %d!', port);
