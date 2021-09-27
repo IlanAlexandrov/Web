@@ -12,3 +12,9 @@ During my work on this project, I  was using all of the latest Web technology’
 Working with NodeJS – Providing smooth work between the Client-side where the system is reaching to the Db, manipulate and sending the data as it needs to be back to the client-side, furthermore the server side is responsible to communicate with the Heroku app, to successfully deploy the website on their server.
 Working with MongoDB, that is including saving the personal data of every one of the users, and Encrypting and decrypting user’s password, making the Database private.
 
+The sign up Page:
+![image](https://user-images.githubusercontent.com/71960259/134929735-3fe679d2-adee-47c7-b9fc-a1c7ff0e2037.png)
+
+The login Page:
+![image](https://user-images.githubusercontent.com/71960259/134929808-ae0034b9-3cc4-4c0a-9d73-7bef944aaa52.png)
+
